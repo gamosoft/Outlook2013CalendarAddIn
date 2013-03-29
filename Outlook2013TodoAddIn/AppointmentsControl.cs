@@ -7,22 +7,38 @@ using Outlook = Microsoft.Office.Interop.Outlook;
 
 namespace Outlook2013TodoAddIn
 {
+    /// User control to hold the calendar, etc...
+    /// </summary>
     public partial class AppointmentsControl : UserControl
     {
+        #region "Variables"
+    /// <summary>
+
+        /// <summary>
+        /// Used to retrieve the email address of a contact
+        /// </summary>
         private const string PR_SMTP_ADDRESS = "http://schemas.microsoft.com/mapi/proptag/0x39FE001E";
 
+        #endregion "Variables"
+
+        #region "Properties"
+        
+        /// <summary>
+        /// Number of days (including today) to retrieve appointments from in the future
+        /// </summary>
         public decimal NumDays
         {
-            get
-            {
-                return this.numRangeDays.Value;
-            }
-            set
-            {
-                this.numRangeDays.Value = value;
-            }
+            get { return this.numRangeDays.Value; }
+            set { this.numRangeDays.Value = value; }
         }
 
+        #endregion "Properties"
+
+        #region "Methods"
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public AppointmentsControl()
         {
             InitializeComponent();
@@ -43,22 +59,40 @@ namespace Outlook2013TodoAddIn
         //    MessageBox.Show("Test");
         //}
 
+        /// <summary>
+        /// Respond to calendar changes
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">DateRangeEventArgs</param>
         private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
         {
             this.RetrieveAppointments();
         }
 
+        /// <summary>
+        /// Change days to retrieve appointments in the future
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">EventArgs</param>
         private void numRangeDays_ValueChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.NumDays = this.numRangeDays.Value;
             this.RetrieveAppointments();
         }
 
+        /// <summary>
+        /// Manual refresh
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">EventArgs</param>
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             this.RetrieveAppointments();
         }
 
+        /// <summary>
+        /// Retrieve all appointments for the current configurations
+        /// </summary>
         public void RetrieveAppointments()
         {
             // Get the Outlook folder for the calendar to retrieve the appointments
@@ -123,20 +157,15 @@ namespace Outlook2013TodoAddIn
                     case Outlook.OlBusyStatus.olBusy:
                         current.ForeColor = Color.Purple;
                         break;
-
                     case Outlook.OlBusyStatus.olFree:
                         break;
-
                     case Outlook.OlBusyStatus.olOutOfOffice:
                         current.ForeColor = Color.Brown;
                         break;
-
                     case Outlook.OlBusyStatus.olTentative:
                         break;
-
                     case Outlook.OlBusyStatus.olWorkingElsewhere:
                         break;
-
                     default:
                         break;
                 }
@@ -159,11 +188,11 @@ namespace Outlook2013TodoAddIn
         }
 
         /// <summary>
-        /// Get recurring appointments in date range.
+        /// Get recurring appointments in a date range.
         /// </summary>
-        /// <param name="folder"></param>
-        /// <param name="startTime"></param>
-        /// <param name="endTime"></param>
+        /// <param name="folder">Outlook folder</param>
+        /// <param name="startTime">Start time</param>
+        /// <param name="endTime">End time</param>
         /// <returns>Outlook.Items</returns>
         private Outlook.Items GetAppointmentsInRange(Outlook.Folder folder, DateTime startTime, DateTime endTime)
         {
@@ -190,6 +219,11 @@ namespace Outlook2013TodoAddIn
             catch { return null; }
         }
 
+        /// <summary>
+        /// Open the appointment, having in mind it might be a recurring event
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">EventArgs</param>
         private void listView1_DoubleClick(object sender, EventArgs e)
         {
             if (this.listView1.SelectedIndices.Count != 0)
@@ -222,13 +256,17 @@ namespace Outlook2013TodoAddIn
                         // Open up the appointment in a new window
                         appt.Display(true); // Modal yes/no
                     }
-
                     // At the end, synchronously "refresh" items in case they have changed
                     this.RetrieveAppointments();
                 }
             }
         }
 
+        /// <summary>
+        /// Creates a new mail item to reply all recipients of an appointment (except the current user)
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">EventArgs</param>
         private void mnuItemReplyAllEmail_Click(object sender, EventArgs e)
         {
             if (this.listView1.SelectedIndices.Count != 0)
@@ -237,7 +275,6 @@ namespace Outlook2013TodoAddIn
                 if (appt != null)
                 {
                     Outlook.MailItem mail = Globals.ThisAddIn.Application.CreateItem(Outlook.OlItemType.olMailItem) as Outlook.MailItem;
-
                     string curUserAddress = GetEmailAddress(Globals.ThisAddIn.Application.Session.CurrentUser);
                     foreach (Outlook.Recipient rcpt in appt.Recipients)
                     {
@@ -245,8 +282,6 @@ namespace Outlook2013TodoAddIn
                         if (curUserAddress != smtpAddress)
                         {
                             mail.Recipients.Add(smtpAddress);
-
-                            //mail.Recipients.Add(rcpt.AddressEntry.Name);
                         }
                     }
                     mail.Body = Environment.NewLine + Environment.NewLine + appt.Body;
@@ -256,10 +291,44 @@ namespace Outlook2013TodoAddIn
             }
         }
 
+        /// <summary>
+        /// Resolves Outlook recipient email address
+        /// </summary>
+        /// <param name="rcpt">Recipient</param>
+        /// <returns>Email address of the contact</returns>
         private string GetEmailAddress(Outlook.Recipient rcpt)
         {
             Outlook.PropertyAccessor pa = rcpt.PropertyAccessor;
             return pa.GetProperty(PR_SMTP_ADDRESS).ToString();
         }
+
+        /// <summary>
+        /// Switch to the calendar view when double-clicking a date
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">EventArgs</param>
+        private void apptCalendar_DoubleClickEx(object sender, EventArgs e)
+        {
+            // TODO: Clicking in days outside of the current month will cause the calendar to refresh to that day, reposition all days and
+            // select the wrong one
+            //MessageBox.Show(this.apptCalendar.SelectionStart.ToShortDateString());
+
+            // Get the Outlook folder for the calendar to retrieve the appointments
+            Outlook.Folder calFolder =
+                Globals.ThisAddIn.Application.Session.GetDefaultFolder(
+                Outlook.OlDefaultFolders.olFolderCalendar)
+                as Outlook.Folder;
+
+            //Outlook.View view = Globals.ThisAddIn.Application.ActiveExplorer().CurrentView;
+
+            foreach (Outlook.View view in Globals.ThisAddIn.Application.ActiveExplorer().CurrentFolder.Views)
+            {
+                MessageBox.Show("New view: {0}", view.Name);
+            }
+
+            //calFolder.Display();
+        }
+
+        #endregion "Methods"
     }
 }

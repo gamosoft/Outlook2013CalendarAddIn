@@ -178,6 +178,7 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="DoubleClickMonthCalendar.cs" />
     <Compile Include="FormRecurringOpen.cs">
       <SubType>Form</SubType>
     </Compile>
