@@ -40,14 +40,16 @@ namespace Outlook2013TodoAddIn
             this.AppControl.RetrieveAppointments();
 
             ToDoTaskPane = this.CustomTaskPanes.Add(this.AppControl, "Appointments");
-            // TODO: Fix this
-            // ToDoTaskPane.Visible = Properties.Settings.Default.Visible;
-            ToDoTaskPane.Visible = true;
+            ToDoTaskPane.Visible = Properties.Settings.Default.Visible;
             ToDoTaskPane.Width = Properties.Settings.Default.Width;
             ToDoTaskPane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
             ToDoTaskPane.DockPositionRestrict = Office.MsoCTPDockPositionRestrict.msoCTPDockPositionRestrictNoHorizontal;
             ToDoTaskPane.VisibleChanged += ToDoTaskPane_VisibleChanged;
             this.AppControl.SizeChanged += appControl_SizeChanged;
+
+            Globals.ThisAddIn.Application.ActiveExplorer().Deactivate += ThisAddIn_Deactivate;
+
+            // TODO: Make sure there are no memory leaks (dispose COM objects)
         }
 
         /// <summary>
@@ -67,13 +69,21 @@ namespace Outlook2013TodoAddIn
         /// <param name="e">EventArgs</param>
         private void ToDoTaskPane_VisibleChanged(object sender, EventArgs e)
         {
-            // TODO: Save visibility ONLY when not closing the form
+            // Can't save visibility here because this fires when closing Outlook, and by that time the pane is ALWAYS not visible
             // Properties.Settings.Default.Visible = ToDoTaskPane.Visible;
             TodoRibbonAddIn rbn = Globals.Ribbons.FirstOrDefault(r => r is TodoRibbonAddIn) as TodoRibbonAddIn;
             if (rbn != null)
             {
                 rbn.toggleButton1.Checked = ToDoTaskPane.Visible;
             }
+        }
+
+        /// <summary>
+        /// This is the alternative to capture the visibility of the pane when shutting down Outlook
+        /// </summary>
+        private void ThisAddIn_Deactivate()
+        {
+            Properties.Settings.Default.Visible = ToDoTaskPane.Visible;
         }
 
         /// <summary>
@@ -97,8 +107,7 @@ namespace Outlook2013TodoAddIn
         /// </summary>
         private void AddRegistryNotification()
         {
-            // TODO: Make sure there are no memory leaks (dispose COM obejcts)
-            // TODO: See if this works the first time (if the entry is not there when Outlook loads, it will NOT notify the add-in)
+            // If the entry is not there when Outlook loads, it will NOT notify the add-in, so the first time won't save the results
             string subKey = @"Software\Microsoft\Office\Outlook\Addins\Outlook2013TodoAddIn";
             RegistryKey rk = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(subKey, true);
             if (rk == null)

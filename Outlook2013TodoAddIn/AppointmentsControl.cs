@@ -42,22 +42,7 @@ namespace Outlook2013TodoAddIn
         public AppointmentsControl()
         {
             InitializeComponent();
-
-            //(this.apptCalendar as Control).SetStyle();
-            //(this.apptCalendar as Control).DoubleClick += AppointmentsControl_DoubleClick;
-            // ShowScrollBar(this.listView1.Handle.ToInt64(), SB_HORZ, 0);
         }
-
-        //[DllImport("user32")]
-        //private static extern long ShowScrollBar(long hwnd, long wBar, long bShow);
-        //long SB_HORZ = 0;
-        //long SB_VERT = 1;
-        //long SB_BOTH = 3;
-
-        //void AppointmentsControl_DoubleClick(object sender, EventArgs e)
-        //{
-        //    MessageBox.Show("Test");
-        //}
 
         /// <summary>
         /// Respond to calendar changes
@@ -309,7 +294,7 @@ namespace Outlook2013TodoAddIn
         /// <param name="e">EventArgs</param>
         private void apptCalendar_DoubleClickEx(object sender, EventArgs e)
         {
-            // TODO: Clicking in days outside of the current month will cause the calendar to refresh to that day
+            // Clicking in days outside of the current month will cause the calendar to refresh to that day
             // reposition all days and select the wrong one
             Outlook.Folder f = Globals.ThisAddIn.Application.Session.GetDefaultFolder(Outlook.OlDefaultFolders.olFolderCalendar) as Outlook.Folder;
             Globals.ThisAddIn.Application.ActiveExplorer().CurrentFolder = f;
