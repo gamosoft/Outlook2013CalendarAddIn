@@ -309,24 +309,13 @@ namespace Outlook2013TodoAddIn
         /// <param name="e">EventArgs</param>
         private void apptCalendar_DoubleClickEx(object sender, EventArgs e)
         {
-            // TODO: Clicking in days outside of the current month will cause the calendar to refresh to that day, reposition all days and
-            // select the wrong one
-            //MessageBox.Show(this.apptCalendar.SelectionStart.ToShortDateString());
-
-            // Get the Outlook folder for the calendar to retrieve the appointments
-            Outlook.Folder calFolder =
-                Globals.ThisAddIn.Application.Session.GetDefaultFolder(
-                Outlook.OlDefaultFolders.olFolderCalendar)
-                as Outlook.Folder;
-
-            //Outlook.View view = Globals.ThisAddIn.Application.ActiveExplorer().CurrentView;
-
-            foreach (Outlook.View view in Globals.ThisAddIn.Application.ActiveExplorer().CurrentFolder.Views)
-            {
-                MessageBox.Show("New view: {0}", view.Name);
-            }
-
-            //calFolder.Display();
+            // TODO: Clicking in days outside of the current month will cause the calendar to refresh to that day
+            // reposition all days and select the wrong one
+            Outlook.Folder f = Globals.ThisAddIn.Application.Session.GetDefaultFolder(Outlook.OlDefaultFolders.olFolderCalendar) as Outlook.Folder;
+            Globals.ThisAddIn.Application.ActiveExplorer().CurrentFolder = f;
+            Outlook.CalendarView cv = (Outlook.CalendarView)(Globals.ThisAddIn.Application.ActiveExplorer().CurrentView);
+            cv.CalendarViewMode = Outlook.OlCalendarViewMode.olCalendarViewDay;
+            cv.GoToDate(this.apptCalendar.SelectionStart);
         }
 
         #endregion "Methods"
