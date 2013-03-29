@@ -5,69 +5,69 @@ using Office = Microsoft.Office.Core;
 
 namespace Outlook2013TodoAddIn
 {
+    /// <summary>
+    /// Class for the add-in
+    /// </summary>
     public partial class ThisAddIn
     {
-        private AppointmentsControl appControl;
+        #region "Properties"
 
+        /// <summary>
+        /// Control with calendar, etc...
+        /// </summary>
+        public AppointmentsControl AppControl { get; set; }
+
+        /// <summary>
+        /// Custom task pane
+        /// </summary>
         public Microsoft.Office.Tools.CustomTaskPane ToDoTaskPane { get; set; }
 
-        //private Dictionary<Outlook.Inspector, InspectorWrapper> inspectorWrappersValue = new Dictionary<Outlook.Inspector, InspectorWrapper>();
-        //private Outlook.Inspectors inspectors;
+        #endregion "Properties"
 
-        //void Inspectors_NewInspector(Outlook.Inspector Inspector)
-        //{
-        //    if (Inspector.CurrentItem is Outlook.MailItem)
-        //    {
-        //        inspectorWrappersValue.Add(Inspector, new InspectorWrapper(Inspector));
-        //    }
-        //}
+        #region "Methods"
 
-        //public Dictionary<Outlook.Inspector, InspectorWrapper> InspectorWrappers
-        //{
-        //    get
-        //    {
-        //        return inspectorWrappersValue;
-        //    }
-        //}
-
+        /// <summary>
+        /// Initialize settings upon add-in startup
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">EventArgs</param>
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
-            //inspectors = this.Application.Inspectors;
-            //inspectors.NewInspector +=
-            //    new Outlook.InspectorsEvents_NewInspectorEventHandler(
-            //    Inspectors_NewInspector);
+            this.AddRegistryNotification();
 
-            //foreach (Outlook.Inspector inspector in inspectors)
-            //{
-            //    Inspectors_NewInspector(inspector);
-            //}
+            this.AppControl = new AppointmentsControl();
+            this.AppControl.NumDays = Properties.Settings.Default.NumDays; // Setting the value will load the appointments
+            this.AppControl.RetrieveAppointments();
 
-            appControl = new AppointmentsControl();
-            appControl.NumDays = Properties.Settings.Default.NumDays; // Setting the value will load the appointments
-
-            //Properties.Settings.Default.Properties[]
-            // appControl.Dock = System.Windows.Forms.DockStyle.Right;
-            ToDoTaskPane = this.CustomTaskPanes.Add(appControl, "Appointments");
-            ToDoTaskPane.Visible = Properties.Settings.Default.Visible;
-
-            //ToDoTaskPane.Visible = true;
-            //ToDoTaskPane.Width = 285; // appControl.Width;
+            ToDoTaskPane = this.CustomTaskPanes.Add(this.AppControl, "Appointments");
+            // TODO: Fix this
+            // ToDoTaskPane.Visible = Properties.Settings.Default.Visible;
+            ToDoTaskPane.Visible = true;
             ToDoTaskPane.Width = Properties.Settings.Default.Width;
             ToDoTaskPane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
             ToDoTaskPane.DockPositionRestrict = Office.MsoCTPDockPositionRestrict.msoCTPDockPositionRestrictNoHorizontal;
             ToDoTaskPane.VisibleChanged += ToDoTaskPane_VisibleChanged;
-            appControl.SizeChanged += appControl_SizeChanged;
-
-            this.AddRegistryNotification();
+            this.AppControl.SizeChanged += appControl_SizeChanged;
         }
 
+        /// <summary>
+        /// Store the new size setting upon resizing
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">EventArgs</param>
         private void appControl_SizeChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.Width = ToDoTaskPane.Width;
         }
 
+        /// <summary>
+        /// Toggle ribbon button's status
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">EventArgs</param>
         private void ToDoTaskPane_VisibleChanged(object sender, EventArgs e)
         {
+            // TODO: Save visibility ONLY when not closing the form
             // Properties.Settings.Default.Visible = ToDoTaskPane.Visible;
             TodoRibbonAddIn rbn = Globals.Ribbons.FirstOrDefault(r => r is TodoRibbonAddIn) as TodoRibbonAddIn;
             if (rbn != null)
@@ -77,44 +77,41 @@ namespace Outlook2013TodoAddIn
         }
 
         /// <summary>
-        /// This is NEVER executed anymore
+        /// This is not executed by default
         /// http://msdn.microsoft.com/en-us/library/office/ee720183.aspx#OL2010AdditionalShutdownChanges_AddinShutdownChangesinOL2010Beta
-        /// We MANUALLY add notification to the registry of each user
+        /// We MANUALLY add notification to the registry of each user below
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">EventArgs</param>
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
         {
-            //inspectors.NewInspector -=
-            //    new Outlook.InspectorsEvents_NewInspectorEventHandler(
-            //    Inspectors_NewInspector);
-            //inspectors = null;
-            //inspectorWrappersValue = null;
-            // Can't call these because the object is already disposed. Settings will be set while the app is running
-            //Properties.Settings.Default.Visible = ToDoTaskPane.Visible;
-            //Properties.Settings.Default.Width = ToDoTaskPane.Width;
-            //Properties.Settings.Default.NumDays = appControl.NumDays;
+            // Can't call property setters such as: Properties.Settings.Default.NumDays = XXX because the pane is already disposed.
+            // Settings will be set while the app is running and saved here.
             Properties.Settings.Default.Save();
         }
 
+        /// <summary>
+        /// Implement shutdown notification for this particular add-in
+        /// http://msdn.microsoft.com/en-us/library/office/ee720183.aspx#OL2010AdditionalShutdownChanges_AddinShutdownChangesinOL2010Beta
+        /// HKEY_CURRENT_USER\Software\Microsoft\Office\Outlook\Addins\<ProgID>\[RequireShutdownNotification]=dword:0x1
+        /// </summary>
         private void AddRegistryNotification()
         {
-            // http://msdn.microsoft.com/en-us/library/office/ee720183.aspx#OL2010AdditionalShutdownChanges_AddinShutdownChangesinOL2010Beta
-            // HKEY_CURRENT_USER\Software\Microsoft\Office\Outlook\Addins\<ProgID>\[RequireShutdownNotification]=dword:0x1
-
+            // TODO: Make sure there are no memory leaks (dispose COM obejcts)
+            // TODO: See if this works the first time (if the entry is not there when Outlook loads, it will NOT notify the add-in)
             string subKey = @"Software\Microsoft\Office\Outlook\Addins\Outlook2013TodoAddIn";
             RegistryKey rk = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(subKey, true);
-
             if (rk == null)
             {
                 rk = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(subKey);
             }
-
             if ((int)rk.GetValue("RequireShutdownNotification", 0) == 0)
             {
                 rk.SetValue("RequireShutdownNotification", 1, RegistryValueKind.DWord); // "dword:0x1"
             }
         }
+
+        #endregion "Methods"
 
         #region VSTO generated code
 

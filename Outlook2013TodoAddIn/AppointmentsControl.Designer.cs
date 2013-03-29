@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.numRangeDays = new System.Windows.Forms.NumericUpDown();
             this.lblRangeDays = new System.Windows.Forms.Label();
-            this.apptCalendar = new System.Windows.Forms.MonthCalendar();
+            this.apptCalendar = new Outlook2013TodoAddIn.DoubleClickMonthCalendar();
             this.ctxMenuAppointments = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuItemReplyAllEmail = new System.Windows.Forms.ToolStripMenuItem();
             this.hdrDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -86,6 +86,7 @@
             this.apptCalendar.MaxSelectionCount = 1;
             this.apptCalendar.Name = "apptCalendar";
             this.apptCalendar.TabIndex = 4;
+            this.apptCalendar.DoubleClickEx += new System.EventHandler(this.apptCalendar_DoubleClickEx);
             this.apptCalendar.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar1_DateChanged);
             // 
             // ctxMenuAppointments
@@ -186,7 +187,7 @@
 
         private System.Windows.Forms.NumericUpDown numRangeDays;
         private System.Windows.Forms.Label lblRangeDays;
-        private System.Windows.Forms.MonthCalendar apptCalendar;
+        private DoubleClickMonthCalendar apptCalendar;
         private System.Windows.Forms.ContextMenuStrip ctxMenuAppointments;
         private System.Windows.Forms.ToolStripMenuItem mnuItemReplyAllEmail;
         private System.Windows.Forms.ColumnHeader hdrDate;
