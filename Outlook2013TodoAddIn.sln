@@ -4,6 +4,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Outlook2013TodoAddIn", "Outlook2013TodoAddIn\Outlook2013TodoAddIn.csproj", "{EF0CD4A2-56E1-4C98-BE40-ED2D969F16A8}"
 EndProject
 Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs04
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Outlook2013TodoAddIn\\Outlook2013TodoAddIn.csproj
+		SccProjectName1 = Outlook2013TodoAddIn
+		SccLocalPath1 = Outlook2013TodoAddIn
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
