@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Linq;
+using System.Windows.Forms;
 using Office = Microsoft.Office.Core;
 
 namespace Outlook2013TodoAddIn
@@ -33,6 +34,7 @@ namespace Outlook2013TodoAddIn
         /// <param name="e">EventArgs</param>
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
+            Globals.ThisAddIn.Application.NewMailEx += Application_NewMailEx;
             this.AddRegistryNotification();
 
             this.AppControl = new AppointmentsControl();
@@ -50,6 +52,29 @@ namespace Outlook2013TodoAddIn
             Globals.ThisAddIn.Application.ActiveExplorer().Deactivate += ThisAddIn_Deactivate;
 
             // TODO: Make sure there are no memory leaks (dispose COM objects)
+        }
+
+        private void Application_NewMailEx(string EntryIDCollection)
+        {
+            Microsoft.Office.Interop.Outlook.MailItem newMail = Globals.ThisAddIn.Application.Session.GetItemFromID(EntryIDCollection) as Microsoft.Office.Interop.Outlook.MailItem;
+            if (newMail != null)
+            {
+                string sender = newMail.Sender.Name;
+                string subject = newMail.Subject;
+                string body = newMail.Body;
+                NewMailAlert nm = new NewMailAlert(sender, subject, body);
+                nm.Email = newMail;
+                nm.Top = 0;
+                nm.Left = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Width - nm.Width;
+                // this.Height = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height;
+                nm.Show();
+                if (nm.WindowState == FormWindowState.Minimized)
+                {
+                    nm.WindowState = FormWindowState.Normal;
+                }
+                nm.Focus();
+                nm.BringToFront();
+            }
         }
 
         /// <summary>
