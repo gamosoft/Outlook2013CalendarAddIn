@@ -185,6 +185,12 @@
     <Compile Include="FormRecurringOpen.Designer.cs">
       <DependentUpon>FormRecurringOpen.cs</DependentUpon>
     </Compile>
+    <Compile Include="NewMailAlert.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewMailAlert.Designer.cs">
+      <DependentUpon>NewMailAlert.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -202,6 +208,9 @@
     </Compile>
     <EmbeddedResource Include="FormRecurringOpen.resx">
       <DependentUpon>FormRecurringOpen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewMailAlert.resx">
+      <DependentUpon>NewMailAlert.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -243,6 +252,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="2012-11-20_1546.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Flag.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Envelope.png" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
