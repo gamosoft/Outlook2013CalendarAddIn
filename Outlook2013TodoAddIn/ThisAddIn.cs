@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Office = Microsoft.Office.Core;
@@ -62,18 +63,11 @@ namespace Outlook2013TodoAddIn
                 string sender = newMail.Sender.Name;
                 string subject = newMail.Subject;
                 string body = newMail.Body;
-                NewMailAlert nm = new NewMailAlert(sender, subject, body);
+                NewMailAlert nm = new NewMailAlert(sender, subject, body, 5000);
                 nm.Email = newMail;
-                nm.Top = 0;
-                nm.Left = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Width - nm.Width;
-                // this.Height = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height;
-                nm.Show();
-                if (nm.WindowState == FormWindowState.Minimized)
-                {
-                    nm.WindowState = FormWindowState.Normal;
-                }
-                nm.Focus();
-                nm.BringToFront();
+                // nm.Show();
+                // Show the popup without stealing focus
+                nm.ShowPopup();
             }
         }
 
