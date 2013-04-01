@@ -55,6 +55,10 @@ namespace Outlook2013TodoAddIn
             // TODO: Make sure there are no memory leaks (dispose COM objects)
         }
 
+        /// <summary>
+        /// Process new email
+        /// </summary>
+        /// <param name="EntryIDCollection">ID of the email</param>
         private void Application_NewMailEx(string EntryIDCollection)
         {
             Microsoft.Office.Interop.Outlook.MailItem newMail = Globals.ThisAddIn.Application.Session.GetItemFromID(EntryIDCollection) as Microsoft.Office.Interop.Outlook.MailItem;
