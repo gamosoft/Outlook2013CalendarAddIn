@@ -38,7 +38,7 @@
     <PublishUrl>publish\</PublishUrl>
     <InstallUrl />
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>1.0.0.7</ApplicationVersion>
+    <ApplicationVersion>1.0.0.9</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>false</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
@@ -257,16 +257,16 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="2012-11-20_1546.png" />
+    <None Include="Images\2012-11-20_1546.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Delete.png" />
+    <None Include="Images\Delete.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Flag.png" />
+    <None Include="Images\Flag.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Envelope.png" />
+    <None Include="Images\Envelope.png" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

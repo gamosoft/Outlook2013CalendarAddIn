@@ -11,5 +11,8 @@
     <Setting Name="NumDays" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">3</Value>
     </Setting>
+    <Setting Name="DisplayTimeOut" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">5000</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

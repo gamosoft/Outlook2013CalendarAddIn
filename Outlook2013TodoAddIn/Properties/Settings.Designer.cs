@@ -58,5 +58,17 @@ namespace Outlook2013TodoAddIn.Properties {
                 this["NumDays"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5000")]
+        public int DisplayTimeOut {
+            get {
+                return ((int)(this["DisplayTimeOut"]));
+            }
+            set {
+                this["DisplayTimeOut"] = value;
+            }
+        }
     }
 }
