@@ -60,12 +60,7 @@ namespace Outlook2013TodoAddIn
             Microsoft.Office.Interop.Outlook.MailItem newMail = Globals.ThisAddIn.Application.Session.GetItemFromID(EntryIDCollection) as Microsoft.Office.Interop.Outlook.MailItem;
             if (newMail != null)
             {
-                string sender = newMail.Sender.Name;
-                string subject = newMail.Subject;
-                string body = newMail.Body;
-                NewMailAlert nm = new NewMailAlert(sender, subject, body, 5000);
-                nm.Email = newMail;
-                // nm.Show();
+                NewMailAlert nm = new NewMailAlert(newMail, Properties.Settings.Default.DisplayTimeOut);
                 // Show the popup without stealing focus
                 nm.ShowPopup();
             }

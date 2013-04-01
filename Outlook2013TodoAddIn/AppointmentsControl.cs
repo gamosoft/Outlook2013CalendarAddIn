@@ -72,14 +72,6 @@ namespace Outlook2013TodoAddIn
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             this.RetrieveAppointments();
-            // Email alert tests
-            //string senderEmail = "pepe@hotmail.com";
-            //string subject = "Subject of the email";
-            //string body = "This is the body of the email";
-            //NewMailAlert nm = new NewMailAlert(senderEmail, subject, body, 5000);
-            //nm.Email = null;
-            //// Show the popup without stealing focus
-            //nm.ShowPopup();
         }
 
         /// <summary>

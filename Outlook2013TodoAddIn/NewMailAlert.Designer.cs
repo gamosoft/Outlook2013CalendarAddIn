@@ -39,12 +39,14 @@
             // 
             // txtBody
             // 
+            this.txtBody.Cursor = System.Windows.Forms.Cursors.Hand;
             this.txtBody.Location = new System.Drawing.Point(88, 47);
             this.txtBody.Multiline = true;
             this.txtBody.Name = "txtBody";
             this.txtBody.ReadOnly = true;
             this.txtBody.Size = new System.Drawing.Size(285, 51);
             this.txtBody.TabIndex = 2;
+            this.txtBody.Click += new System.EventHandler(this.txtBody_Click);
             // 
             // btnDelete
             // 
