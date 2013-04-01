@@ -28,48 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lblSender = new System.Windows.Forms.Label();
-            this.lblSubject = new System.Windows.Forms.Label();
             this.txtBody = new System.Windows.Forms.TextBox();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnFlag = new System.Windows.Forms.Button();
             this.btnEnvelope = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
+            this.lnkSender = new System.Windows.Forms.LinkLabel();
+            this.lnkSubject = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
-            // 
-            // lblSender
-            // 
-            this.lblSender.AutoSize = true;
-            this.lblSender.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSender.Location = new System.Drawing.Point(85, 11);
-            this.lblSender.Name = "lblSender";
-            this.lblSender.Size = new System.Drawing.Size(52, 17);
-            this.lblSender.TabIndex = 0;
-            this.lblSender.Text = "label1";
-            // 
-            // lblSubject
-            // 
-            this.lblSubject.AutoSize = true;
-            this.lblSubject.Location = new System.Drawing.Point(85, 28);
-            this.lblSubject.Name = "lblSubject";
-            this.lblSubject.Size = new System.Drawing.Size(46, 17);
-            this.lblSubject.TabIndex = 1;
-            this.lblSubject.Text = "label1";
             // 
             // txtBody
             // 
-            this.txtBody.Location = new System.Drawing.Point(88, 49);
+            this.txtBody.Location = new System.Drawing.Point(88, 47);
             this.txtBody.Multiline = true;
             this.txtBody.Name = "txtBody";
             this.txtBody.ReadOnly = true;
-            this.txtBody.Size = new System.Drawing.Size(214, 77);
+            this.txtBody.Size = new System.Drawing.Size(285, 51);
             this.txtBody.TabIndex = 2;
             // 
             // btnDelete
             // 
             this.btnDelete.BackgroundImage = global::Outlook2013TodoAddIn.Properties.Resources.Delete;
             this.btnDelete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnDelete.Location = new System.Drawing.Point(50, 94);
+            this.btnDelete.Location = new System.Drawing.Point(50, 66);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(32, 32);
             this.btnDelete.TabIndex = 6;
@@ -80,7 +61,7 @@
             // 
             this.btnFlag.BackgroundImage = global::Outlook2013TodoAddIn.Properties.Resources.Flag;
             this.btnFlag.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnFlag.Location = new System.Drawing.Point(12, 94);
+            this.btnFlag.Location = new System.Drawing.Point(12, 66);
             this.btnFlag.Name = "btnFlag";
             this.btnFlag.Size = new System.Drawing.Size(32, 32);
             this.btnFlag.TabIndex = 5;
@@ -91,7 +72,7 @@
             // 
             this.btnEnvelope.BackgroundImage = global::Outlook2013TodoAddIn.Properties.Resources.Envelope;
             this.btnEnvelope.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnEnvelope.Location = new System.Drawing.Point(16, 17);
+            this.btnEnvelope.Location = new System.Drawing.Point(19, 5);
             this.btnEnvelope.Name = "btnEnvelope";
             this.btnEnvelope.Size = new System.Drawing.Size(60, 60);
             this.btnEnvelope.TabIndex = 8;
@@ -102,32 +83,57 @@
             // 
             this.btnClose.BackgroundImage = global::Outlook2013TodoAddIn.Properties.Resources.Delete;
             this.btnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnClose.Location = new System.Drawing.Point(282, 8);
+            this.btnClose.Location = new System.Drawing.Point(353, 8);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(20, 20);
             this.btnClose.TabIndex = 9;
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // lnkSender
+            // 
+            this.lnkSender.AutoSize = true;
+            this.lnkSender.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkSender.Location = new System.Drawing.Point(85, 5);
+            this.lnkSender.Name = "lnkSender";
+            this.lnkSender.Size = new System.Drawing.Size(82, 17);
+            this.lnkSender.TabIndex = 10;
+            this.lnkSender.TabStop = true;
+            this.lnkSender.Text = "linkLabel1";
+            this.lnkSender.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkSender_LinkClicked);
+            // 
+            // lnkSubject
+            // 
+            this.lnkSubject.AutoSize = true;
+            this.lnkSubject.Location = new System.Drawing.Point(85, 27);
+            this.lnkSubject.Name = "lnkSubject";
+            this.lnkSubject.Size = new System.Drawing.Size(72, 17);
+            this.lnkSubject.TabIndex = 11;
+            this.lnkSubject.TabStop = true;
+            this.lnkSubject.Text = "linkLabel2";
+            this.lnkSubject.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkSubject_LinkClicked);
+            // 
             // NewMailAlert
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(314, 140);
+            this.ClientSize = new System.Drawing.Size(385, 100);
+            this.Controls.Add(this.lnkSubject);
+            this.Controls.Add(this.lnkSender);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnEnvelope);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnFlag);
             this.Controls.Add(this.txtBody);
-            this.Controls.Add(this.lblSubject);
-            this.Controls.Add(this.lblSender);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "NewMailAlert";
             this.ShowIcon = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "NewMailAlert";
+            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -135,12 +141,12 @@
 
         #endregion
 
-        private System.Windows.Forms.Label lblSender;
-        private System.Windows.Forms.Label lblSubject;
         private System.Windows.Forms.TextBox txtBody;
         private System.Windows.Forms.Button btnFlag;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnEnvelope;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.LinkLabel lnkSender;
+        private System.Windows.Forms.LinkLabel lnkSubject;
     }
 }

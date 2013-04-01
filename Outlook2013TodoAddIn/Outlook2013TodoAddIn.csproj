@@ -45,6 +45,10 @@
     <FriendlyName>Outlook2013TodoAddIn</FriendlyName>
     <OfficeApplicationDescription />
     <LoadBehavior>3</LoadBehavior>
+    <SccProjectName>%24/outlook2013addin/Outlook2013TodoAddIn</SccProjectName>
+    <SccLocalPath>.</SccLocalPath>
+    <SccAuxPath>https://tfs.codeplex.com/tfs/tfs04</SccAuxPath>
+    <SccProvider>{4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}</SccProvider>
   </PropertyGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
@@ -178,7 +182,9 @@
     can be found.
   -->
   <ItemGroup>
-    <Compile Include="DoubleClickMonthCalendar.cs" />
+    <Compile Include="DoubleClickMonthCalendar.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="FormRecurringOpen.cs">
       <SubType>Form</SubType>
     </Compile>

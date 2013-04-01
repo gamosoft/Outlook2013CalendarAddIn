@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Outlook2013TodoAddIn", "Outlook2013TodoAddIn\Outlook2013TodoAddIn.csproj", "{EF0CD4A2-56E1-4C98-BE40-ED2D969F16A8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2FFBC2F9-1F58-40E6-8901-9853C61020E6}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 2
