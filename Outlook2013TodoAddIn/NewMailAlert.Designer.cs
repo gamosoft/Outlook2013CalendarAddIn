@@ -52,6 +52,7 @@
             // 
             this.btnDelete.BackgroundImage = global::Outlook2013TodoAddIn.Properties.Resources.Delete;
             this.btnDelete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnDelete.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDelete.Location = new System.Drawing.Point(50, 66);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(32, 32);
@@ -63,6 +64,7 @@
             // 
             this.btnFlag.BackgroundImage = global::Outlook2013TodoAddIn.Properties.Resources.Flag;
             this.btnFlag.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnFlag.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnFlag.Location = new System.Drawing.Point(12, 66);
             this.btnFlag.Name = "btnFlag";
             this.btnFlag.Size = new System.Drawing.Size(32, 32);
@@ -74,6 +76,7 @@
             // 
             this.btnEnvelope.BackgroundImage = global::Outlook2013TodoAddIn.Properties.Resources.Envelope;
             this.btnEnvelope.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnEnvelope.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnEnvelope.Location = new System.Drawing.Point(19, 5);
             this.btnEnvelope.Name = "btnEnvelope";
             this.btnEnvelope.Size = new System.Drawing.Size(60, 60);

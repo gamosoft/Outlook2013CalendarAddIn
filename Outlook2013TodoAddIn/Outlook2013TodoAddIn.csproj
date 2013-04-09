@@ -207,6 +207,7 @@
     <Compile Include="AppointmentsControl.Designer.cs">
       <DependentUpon>AppointmentsControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="SoundHelper.cs" />
     <Compile Include="TodoRibbonAddIn.cs">
       <SubType>Component</SubType>
     </Compile>
