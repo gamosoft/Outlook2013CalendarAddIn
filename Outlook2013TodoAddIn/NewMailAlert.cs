@@ -90,7 +90,6 @@ namespace Outlook2013TodoAddIn
             {
                 this.WindowState = FormWindowState.Normal;
             }
-            this.Focus();
             this.BringToFront();
         }
 
@@ -108,7 +107,6 @@ namespace Outlook2013TodoAddIn
         {
             bool result = ShowWindow(this.Handle, SW_SHOW);
             //bool result = AnimateWindow(this.Handle, 200, AW_BLEND);
-            this.BringToFront();
             return result;
         }
 
