@@ -48,7 +48,7 @@ namespace Outlook2013TodoAddIn
         /// </summary>
         /// <param name="sender">Sender</param>
         /// <param name="e">DateRangeEventArgs</param>
-        private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
+        private void apptCalendar_SelectedDateChanged(object sender, EventArgs e)
         {
             this.RetrieveAppointments();
         }
@@ -85,8 +85,8 @@ namespace Outlook2013TodoAddIn
                 Outlook.OlDefaultFolders.olFolderCalendar)
                 as Outlook.Folder;
 
-            int selectedMonth = this.apptCalendar.SelectionStart.Month;
-            int selectedYear = this.apptCalendar.SelectionStart.Year;
+            int selectedMonth = this.apptCalendar.SelectedDate.Month;
+            int selectedYear = this.apptCalendar.SelectedDate.Year;
 
             // To get all the appointments for the current month (so it displays nicely bolded even for past events)
             DateTime start = new DateTime(selectedYear, selectedMonth, 1); // MM-01-YYYY
@@ -107,10 +107,10 @@ namespace Outlook2013TodoAddIn
             }
 
             // Highlight dates with appointments in the current calendar
-            this.apptCalendar.BoldedDates = appts.Select<Outlook.AppointmentItem, DateTime>(a => a.Start).ToArray();
+            this.apptCalendar.BoldedDates = appts.Select<Outlook.AppointmentItem, DateTime>(a => a.Start.Date).Distinct().ToArray();
 
             // Now display the actual appointments below the calendar
-            DateTime startRange = this.apptCalendar.SelectionStart;
+            DateTime startRange = this.apptCalendar.SelectedDate;
             DateTime endRange = startRange.AddDays((int)this.numRangeDays.Value);
 
             // Get items in range
@@ -169,6 +169,8 @@ namespace Outlook2013TodoAddIn
 
             this.listView1.Items.Clear();
             this.listView1.Items.AddRange(lstCol.ToArray());
+
+            this.apptCalendar.UpdateCalendar();
         }
 
         /// <summary>
@@ -291,7 +293,7 @@ namespace Outlook2013TodoAddIn
         /// </summary>
         /// <param name="sender">Sender</param>
         /// <param name="e">EventArgs</param>
-        private void apptCalendar_DoubleClickEx(object sender, EventArgs e)
+        private void apptCalendar_CellDoubleClick(object sender, EventArgs e)
         {
             // Clicking in days outside of the current month will cause the calendar to refresh to that day
             // reposition all days and select the wrong one
@@ -299,9 +301,10 @@ namespace Outlook2013TodoAddIn
             Globals.ThisAddIn.Application.ActiveExplorer().CurrentFolder = f;
             Outlook.CalendarView cv = (Outlook.CalendarView)(Globals.ThisAddIn.Application.ActiveExplorer().CurrentView);
             cv.CalendarViewMode = Outlook.OlCalendarViewMode.olCalendarViewDay;
-            cv.GoToDate(this.apptCalendar.SelectionStart);
+            cv.GoToDate(this.apptCalendar.SelectedDate);
         }
 
         #endregion "Methods"
+
     }
 }

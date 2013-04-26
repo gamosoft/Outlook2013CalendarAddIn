@@ -183,8 +183,11 @@
     can be found.
   -->
   <ItemGroup>
-    <Compile Include="DoubleClickMonthCalendar.cs">
-      <SubType>Component</SubType>
+    <Compile Include="CustomCalendar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomCalendar.Designer.cs">
+      <DependentUpon>CustomCalendar.cs</DependentUpon>
     </Compile>
     <Compile Include="FormRecurringOpen.cs">
       <SubType>Form</SubType>
@@ -214,6 +217,9 @@
     <Compile Include="TodoRibbonAddIn.Designer.cs">
       <DependentUpon>TodoRibbonAddIn.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="CustomCalendar.resx">
+      <DependentUpon>CustomCalendar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormRecurringOpen.resx">
       <DependentUpon>FormRecurringOpen.cs</DependentUpon>
     </EmbeddedResource>
