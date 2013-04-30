@@ -119,23 +119,26 @@ namespace Outlook2013TodoAddIn
             int sameDay = -1; // startRange.Day;
 
             List<ListViewItem> lstCol = new List<ListViewItem>();
+            ListViewGroup grp = null;
             lstItems.ToList().ForEach(i =>
             {
                 if (i.Start.Day != sameDay)
                 {
-                    ListViewItem dateItem = new ListViewItem() { Text = i.Start.ToShortDateString() };
-                    dateItem.Font = new Font(this.listView1.Font, FontStyle.Bold);
-                    lstCol.Add(dateItem);
+                    grp = new ListViewGroup(i.Start.ToShortDateString(), HorizontalAlignment.Left);
+                    this.listView1.Groups.Add(grp); // TODO: Style it?
                     sameDay = i.Start.Day;
                 };
-
-                ListViewItem current = new ListViewItem() { Text = i.Start.ToShortTimeString() };
+                string loc = "-"; // TODO: If no second line is specified, the tile is stretched to only one line
+                if (!String.IsNullOrEmpty(i.Location)) loc = i.Location;
+                ListViewItem current = new ListViewItem(new string[] { String.Format("{0} {1}", i.Start.ToShortTimeString(), i.Subject), loc });
                 current.SubItems.Add(i.Subject);
 
-                // current.SubItems.Add(i.Location);
+                // current.Font = new Font(this.Font, FontStyle.Bold);
+                // current.UseItemStyleForSubItems = false;
+
                 current.ToolTipText = String.Format("{0} - {1}  {2}", i.Start.ToShortTimeString(), i.End.ToShortTimeString(), i.Subject);
                 current.Tag = i;
-
+                current.Group = grp;
                 switch (i.BusyStatus)
                 {
                     case Outlook.OlBusyStatus.olBusy:
@@ -155,16 +158,6 @@ namespace Outlook2013TodoAddIn
                 }
 
                 lstCol.Add(current);
-
-                // Add location into a new line (if available)
-                if (!String.IsNullOrEmpty(i.Location))
-                {
-                    ListViewItem locationItem = new ListViewItem() { Text = String.Empty };
-                    locationItem.SubItems.Add(i.Location);
-                    locationItem.ForeColor = current.ForeColor;
-                    locationItem.Tag = i;
-                    lstCol.Add(locationItem);
-                }
             });
 
             this.listView1.Items.Clear();
