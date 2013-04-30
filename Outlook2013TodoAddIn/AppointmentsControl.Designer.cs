@@ -115,6 +115,7 @@
             // 
             // listView1
             // 
+            this.listView1.Activation = System.Windows.Forms.ItemActivation.OneClick;
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2});
@@ -129,19 +130,20 @@
             this.listView1.ShowItemToolTips = true;
             this.listView1.Size = new System.Drawing.Size(226, 507);
             this.listView1.TabIndex = 4;
+            this.listView1.TileSize = new System.Drawing.Size(300, 38);
             this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.View = System.Windows.Forms.View.Tile;
             this.listView1.DoubleClick += new System.EventHandler(this.listView1_DoubleClick);
             // 
             // columnHeader1
             // 
             this.columnHeader1.Text = "Date";
-            this.columnHeader1.Width = 78;
+            this.columnHeader1.Width = 200;
             // 
             // columnHeader2
             // 
             this.columnHeader2.Text = "Subject";
-            this.columnHeader2.Width = 163;
+            this.columnHeader2.Width = 200;
             // 
             // grpRefresh
             // 
@@ -170,7 +172,6 @@
             this.apptCalendar.Name = "apptCalendar";
             this.apptCalendar.OtherMonthForeColor = System.Drawing.Color.LightGray;
             this.apptCalendar.SelectedBackColor = System.Drawing.Color.LightBlue;
-            this.apptCalendar.SelectedDate = new System.DateTime(2013, 4, 26, 0, 0, 0, 0);
             this.apptCalendar.SelectedForeColor = System.Drawing.Color.Blue;
             this.apptCalendar.Size = new System.Drawing.Size(226, 242);
             this.apptCalendar.TabIndex = 1;
