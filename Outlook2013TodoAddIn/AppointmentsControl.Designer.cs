@@ -40,6 +40,7 @@
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.grpRefresh = new System.Windows.Forms.GroupBox();
             this.apptCalendar = new Outlook2013TodoAddIn.CustomCalendar();
+            this.chkMailAlerts = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numRangeDays)).BeginInit();
             this.ctxMenuAppointments.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -124,11 +125,11 @@
             this.listView1.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listView1.FullRowSelect = true;
             this.listView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.listView1.Location = new System.Drawing.Point(0, 308);
+            this.listView1.Location = new System.Drawing.Point(0, 334);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
             this.listView1.ShowItemToolTips = true;
-            this.listView1.Size = new System.Drawing.Size(226, 507);
+            this.listView1.Size = new System.Drawing.Size(226, 481);
             this.listView1.TabIndex = 4;
             this.listView1.TileSize = new System.Drawing.Size(300, 38);
             this.listView1.UseCompatibleStateImageBehavior = false;
@@ -147,13 +148,14 @@
             // 
             // grpRefresh
             // 
+            this.grpRefresh.Controls.Add(this.chkMailAlerts);
             this.grpRefresh.Controls.Add(this.btnRefresh);
             this.grpRefresh.Controls.Add(this.lblRangeDays);
             this.grpRefresh.Controls.Add(this.numRangeDays);
             this.grpRefresh.Dock = System.Windows.Forms.DockStyle.Top;
             this.grpRefresh.Location = new System.Drawing.Point(0, 242);
             this.grpRefresh.Name = "grpRefresh";
-            this.grpRefresh.Size = new System.Drawing.Size(226, 66);
+            this.grpRefresh.Size = new System.Drawing.Size(226, 92);
             this.grpRefresh.TabIndex = 3;
             this.grpRefresh.TabStop = false;
             this.grpRefresh.Text = "Configuration:";
@@ -180,6 +182,17 @@
             this.apptCalendar.TodayForeColor = System.Drawing.Color.White;
             this.apptCalendar.CellDoubleClick += new System.EventHandler(this.apptCalendar_CellDoubleClick);
             this.apptCalendar.SelectedDateChanged += new System.EventHandler(this.apptCalendar_SelectedDateChanged);
+            // 
+            // chkMailAlerts
+            // 
+            this.chkMailAlerts.AutoSize = true;
+            this.chkMailAlerts.Location = new System.Drawing.Point(36, 63);
+            this.chkMailAlerts.Name = "chkMailAlerts";
+            this.chkMailAlerts.Size = new System.Drawing.Size(140, 23);
+            this.chkMailAlerts.TabIndex = 5;
+            this.chkMailAlerts.Text = "Enable Mail Alerts";
+            this.chkMailAlerts.UseVisualStyleBackColor = true;
+            this.chkMailAlerts.CheckedChanged += new System.EventHandler(this.chkMailAlerts_CheckedChanged);
             // 
             // AppointmentsControl
             // 
@@ -211,6 +224,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.GroupBox grpRefresh;
+        private System.Windows.Forms.CheckBox chkMailAlerts;
 
 
     }

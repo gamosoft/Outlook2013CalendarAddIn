@@ -70,5 +70,17 @@ namespace Outlook2013TodoAddIn.Properties {
                 this["DisplayTimeOut"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MailAlertsEnabled {
+            get {
+                return ((bool)(this["MailAlertsEnabled"]));
+            }
+            set {
+                this["MailAlertsEnabled"] = value;
+            }
+        }
     }
 }
