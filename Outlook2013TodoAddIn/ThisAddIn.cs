@@ -39,6 +39,7 @@ namespace Outlook2013TodoAddIn
             this.AddRegistryNotification();
 
             this.AppControl = new AppointmentsControl();
+            this.AppControl.MailAlertsEnabled = Properties.Settings.Default.MailAlertsEnabled;
             this.AppControl.NumDays = Properties.Settings.Default.NumDays; // Setting the value will load the appointments
             this.AppControl.RetrieveAppointments();
 
@@ -61,8 +62,7 @@ namespace Outlook2013TodoAddIn
         /// <param name="EntryIDCollection">ID of the email</param>
         private void Application_NewMailEx(string EntryIDCollection)
         {
-            // TODO: Make this optional, still hook the event as this setting will be able to be enabled/disabled by user
-            if (true)
+            if (Properties.Settings.Default.MailAlertsEnabled)
             {
 
                 Microsoft.Office.Interop.Outlook.MailItem newMail = Globals.ThisAddIn.Application.Session.GetItemFromID(EntryIDCollection) as Microsoft.Office.Interop.Outlook.MailItem;

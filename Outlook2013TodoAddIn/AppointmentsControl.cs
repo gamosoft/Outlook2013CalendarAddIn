@@ -31,6 +31,15 @@ namespace Outlook2013TodoAddIn
             set { this.numRangeDays.Value = value; }
         }
 
+        /// <summary>
+        /// Gets/sets whether mail notifications are enabled or not
+        /// </summary>
+        public bool MailAlertsEnabled
+        {
+            get { return this.chkMailAlerts.Checked; }
+            set { this.chkMailAlerts.Checked = value; }
+        }
+
         #endregion "Properties"
 
         #region "Methods"
@@ -72,6 +81,16 @@ namespace Outlook2013TodoAddIn
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             this.RetrieveAppointments();
+        }
+
+        /// <summary>
+        /// Enables/disables email notifications
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">EventArgs</param>
+        private void chkMailAlerts_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.MailAlertsEnabled = this.chkMailAlerts.Checked;
         }
 
         /// <summary>
@@ -298,6 +317,5 @@ namespace Outlook2013TodoAddIn
         }
 
         #endregion "Methods"
-
     }
 }
