@@ -61,13 +61,18 @@ namespace Outlook2013TodoAddIn
         /// <param name="EntryIDCollection">ID of the email</param>
         private void Application_NewMailEx(string EntryIDCollection)
         {
-            Microsoft.Office.Interop.Outlook.MailItem newMail = Globals.ThisAddIn.Application.Session.GetItemFromID(EntryIDCollection) as Microsoft.Office.Interop.Outlook.MailItem;
-            if (newMail != null)
+            // TODO: Make this optional, still hook the event as this setting will be able to be enabled/disabled by user
+            if (true)
             {
-                NewMailAlert nm = new NewMailAlert(newMail, Properties.Settings.Default.DisplayTimeOut);
-                // Show the popup without stealing focus
-                SoundHelper.sndPlaySoundW(SoundHelper.MailBeep, SoundHelper.SND_NODEFAULT);
-                nm.ShowPopup();
+
+                Microsoft.Office.Interop.Outlook.MailItem newMail = Globals.ThisAddIn.Application.Session.GetItemFromID(EntryIDCollection) as Microsoft.Office.Interop.Outlook.MailItem;
+                if (newMail != null)
+                {
+                    NewMailAlert nm = new NewMailAlert(newMail, Properties.Settings.Default.DisplayTimeOut);
+                    // Show the popup without stealing focus
+                    SoundHelper.sndPlaySoundW(SoundHelper.MailBeep, SoundHelper.SND_NODEFAULT);
+                    nm.ShowPopup();
+                }
             }
         }
 
