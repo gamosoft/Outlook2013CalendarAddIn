@@ -156,7 +156,7 @@
             this.grpRefresh.Size = new System.Drawing.Size(226, 66);
             this.grpRefresh.TabIndex = 3;
             this.grpRefresh.TabStop = false;
-            this.grpRefresh.Text = "Days:";
+            this.grpRefresh.Text = "Configuration:";
             // 
             // apptCalendar
             // 
@@ -172,6 +172,7 @@
             this.apptCalendar.Name = "apptCalendar";
             this.apptCalendar.OtherMonthForeColor = System.Drawing.Color.LightGray;
             this.apptCalendar.SelectedBackColor = System.Drawing.Color.LightBlue;
+            this.apptCalendar.SelectedDate = new System.DateTime(2013, 5, 1, 0, 0, 0, 0);
             this.apptCalendar.SelectedForeColor = System.Drawing.Color.Blue;
             this.apptCalendar.Size = new System.Drawing.Size(226, 242);
             this.apptCalendar.TabIndex = 1;
