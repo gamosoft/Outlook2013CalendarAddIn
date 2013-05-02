@@ -50,6 +50,7 @@ namespace Outlook2013TodoAddIn
         public AppointmentsControl()
         {
             InitializeComponent();
+            this.btnRefresh.FlatAppearance.MouseOverBackColor = this.apptCalendar.HoverBackColor;
         }
 
         /// <summary>

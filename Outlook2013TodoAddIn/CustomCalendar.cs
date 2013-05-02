@@ -162,6 +162,9 @@ namespace Outlook2013TodoAddIn
                     this.tableLayoutPanel1.SetCellPosition(lblCtrl, new TableLayoutPanelCellPosition(col, row));
                 }
             }
+
+            this.btnPrevious.FlatAppearance.MouseOverBackColor = this.HoverBackColor;
+            this.btnNext.FlatAppearance.MouseOverBackColor = this.HoverBackColor;
         }
 
         /// <summary>
