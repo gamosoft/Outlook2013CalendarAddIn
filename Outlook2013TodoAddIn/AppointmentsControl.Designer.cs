@@ -39,8 +39,8 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.grpRefresh = new System.Windows.Forms.GroupBox();
-            this.apptCalendar = new Outlook2013TodoAddIn.CustomCalendar();
             this.chkMailAlerts = new System.Windows.Forms.CheckBox();
+            this.apptCalendar = new Outlook2013TodoAddIn.CustomCalendar();
             ((System.ComponentModel.ISupportInitialize)(this.numRangeDays)).BeginInit();
             this.ctxMenuAppointments.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -49,7 +49,7 @@
             // 
             // numRangeDays
             // 
-            this.numRangeDays.Location = new System.Drawing.Point(53, 28);
+            this.numRangeDays.Location = new System.Drawing.Point(61, 26);
             this.numRangeDays.Maximum = new decimal(new int[] {
             15,
             0,
@@ -61,7 +61,7 @@
             0,
             0});
             this.numRangeDays.Name = "numRangeDays";
-            this.numRangeDays.Size = new System.Drawing.Size(48, 25);
+            this.numRangeDays.Size = new System.Drawing.Size(55, 22);
             this.numRangeDays.TabIndex = 2;
             this.numRangeDays.Value = new decimal(new int[] {
             3,
@@ -73,9 +73,9 @@
             // lblRangeDays
             // 
             this.lblRangeDays.AutoSize = true;
-            this.lblRangeDays.Location = new System.Drawing.Point(10, 30);
+            this.lblRangeDays.Location = new System.Drawing.Point(11, 28);
             this.lblRangeDays.Name = "lblRangeDays";
-            this.lblRangeDays.Size = new System.Drawing.Size(42, 19);
+            this.lblRangeDays.Size = new System.Drawing.Size(44, 17);
             this.lblRangeDays.TabIndex = 3;
             this.lblRangeDays.Text = "Days:";
             // 
@@ -95,9 +95,10 @@
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(110, 28);
+            this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRefresh.Location = new System.Drawing.Point(122, 23);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(66, 24);
+            this.btnRefresh.Size = new System.Drawing.Size(77, 27);
             this.btnRefresh.TabIndex = 4;
             this.btnRefresh.Text = "Refresh";
             this.btnRefresh.UseVisualStyleBackColor = true;
@@ -111,7 +112,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(226, 815);
+            this.panel1.Size = new System.Drawing.Size(258, 767);
             this.panel1.TabIndex = 8;
             // 
             // listView1
@@ -122,14 +123,13 @@
             this.columnHeader2});
             this.listView1.ContextMenuStrip = this.ctxMenuAppointments;
             this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView1.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listView1.FullRowSelect = true;
             this.listView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.listView1.Location = new System.Drawing.Point(0, 334);
+            this.listView1.Location = new System.Drawing.Point(0, 315);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
             this.listView1.ShowItemToolTips = true;
-            this.listView1.Size = new System.Drawing.Size(226, 481);
+            this.listView1.Size = new System.Drawing.Size(258, 452);
             this.listView1.TabIndex = 4;
             this.listView1.TileSize = new System.Drawing.Size(300, 38);
             this.listView1.UseCompatibleStateImageBehavior = false;
@@ -153,12 +153,23 @@
             this.grpRefresh.Controls.Add(this.lblRangeDays);
             this.grpRefresh.Controls.Add(this.numRangeDays);
             this.grpRefresh.Dock = System.Windows.Forms.DockStyle.Top;
-            this.grpRefresh.Location = new System.Drawing.Point(0, 242);
+            this.grpRefresh.Location = new System.Drawing.Point(0, 228);
             this.grpRefresh.Name = "grpRefresh";
-            this.grpRefresh.Size = new System.Drawing.Size(226, 92);
+            this.grpRefresh.Size = new System.Drawing.Size(258, 87);
             this.grpRefresh.TabIndex = 3;
             this.grpRefresh.TabStop = false;
             this.grpRefresh.Text = "Configuration:";
+            // 
+            // chkMailAlerts
+            // 
+            this.chkMailAlerts.AutoSize = true;
+            this.chkMailAlerts.Location = new System.Drawing.Point(41, 59);
+            this.chkMailAlerts.Name = "chkMailAlerts";
+            this.chkMailAlerts.Size = new System.Drawing.Size(143, 21);
+            this.chkMailAlerts.TabIndex = 5;
+            this.chkMailAlerts.Text = "Enable Mail Alerts";
+            this.chkMailAlerts.UseVisualStyleBackColor = true;
+            this.chkMailAlerts.CheckedChanged += new System.EventHandler(this.chkMailAlerts_CheckedChanged);
             // 
             // apptCalendar
             // 
@@ -166,7 +177,6 @@
             this.apptCalendar.CurrentMonthForeColor = System.Drawing.Color.Black;
             this.apptCalendar.Dock = System.Windows.Forms.DockStyle.Top;
             this.apptCalendar.FirstDayOfWeek = System.DayOfWeek.Sunday;
-            this.apptCalendar.Font = new System.Drawing.Font("Segoe UI", 7.8F);
             this.apptCalendar.HoverBackColor = System.Drawing.Color.LightCyan;
             this.apptCalendar.HoverForeColor = System.Drawing.Color.Black;
             this.apptCalendar.Location = new System.Drawing.Point(0, 0);
@@ -174,34 +184,22 @@
             this.apptCalendar.Name = "apptCalendar";
             this.apptCalendar.OtherMonthForeColor = System.Drawing.Color.LightGray;
             this.apptCalendar.SelectedBackColor = System.Drawing.Color.LightBlue;
-            this.apptCalendar.SelectedDate = new System.DateTime(2013, 5, 1, 0, 0, 0, 0);
+            this.apptCalendar.SelectedDate = new System.DateTime(2013, 5, 2, 0, 0, 0, 0);
             this.apptCalendar.SelectedForeColor = System.Drawing.Color.Blue;
-            this.apptCalendar.Size = new System.Drawing.Size(226, 242);
+            this.apptCalendar.Size = new System.Drawing.Size(258, 228);
             this.apptCalendar.TabIndex = 1;
             this.apptCalendar.TodayBackColor = System.Drawing.Color.Blue;
             this.apptCalendar.TodayForeColor = System.Drawing.Color.White;
             this.apptCalendar.CellDoubleClick += new System.EventHandler(this.apptCalendar_CellDoubleClick);
             this.apptCalendar.SelectedDateChanged += new System.EventHandler(this.apptCalendar_SelectedDateChanged);
             // 
-            // chkMailAlerts
-            // 
-            this.chkMailAlerts.AutoSize = true;
-            this.chkMailAlerts.Location = new System.Drawing.Point(36, 63);
-            this.chkMailAlerts.Name = "chkMailAlerts";
-            this.chkMailAlerts.Size = new System.Drawing.Size(140, 23);
-            this.chkMailAlerts.TabIndex = 5;
-            this.chkMailAlerts.Text = "Enable Mail Alerts";
-            this.chkMailAlerts.UseVisualStyleBackColor = true;
-            this.chkMailAlerts.CheckedChanged += new System.EventHandler(this.chkMailAlerts_CheckedChanged);
-            // 
             // AppointmentsControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel1);
-            this.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "AppointmentsControl";
-            this.Size = new System.Drawing.Size(226, 815);
+            this.Size = new System.Drawing.Size(258, 767);
             ((System.ComponentModel.ISupportInitialize)(this.numRangeDays)).EndInit();
             this.ctxMenuAppointments.ResumeLayout(false);
             this.panel1.ResumeLayout(false);

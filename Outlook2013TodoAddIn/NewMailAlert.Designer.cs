@@ -98,7 +98,6 @@
             // lnkSender
             // 
             this.lnkSender.AutoSize = true;
-            this.lnkSender.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lnkSender.Location = new System.Drawing.Point(85, 5);
             this.lnkSender.Name = "lnkSender";
             this.lnkSender.Size = new System.Drawing.Size(82, 17);

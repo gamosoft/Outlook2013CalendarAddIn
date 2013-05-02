@@ -37,10 +37,11 @@
             // 
             // btnPrevious
             // 
-            this.btnPrevious.Location = new System.Drawing.Point(9, 8);
+            this.btnPrevious.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPrevious.Location = new System.Drawing.Point(9, 7);
             this.btnPrevious.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnPrevious.Name = "btnPrevious";
-            this.btnPrevious.Size = new System.Drawing.Size(31, 26);
+            this.btnPrevious.Size = new System.Drawing.Size(31, 23);
             this.btnPrevious.TabIndex = 0;
             this.btnPrevious.Text = "<";
             this.btnPrevious.UseVisualStyleBackColor = true;
@@ -48,10 +49,11 @@
             // 
             // btnNext
             // 
-            this.btnNext.Location = new System.Drawing.Point(213, 8);
+            this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNext.Location = new System.Drawing.Point(213, 7);
             this.btnNext.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(31, 26);
+            this.btnNext.Size = new System.Drawing.Size(31, 23);
             this.btnNext.TabIndex = 2;
             this.btnNext.Text = ">";
             this.btnNext.UseVisualStyleBackColor = true;
@@ -67,7 +69,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(9, 38);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(9, 34);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 7;
@@ -78,15 +80,15 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(234, 181);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(234, 161);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // lnkCurrentRange
             // 
             this.lnkCurrentRange.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.lnkCurrentRange.Location = new System.Drawing.Point(47, 8);
+            this.lnkCurrentRange.Location = new System.Drawing.Point(47, 7);
             this.lnkCurrentRange.Name = "lnkCurrentRange";
-            this.lnkCurrentRange.Size = new System.Drawing.Size(159, 26);
+            this.lnkCurrentRange.Size = new System.Drawing.Size(159, 23);
             this.lnkCurrentRange.TabIndex = 0;
             this.lnkCurrentRange.TabStop = true;
             this.lnkCurrentRange.Text = "lnkCurrentRange";
@@ -95,9 +97,9 @@
             // lnkToday
             // 
             this.lnkToday.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.lnkToday.Location = new System.Drawing.Point(9, 221);
+            this.lnkToday.Location = new System.Drawing.Point(9, 196);
             this.lnkToday.Name = "lnkToday";
-            this.lnkToday.Size = new System.Drawing.Size(234, 26);
+            this.lnkToday.Size = new System.Drawing.Size(234, 23);
             this.lnkToday.TabIndex = 4;
             this.lnkToday.TabStop = true;
             this.lnkToday.Text = "lnkToday";
@@ -106,17 +108,16 @@
             // 
             // CustomCalendar
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.lnkToday);
             this.Controls.Add(this.lnkCurrentRange);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.btnNext);
             this.Controls.Add(this.btnPrevious);
-            this.Font = new System.Drawing.Font("Calibri", 9F);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "CustomCalendar";
-            this.Size = new System.Drawing.Size(256, 257);
+            this.Size = new System.Drawing.Size(256, 228);
             this.Load += new System.EventHandler(this.CustomCalendar_Load);
             this.ResumeLayout(false);
 
