@@ -106,7 +106,6 @@ namespace Outlook2013TodoAddIn
         public CustomCalendar()
         {
             InitializeComponent();
-            //this.SelectedDate = DateTime.Today;
             this.FirstDayOfWeek = DayOfWeek.Sunday;
             //TODO: Thread.CurrentThread.CurrentCulture.DateTimeFormat.FirstDayOfWeek
             this.CurrentMonthForeColor = Color.Black;
@@ -131,7 +130,7 @@ namespace Outlook2013TodoAddIn
         {
             // TODO: check initial double firing
             // TODO: Mark dates with colors from outlook
-            this.UpdateCalendar();
+            // this.UpdateCalendar();
         }
 
         /// <summary>
