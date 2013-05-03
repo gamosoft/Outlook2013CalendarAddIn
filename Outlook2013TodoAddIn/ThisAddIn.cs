@@ -41,8 +41,7 @@ namespace Outlook2013TodoAddIn
             this.AppControl = new AppointmentsControl();
             this.AppControl.MailAlertsEnabled = Properties.Settings.Default.MailAlertsEnabled;
             this.AppControl.NumDays = Properties.Settings.Default.NumDays; // Setting the value will load the appointments
-            this.AppControl.RetrieveAppointments();
-
+            
             ToDoTaskPane = this.CustomTaskPanes.Add(this.AppControl, "Appointments");
             ToDoTaskPane.Visible = Properties.Settings.Default.Visible;
             ToDoTaskPane.Width = Properties.Settings.Default.Width;
@@ -50,6 +49,11 @@ namespace Outlook2013TodoAddIn
             ToDoTaskPane.DockPositionRestrict = Office.MsoCTPDockPositionRestrict.msoCTPDockPositionRestrictNoHorizontal;
             ToDoTaskPane.VisibleChanged += ToDoTaskPane_VisibleChanged;
             this.AppControl.SizeChanged += appControl_SizeChanged;
+
+            // Selecting the date will retrieve the appointments
+            // Otherwise it'll take the one used when the designer changed!
+            this.AppControl.SelectedDate = DateTime.Today;
+            // this.AppControl.RetrieveAppointments();
 
             Globals.ThisAddIn.Application.ActiveExplorer().Deactivate += ThisAddIn_Deactivate;
 

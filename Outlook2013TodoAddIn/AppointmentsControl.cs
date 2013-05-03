@@ -40,6 +40,15 @@ namespace Outlook2013TodoAddIn
             set { this.chkMailAlerts.Checked = value; }
         }
 
+        /// <summary>
+        /// Gets/sets the selected calendar date
+        /// </summary>
+        public DateTime SelectedDate
+        {
+            get { return this.apptCalendar.SelectedDate; }
+            set { this.apptCalendar.SelectedDate = value; }
+        }
+
         #endregion "Properties"
 
         #region "Methods"
