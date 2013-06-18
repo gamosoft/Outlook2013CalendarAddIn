@@ -11,15 +11,6 @@ namespace Outlook2013TodoAddIn
     /// </summary>
     public partial class AppointmentsControl : UserControl
     {
-        #region "Variables"
-        
-        /// <summary>
-        /// Used to retrieve the email address of a contact
-        /// </summary>
-        private const string PR_SMTP_ADDRESS = "http://schemas.microsoft.com/mapi/proptag/0x39FE001E";
-
-        #endregion "Variables"
-
         #region "Properties"
         
         /// <summary>
@@ -283,10 +274,10 @@ namespace Outlook2013TodoAddIn
                 if (appt != null)
                 {
                     Outlook.MailItem mail = Globals.ThisAddIn.Application.CreateItem(Outlook.OlItemType.olMailItem) as Outlook.MailItem;
-                    string curUserAddress = GetEmailAddress(Globals.ThisAddIn.Application.Session.CurrentUser);
+                    string curUserAddress = OutlookHelper.GetEmailAddress(Globals.ThisAddIn.Application.Session.CurrentUser);
                     foreach (Outlook.Recipient rcpt in appt.Recipients)
                     {
-                        string smtpAddress = GetEmailAddress(rcpt);
+                        string smtpAddress = OutlookHelper.GetEmailAddress(rcpt);
                         if (curUserAddress != smtpAddress)
                         {
                             mail.Recipients.Add(smtpAddress);
@@ -297,17 +288,6 @@ namespace Outlook2013TodoAddIn
                     mail.Display();
                 }
             }
-        }
-
-        /// <summary>
-        /// Resolves Outlook recipient email address
-        /// </summary>
-        /// <param name="rcpt">Recipient</param>
-        /// <returns>Email address of the contact</returns>
-        private string GetEmailAddress(Outlook.Recipient rcpt)
-        {
-            Outlook.PropertyAccessor pa = rcpt.PropertyAccessor;
-            return pa.GetProperty(PR_SMTP_ADDRESS).ToString();
         }
 
         /// <summary>

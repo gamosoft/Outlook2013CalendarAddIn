@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Outlook = Microsoft.Office.Interop.Outlook;
 
 namespace Outlook2013TodoAddIn
 {
@@ -156,6 +157,9 @@ namespace Outlook2013TodoAddIn
                         lblCtrl.MouseLeave += lblCtrl_MouseLeave;
                         lblCtrl.Click += lblCtrl_Click; // TODO: If we disable this, then we can't select a date...
                         lblCtrl.DoubleClick += lblCtrl_DoubleClick;
+                        lblCtrl.AllowDrop = true;
+                        lblCtrl.DragEnter += lblCtrl_DragEnter;
+                        lblCtrl.DragDrop += lblCtrl_DragDrop;
                     }
                     this.tableLayoutPanel1.Controls.Add(lblCtrl);
                     this.tableLayoutPanel1.SetCellPosition(lblCtrl, new TableLayoutPanelCellPosition(col, row));
@@ -164,6 +168,92 @@ namespace Outlook2013TodoAddIn
 
             this.btnPrevious.FlatAppearance.MouseOverBackColor = this.HoverBackColor;
             this.btnNext.FlatAppearance.MouseOverBackColor = this.HoverBackColor;
+        }
+
+        /// <summary>
+        /// To enable/disable drop operations on every day of the calendar
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">DragEventArgs</param>
+        private void lblCtrl_DragEnter(object sender, DragEventArgs e)
+        {
+            List<string> outlookRequiredFormats = new List<string>() { "RenPrivateSourceFolder", "RenPrivateMessages", "RenPrivateItem", "FileGroupDescriptor", "FileGroupDescriptorW", "FileContents", "Object Descriptor" };
+            if (outlookRequiredFormats.All(r => e.Data.GetDataPresent(r)))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        /// <summary>
+        /// When the user "drops" one or more email items into the calendar
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">DragEventArgs</param>
+        private void lblCtrl_DragDrop(object sender, DragEventArgs e)
+        {
+            Label lblDay = sender as Label;
+            if (sender != null)
+            {
+                Outlook.Explorer mailExpl = Globals.ThisAddIn.Application.ActiveExplorer();
+                List<string> attendees = new List<string>();
+                string curUserAddress = OutlookHelper.GetEmailAddress(Globals.ThisAddIn.Application.Session.CurrentUser);
+                string body = String.Empty;
+                string subject = String.Empty;
+                foreach (object obj in mailExpl.Selection)
+                {
+                    Outlook.MailItem mail = obj as Outlook.MailItem;
+                    if (mail != null)
+                    {
+                        subject = mail.Subject;
+                        body = mail.Body;
+                        if (mail.SenderEmailAddress != curUserAddress && !attendees.Contains(mail.SenderEmailAddress))
+                        {
+                            attendees.Add(mail.SenderEmailAddress);
+                        }
+                        attendees.AddRange(OutlookHelper.GetRecipentsEmailAddresses(mail.Recipients, curUserAddress));
+                    }
+                    else // It's not an email, let's see if it's a meeting instead
+                    {
+                        Outlook.MeetingItem meeting = obj as Outlook.MeetingItem;
+                        if (meeting != null)
+                        {
+                            subject = meeting.Subject;
+                            body = meeting.Body;
+                            if (meeting.SenderEmailAddress != curUserAddress && !attendees.Contains(meeting.SenderEmailAddress))
+                            {
+                                attendees.Add(meeting.SenderEmailAddress);
+                            }
+                            attendees.AddRange(OutlookHelper.GetRecipentsEmailAddresses(meeting.Recipients, curUserAddress));
+                        }
+                        else // It wasn't a meeting either, let's try with an appointment
+                        {
+                            Outlook.AppointmentItem appointment = obj as Outlook.AppointmentItem;
+                            if (appointment != null)
+                            {
+                                subject = appointment.Subject;
+                                body = appointment.Body;
+                                if (appointment.Organizer != curUserAddress && !attendees.Contains(appointment.Organizer))
+                                {
+                                    attendees.Add(appointment.Organizer);
+                                }
+                                attendees.AddRange(OutlookHelper.GetRecipentsEmailAddresses(appointment.Recipients, curUserAddress));
+                            }
+                        }
+                    }
+                }
+                Outlook.AppointmentItem appt = Globals.ThisAddIn.Application.CreateItem(Outlook.OlItemType.olAppointmentItem) as Outlook.AppointmentItem;
+                attendees.ForEach(a => appt.Recipients.Add(a));
+                appt.Body = Environment.NewLine + Environment.NewLine + body;
+                appt.Subject = subject;
+                DateTime day = (DateTime)lblDay.Tag;
+                DateTime now = DateTime.Now;
+                appt.Start = OutlookHelper.RoundUp(new DateTime(day.Year, day.Month, day.Day, now.Hour, now.Minute, now.Second), TimeSpan.FromMinutes(15));
+                appt.Display();
+            }
         }
 
         /// <summary>

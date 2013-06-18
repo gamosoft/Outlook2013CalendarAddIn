@@ -201,6 +201,7 @@
     <Compile Include="NewMailAlert.Designer.cs">
       <DependentUpon>NewMailAlert.cs</DependentUpon>
     </Compile>
+    <Compile Include="OutlookHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
