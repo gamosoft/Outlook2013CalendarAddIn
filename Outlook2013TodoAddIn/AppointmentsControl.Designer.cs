@@ -51,7 +51,7 @@
             // 
             this.numRangeDays.Location = new System.Drawing.Point(61, 26);
             this.numRangeDays.Maximum = new decimal(new int[] {
-            15,
+            30,
             0,
             0,
             0});
