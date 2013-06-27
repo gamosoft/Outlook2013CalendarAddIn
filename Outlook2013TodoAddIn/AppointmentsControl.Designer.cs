@@ -29,55 +29,16 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.numRangeDays = new System.Windows.Forms.NumericUpDown();
-            this.lblRangeDays = new System.Windows.Forms.Label();
             this.ctxMenuAppointments = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuItemReplyAllEmail = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnRefresh = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.listView1 = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.grpRefresh = new System.Windows.Forms.GroupBox();
-            this.chkMailAlerts = new System.Windows.Forms.CheckBox();
             this.apptCalendar = new Outlook2013TodoAddIn.CustomCalendar();
-            ((System.ComponentModel.ISupportInitialize)(this.numRangeDays)).BeginInit();
             this.ctxMenuAppointments.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.grpRefresh.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // numRangeDays
-            // 
-            this.numRangeDays.Location = new System.Drawing.Point(61, 26);
-            this.numRangeDays.Maximum = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
-            this.numRangeDays.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numRangeDays.Name = "numRangeDays";
-            this.numRangeDays.Size = new System.Drawing.Size(55, 22);
-            this.numRangeDays.TabIndex = 2;
-            this.numRangeDays.Value = new decimal(new int[] {
-            3,
-            0,
-            0,
-            0});
-            this.numRangeDays.ValueChanged += new System.EventHandler(this.numRangeDays_ValueChanged);
-            // 
-            // lblRangeDays
-            // 
-            this.lblRangeDays.AutoSize = true;
-            this.lblRangeDays.Location = new System.Drawing.Point(11, 28);
-            this.lblRangeDays.Name = "lblRangeDays";
-            this.lblRangeDays.Size = new System.Drawing.Size(44, 17);
-            this.lblRangeDays.TabIndex = 3;
-            this.lblRangeDays.Text = "Days:";
             // 
             // ctxMenuAppointments
             // 
@@ -93,21 +54,9 @@
             this.mnuItemReplyAllEmail.Text = "Reply All With Email";
             this.mnuItemReplyAllEmail.Click += new System.EventHandler(this.mnuItemReplyAllEmail_Click);
             // 
-            // btnRefresh
-            // 
-            this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRefresh.Location = new System.Drawing.Point(122, 23);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(77, 27);
-            this.btnRefresh.TabIndex = 4;
-            this.btnRefresh.Text = "Refresh";
-            this.btnRefresh.UseVisualStyleBackColor = true;
-            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
-            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.listView1);
-            this.panel1.Controls.Add(this.grpRefresh);
             this.panel1.Controls.Add(this.apptCalendar);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
@@ -125,11 +74,11 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView1.FullRowSelect = true;
             this.listView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.listView1.Location = new System.Drawing.Point(0, 315);
+            this.listView1.Location = new System.Drawing.Point(0, 228);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
             this.listView1.ShowItemToolTips = true;
-            this.listView1.Size = new System.Drawing.Size(258, 452);
+            this.listView1.Size = new System.Drawing.Size(258, 539);
             this.listView1.TabIndex = 4;
             this.listView1.TileSize = new System.Drawing.Size(300, 38);
             this.listView1.UseCompatibleStateImageBehavior = false;
@@ -145,31 +94,6 @@
             // 
             this.columnHeader2.Text = "Subject";
             this.columnHeader2.Width = 200;
-            // 
-            // grpRefresh
-            // 
-            this.grpRefresh.Controls.Add(this.chkMailAlerts);
-            this.grpRefresh.Controls.Add(this.btnRefresh);
-            this.grpRefresh.Controls.Add(this.lblRangeDays);
-            this.grpRefresh.Controls.Add(this.numRangeDays);
-            this.grpRefresh.Dock = System.Windows.Forms.DockStyle.Top;
-            this.grpRefresh.Location = new System.Drawing.Point(0, 228);
-            this.grpRefresh.Name = "grpRefresh";
-            this.grpRefresh.Size = new System.Drawing.Size(258, 87);
-            this.grpRefresh.TabIndex = 3;
-            this.grpRefresh.TabStop = false;
-            this.grpRefresh.Text = "Configuration:";
-            // 
-            // chkMailAlerts
-            // 
-            this.chkMailAlerts.AutoSize = true;
-            this.chkMailAlerts.Location = new System.Drawing.Point(41, 59);
-            this.chkMailAlerts.Name = "chkMailAlerts";
-            this.chkMailAlerts.Size = new System.Drawing.Size(143, 21);
-            this.chkMailAlerts.TabIndex = 5;
-            this.chkMailAlerts.Text = "Enable Mail Alerts";
-            this.chkMailAlerts.UseVisualStyleBackColor = true;
-            this.chkMailAlerts.CheckedChanged += new System.EventHandler(this.chkMailAlerts_CheckedChanged);
             // 
             // apptCalendar
             // 
@@ -192,6 +116,7 @@
             this.apptCalendar.TodayForeColor = System.Drawing.Color.White;
             this.apptCalendar.CellDoubleClick += new System.EventHandler(this.apptCalendar_CellDoubleClick);
             this.apptCalendar.SelectedDateChanged += new System.EventHandler(this.apptCalendar_SelectedDateChanged);
+            this.apptCalendar.ConfigurationButtonClicked += new System.EventHandler(this.apptCalendar_ConfigurationButtonClicked);
             // 
             // AppointmentsControl
             // 
@@ -200,29 +125,21 @@
             this.Controls.Add(this.panel1);
             this.Name = "AppointmentsControl";
             this.Size = new System.Drawing.Size(258, 767);
-            ((System.ComponentModel.ISupportInitialize)(this.numRangeDays)).EndInit();
             this.ctxMenuAppointments.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            this.grpRefresh.ResumeLayout(false);
-            this.grpRefresh.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.NumericUpDown numRangeDays;
-        private System.Windows.Forms.Label lblRangeDays;
         private System.Windows.Forms.ContextMenuStrip ctxMenuAppointments;
         private System.Windows.Forms.ToolStripMenuItem mnuItemReplyAllEmail;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button btnRefresh;
         private CustomCalendar apptCalendar;
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.GroupBox grpRefresh;
-        private System.Windows.Forms.CheckBox chkMailAlerts;
 
 
     }

@@ -168,6 +168,7 @@ namespace Outlook2013TodoAddIn
 
             this.btnPrevious.FlatAppearance.MouseOverBackColor = this.HoverBackColor;
             this.btnNext.FlatAppearance.MouseOverBackColor = this.HoverBackColor;
+            this.btnConfig.FlatAppearance.MouseOverBackColor = this.HoverBackColor;
         }
 
         /// <summary>
@@ -498,6 +499,20 @@ namespace Outlook2013TodoAddIn
         protected virtual void OnSelectedDateChanged(EventArgs e)
         {
             EventHandler handler = SelectedDateChanged;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        /// <summary>
+        /// Event handler to subscribe to
+        /// </summary>
+        public event EventHandler ConfigurationButtonClicked;
+
+        private void btnConfig_Click(object sender, EventArgs e)
+        {
+            EventHandler handler = ConfigurationButtonClicked;
             if (handler != null)
             {
                 handler(this, e);

@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Outlook2013TodoAddIn
+namespace Outlook2013TodoAddIn.Forms
 {
     /// <summary>
     /// New form to display new emai lnotifications

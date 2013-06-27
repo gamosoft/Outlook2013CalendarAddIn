@@ -1,4 +1,4 @@
-﻿namespace Outlook2013TodoAddIn
+﻿namespace Outlook2013TodoAddIn.Forms
 {
     partial class NewMailAlert
     {

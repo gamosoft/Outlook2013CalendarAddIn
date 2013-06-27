@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Outlook2013TodoAddIn.Forms;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -12,24 +13,21 @@ namespace Outlook2013TodoAddIn
     public partial class AppointmentsControl : UserControl
     {
         #region "Properties"
-        
+
         /// <summary>
         /// Number of days (including today) to retrieve appointments from in the future
         /// </summary>
-        public decimal NumDays
-        {
-            get { return this.numRangeDays.Value; }
-            set { this.numRangeDays.Value = value; }
-        }
+        public decimal NumDays { get; set; }
 
         /// <summary>
         /// Gets/sets whether mail notifications are enabled or not
         /// </summary>
-        public bool MailAlertsEnabled
-        {
-            get { return this.chkMailAlerts.Checked; }
-            set { this.chkMailAlerts.Checked = value; }
-        }
+        public bool MailAlertsEnabled { get; set; }
+
+        /// <summary>
+        /// Gets/sets whether to show past appointments in the current day or not
+        /// </summary>
+        public bool ShowPastAppointments { get; set; }
 
         /// <summary>
         /// Gets/sets the selected calendar date
@@ -50,7 +48,6 @@ namespace Outlook2013TodoAddIn
         public AppointmentsControl()
         {
             InitializeComponent();
-            this.btnRefresh.FlatAppearance.MouseOverBackColor = this.apptCalendar.HoverBackColor;
         }
 
         /// <summary>
@@ -64,74 +61,82 @@ namespace Outlook2013TodoAddIn
         }
 
         /// <summary>
-        /// Change days to retrieve appointments in the future
+        /// Retrieves tasks for all stores
         /// </summary>
-        /// <param name="sender">Sender</param>
-        /// <param name="e">EventArgs</param>
-        private void numRangeDays_ValueChanged(object sender, EventArgs e)
+        public void RetrieveTasks()
         {
-            Properties.Settings.Default.NumDays = this.numRangeDays.Value;
-            this.RetrieveAppointments();
+            // We want tasks for all the accounts
+            //foreach (Outlook.Store store in Globals.ThisAddIn.Application.Session.Stores)
+            //{
+            //    // Get the Outlook to-do folder to retrieve the items
+            //    MessageBox.Show("Store: " + store.DisplayName);
+            //    // TODO: try..catch (public folders times out)
+            Outlook.Folder todoFolder =
+                Globals.ThisAddIn.Application.Session.GetDefaultFolder(
+                Outlook.OlDefaultFolders.olFolderToDo)
+                as Outlook.Folder;
+            this.RetrieveTasksForFolder(todoFolder);
         }
 
         /// <summary>
-        /// Manual refresh
+        /// Retrieves to-do tasks for the folder on the specified store
         /// </summary>
-        /// <param name="sender">Sender</param>
-        /// <param name="e">EventArgs</param>
-        private void btnRefresh_Click(object sender, EventArgs e)
+        /// <param name="todoFolder">Outlook folder</param>
+        private void RetrieveTasksForFolder(Outlook.Folder todoFolder)
         {
-            this.RetrieveAppointments();
+            foreach (object item in todoFolder.Items)
+            {
+                if (item is Outlook.MailItem)
+                {
+                    Outlook.MailItem mail = item as Outlook.MailItem;
+                    //mail.Categories
+                    //mail.TaskCompletedDate;
+                    MessageBox.Show(String.Format("Mail Task: {0}, Due: {1}", mail.TaskSubject, mail.TaskDueDate.ToShortDateString()));
+                }
+                else if (item is Outlook.ContactItem)
+                {
+                    Outlook.ContactItem contact = item as Outlook.ContactItem;
+                    //contact.Categories
+                    //contact.TaskCompletedDate
+                    MessageBox.Show(String.Format("Contact Task: {0}, Due: {1}", contact.TaskSubject, contact.TaskDueDate.ToShortDateString()));
+                }
+                else if (item is Outlook.TaskItem)
+                {
+                    Outlook.TaskItem task = item as Outlook.TaskItem;
+                    //task.Categories
+                    //task.DateCompleted
+                    MessageBox.Show(String.Format("Task Task: {0}, Due: {1}", task.Subject, task.DueDate.ToShortDateString()));
+                }
+                else
+                {
+                    MessageBox.Show("Unknown type");
+                }
+            }
         }
 
         /// <summary>
-        /// Enables/disables email notifications
-        /// </summary>
-        /// <param name="sender">Sender</param>
-        /// <param name="e">EventArgs</param>
-        private void chkMailAlerts_CheckedChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.MailAlertsEnabled = this.chkMailAlerts.Checked;
-        }
-
-        /// <summary>
-        /// Retrieve all appointments for the current configurations
+        /// Retrieve all appointments for the current configurations for all stores
         /// </summary>
         public void RetrieveAppointments()
         {
+            //foreach (Outlook.Store store in Globals.ThisAddIn.Application.Session.Stores)
             // Get the Outlook folder for the calendar to retrieve the appointments
             Outlook.Folder calFolder =
                 Globals.ThisAddIn.Application.Session.GetDefaultFolder(
                 Outlook.OlDefaultFolders.olFolderCalendar)
                 as Outlook.Folder;
-
-            int selectedMonth = this.apptCalendar.SelectedDate.Month;
-            int selectedYear = this.apptCalendar.SelectedDate.Year;
-
-            // To get all the appointments for the current month (so it displays nicely bolded even for past events)
-            DateTime start = new DateTime(selectedYear, selectedMonth, 1); // MM-01-YYYY
-            DateTime end = start.AddMonths(1).AddDays(-1); // Last day of the month
-            end = end.AddDays((int)this.numRangeDays.Value); // So we get appointments for the "possible" first days of the next month
-
-            // Get all the appointments
-            Outlook.Items rangeAppts = GetAppointmentsInRange(calFolder, start, end);
-
-            // Get a more manageable list
-            List<Outlook.AppointmentItem> appts = new List<Outlook.AppointmentItem>();
-            if (rangeAppts != null)
-            {
-                foreach (Outlook.AppointmentItem appt in rangeAppts)
-                {
-                    appts.Add(appt);
-                }
-            }
+            List<Outlook.AppointmentItem> appts = this.RetrieveAppointmentsForFolder(calFolder);
 
             // Highlight dates with appointments in the current calendar
             this.apptCalendar.BoldedDates = appts.Select<Outlook.AppointmentItem, DateTime>(a => a.Start.Date).Distinct().ToArray();
 
             // Now display the actual appointments below the calendar
             DateTime startRange = this.apptCalendar.SelectedDate;
-            DateTime endRange = startRange.AddDays((int)this.numRangeDays.Value);
+            if (!this.ShowPastAppointments)
+            {
+                startRange = startRange.Add(DateTime.Now.TimeOfDay);
+            }
+            DateTime endRange = startRange.AddDays((int)this.NumDays);
 
             // Get items in range
             var lstItems = appts.Where(a => a.Start >= startRange && a.Start <= endRange);
@@ -184,6 +189,36 @@ namespace Outlook2013TodoAddIn
             this.listView1.Items.AddRange(lstCol.ToArray());
 
             this.apptCalendar.UpdateCalendar();
+        }
+
+        /// <summary>
+        /// Retrieve all appointments for the current configurations for a specific folder
+        /// </summary>
+        /// <param name="calFolder">Outlook folder</param>
+        /// <returns>List of appointments</returns>
+        private List<Outlook.AppointmentItem> RetrieveAppointmentsForFolder(Outlook.Folder calFolder)
+        {
+            int selectedMonth = this.apptCalendar.SelectedDate.Month;
+            int selectedYear = this.apptCalendar.SelectedDate.Year;
+
+            // To get all the appointments for the current month (so it displays nicely bolded even for past events)
+            DateTime start = new DateTime(selectedYear, selectedMonth, 1); // MM-01-YYYY
+            DateTime end = start.AddMonths(1).AddDays(-1); // Last day of the month
+            end = end.AddDays((int)this.NumDays); // So we get appointments for the "possible" first days of the next month
+
+            // Get all the appointments
+            Outlook.Items rangeAppts = GetAppointmentsInRange(calFolder, start, end);
+
+            // Get a more manageable list
+            List<Outlook.AppointmentItem> appts = new List<Outlook.AppointmentItem>();
+            if (rangeAppts != null)
+            {
+                foreach (Outlook.AppointmentItem appt in rangeAppts)
+                {
+                    appts.Add(appt);
+                }
+            }
+            return appts;
         }
 
         /// <summary>
@@ -304,6 +339,25 @@ namespace Outlook2013TodoAddIn
             Outlook.CalendarView cv = (Outlook.CalendarView)(Globals.ThisAddIn.Application.ActiveExplorer().CurrentView);
             cv.CalendarViewMode = Outlook.OlCalendarViewMode.olCalendarViewDay;
             cv.GoToDate(this.apptCalendar.SelectedDate);
+        }
+
+        /// <summary>
+        /// New method to show the configuration form
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">EventArgs</param>
+        private void apptCalendar_ConfigurationButtonClicked(object sender, EventArgs e)
+        {
+            using (FormConfiguration cfg = new FormConfiguration())
+            {
+                if (cfg.ShowDialog() == DialogResult.OK)
+                {
+                    this.NumDays = cfg.NumDays;
+                    this.MailAlertsEnabled = cfg.MailAlertsEnabled;
+                    this.ShowPastAppointments = cfg.ShowPastAppointments;
+                    this.RetrieveAppointments();
+                }
+            }
         }
 
         #endregion "Methods"

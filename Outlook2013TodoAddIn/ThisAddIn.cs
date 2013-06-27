@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Outlook2013TodoAddIn.Forms;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -40,6 +41,7 @@ namespace Outlook2013TodoAddIn
 
             this.AppControl = new AppointmentsControl();
             this.AppControl.MailAlertsEnabled = Properties.Settings.Default.MailAlertsEnabled;
+            this.AppControl.ShowPastAppointments = Properties.Settings.Default.ShowPastAppointments; 
             this.AppControl.NumDays = Properties.Settings.Default.NumDays; // Setting the value will load the appointments
             
             ToDoTaskPane = this.CustomTaskPanes.Add(this.AppControl, "Appointments");

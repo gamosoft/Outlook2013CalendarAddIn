@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace Outlook2013TodoAddIn
+namespace Outlook2013TodoAddIn.Forms
 {
     /// <summary>
     /// Mimic Outlook's popup to open one instance or the whole series
