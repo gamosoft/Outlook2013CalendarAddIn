@@ -189,16 +189,22 @@
     <Compile Include="CustomCalendar.Designer.cs">
       <DependentUpon>CustomCalendar.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormRecurringOpen.cs">
+    <Compile Include="Forms\FormConfiguration.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormRecurringOpen.Designer.cs">
+    <Compile Include="Forms\FormConfiguration.Designer.cs">
+      <DependentUpon>FormConfiguration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormRecurringOpen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormRecurringOpen.Designer.cs">
       <DependentUpon>FormRecurringOpen.cs</DependentUpon>
     </Compile>
-    <Compile Include="NewMailAlert.cs">
+    <Compile Include="Forms\NewMailAlert.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewMailAlert.Designer.cs">
+    <Compile Include="Forms\NewMailAlert.Designer.cs">
       <DependentUpon>NewMailAlert.cs</DependentUpon>
     </Compile>
     <Compile Include="OutlookHelper.cs" />
@@ -221,10 +227,13 @@
     <EmbeddedResource Include="CustomCalendar.resx">
       <DependentUpon>CustomCalendar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormRecurringOpen.resx">
+    <EmbeddedResource Include="Forms\FormConfiguration.resx">
+      <DependentUpon>FormConfiguration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormRecurringOpen.resx">
       <DependentUpon>FormRecurringOpen.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NewMailAlert.resx">
+    <EmbeddedResource Include="Forms\NewMailAlert.resx">
       <DependentUpon>NewMailAlert.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -276,6 +285,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Images\Envelope.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\gear.png" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
