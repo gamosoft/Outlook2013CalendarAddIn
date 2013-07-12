@@ -77,12 +77,14 @@
             this.listView1.Location = new System.Drawing.Point(0, 228);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
+            this.listView1.OwnerDraw = true;
             this.listView1.ShowItemToolTips = true;
             this.listView1.Size = new System.Drawing.Size(258, 539);
             this.listView1.TabIndex = 4;
             this.listView1.TileSize = new System.Drawing.Size(300, 38);
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Tile;
+            this.listView1.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.listView1_DrawItem);
             this.listView1.DoubleClick += new System.EventHandler(this.listView1_DoubleClick);
             // 
             // columnHeader1
