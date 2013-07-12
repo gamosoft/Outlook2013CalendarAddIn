@@ -38,12 +38,14 @@ namespace Outlook2013TodoAddIn
             }
             set
             {
-                if (_selectedDate != value)
-                {
+                // Check if the day is the same we're trying to set
+                //if (_selectedDate != value)
+                //{
+                // Commented out, because if the user clicks on the TODAY link to refresh today's view it wouldn't work
                     _selectedDate = value;
                     // this.UpdateCalendar();
                     this.OnSelectedDateChanged(EventArgs.Empty);
-                }
+                //}
             }
         }
 
