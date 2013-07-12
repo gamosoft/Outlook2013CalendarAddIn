@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
 using Outlook = Microsoft.Office.Interop.Outlook;
@@ -358,6 +359,180 @@ namespace Outlook2013TodoAddIn
                     this.RetrieveAppointments();
                 }
             }
+        }
+
+        /// <summary>
+        /// Method to custom draw the list items
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">DrawListViewItemEventArgs</param>
+        private void listView1_DrawItem(object sender, DrawListViewItemEventArgs e)
+        {
+            e.DrawBackground(); // To avoid repainting (making font "grow")
+            Outlook.AppointmentItem appt = e.Item.Tag as Outlook.AppointmentItem;
+
+            Color catColor = Color.Empty;
+
+            Font itemFont = this.Font;
+            if (!String.IsNullOrEmpty(appt.Categories))
+            {
+                string[] allCats = appt.Categories.Split(new char[] { ',' });
+                if (allCats != null && allCats.Length != 0)
+                {
+                    List<string> cs = allCats.Select(cat => cat.Trim()).ToList();
+                    cs.ForEach(cat =>
+                    {
+                        Outlook.Category c = Globals.ThisAddIn.Application.Session.Categories[cat] as Outlook.Category;
+                        if (c != null)
+                        {
+                            catColor = TranslateCategoryColor(c.Color);
+                        }
+                        // TODO: Check if more than one
+                    });
+                }
+            }
+            int startRectangleWidth = 65;
+            int horizontalSpacing = 5;
+
+            Rectangle totalRectangle = e.Bounds;
+            Rectangle startRectangle = totalRectangle; startRectangle.Width = startRectangleWidth;
+            Rectangle statusRectangle = totalRectangle; statusRectangle.Width = horizontalSpacing * 2; statusRectangle.Offset(startRectangleWidth + horizontalSpacing, 0);
+            Rectangle subjectRectangle = totalRectangle; subjectRectangle.Height = this.FontHeight; subjectRectangle.Offset(startRectangleWidth + horizontalSpacing * 4, 0);
+            Rectangle locationRectangle = totalRectangle; locationRectangle.Height = this.FontHeight; locationRectangle.Offset(startRectangleWidth + horizontalSpacing * 4, this.FontHeight);
+            bool selected = e.State.HasFlag(ListViewItemStates.Selected);
+            Color back = Color.Empty;
+            if (selected) back = Color.LightCyan;
+            using (Brush br = new SolidBrush(back))
+                e.Graphics.FillRectangle(br, totalRectangle);
+
+            StringFormat rightFormat = new StringFormat();
+            rightFormat.Alignment = StringAlignment.Far;
+            rightFormat.LineAlignment = StringAlignment.Near;
+            StringFormat leftFormat = new StringFormat();
+            leftFormat.Alignment = StringAlignment.Near;
+            leftFormat.LineAlignment = StringAlignment.Near;
+
+            Brush colorBrush = new SolidBrush(this.ForeColor);
+            e.Graphics.DrawString(appt.Start.ToShortTimeString(), this.Font, colorBrush, startRectangle, rightFormat);
+
+            Color statusColor = Color.LightBlue;
+            Brush statusBrush = new SolidBrush(Color.Transparent);
+            switch (appt.BusyStatus)
+            {
+                case Outlook.OlBusyStatus.olBusy:
+                    statusBrush = new SolidBrush(statusColor);
+                    break;
+                case Outlook.OlBusyStatus.olFree:
+                    break;
+                case Outlook.OlBusyStatus.olOutOfOffice:
+                    statusBrush = new SolidBrush(Color.Purple); // TODO: Figure this out
+                    break;
+                case Outlook.OlBusyStatus.olTentative:
+                    statusBrush = new HatchBrush(HatchStyle.BackwardDiagonal, statusColor, this.BackColor);
+                    break;
+                case Outlook.OlBusyStatus.olWorkingElsewhere:
+                    statusBrush = new HatchBrush(HatchStyle.DottedDiamond, statusColor, this.BackColor);
+                    break;
+                default:
+                    break;
+            }
+            // Let's draw the status with a custom brush
+            e.Graphics.FillRectangle(statusBrush, statusRectangle);
+            e.Graphics.DrawRectangle(new Pen(statusColor), statusRectangle);
+
+            e.Graphics.FillRectangle(new SolidBrush(catColor), subjectRectangle);
+            e.Graphics.DrawString(appt.Subject, new Font(this.Font, FontStyle.Bold), colorBrush, subjectRectangle, leftFormat);
+            e.Graphics.FillRectangle(new SolidBrush(catColor), locationRectangle);
+            e.Graphics.DrawString(appt.Location, this.Font, colorBrush, locationRectangle, leftFormat);
+        }
+
+        private Color TranslateCategoryColor(Outlook.OlCategoryColor col)
+        {
+            Color result = Color.Black;
+            switch (col)
+            {
+                case Outlook.OlCategoryColor.olCategoryColorNone:
+                    // Nothing
+                    break;
+                case Outlook.OlCategoryColor.olCategoryColorRed:
+                    result = Color.Red;
+                    break;
+                case Outlook.OlCategoryColor.olCategoryColorOrange:
+                    result = Color.Orange;
+                    break;
+                case Outlook.OlCategoryColor.olCategoryColorPeach:
+                    result = Color.PeachPuff;
+                    break;
+                case Outlook.OlCategoryColor.olCategoryColorYellow:
+                    result = Color.Yellow;
+                    break;
+                case Outlook.OlCategoryColor.olCategoryColorGreen:
+                    result = Color.Green;
+                    break;
+                case Outlook.OlCategoryColor.olCategoryColorTeal:
+                    result = Color.Teal;
+                    break;
+                case Outlook.OlCategoryColor.olCategoryColorOlive:
+                    result = Color.Olive;
+                    break;
+                case Outlook.OlCategoryColor.olCategoryColorBlue:
+                    result = Color.Blue;
+                    break;
+                case Outlook.OlCategoryColor.olCategoryColorPurple:
+                    result = Color.Purple;
+                    break;
+                case Outlook.OlCategoryColor.olCategoryColorMaroon:
+                    result = Color.Maroon;
+                    break;
+                case Outlook.OlCategoryColor.olCategoryColorSteel:
+                    result = Color.LightSteelBlue;
+                    break;
+                case Outlook.OlCategoryColor.olCategoryColorDarkSteel:
+                    result = Color.SteelBlue;
+                    break;
+                case Outlook.OlCategoryColor.olCategoryColorGray:
+                    result = Color.Gray;
+                    break;
+                case Outlook.OlCategoryColor.olCategoryColorDarkGray:
+                    result = Color.DarkGray;
+                    break;
+                case Outlook.OlCategoryColor.olCategoryColorBlack:
+                    result = Color.Black;
+                    break;
+                case Outlook.OlCategoryColor.olCategoryColorDarkRed:
+                    result = Color.DarkRed;
+                    break;
+                case Outlook.OlCategoryColor.olCategoryColorDarkOrange:
+                    result = Color.DarkOrange;
+                    break;
+                case Outlook.OlCategoryColor.olCategoryColorDarkPeach:
+                    result = Color.DarkSalmon;
+                    break;
+                case Outlook.OlCategoryColor.olCategoryColorDarkYellow:
+                    result = Color.DarkGoldenrod;
+                    break;
+                case Outlook.OlCategoryColor.olCategoryColorDarkGreen:
+                    result = Color.DarkGreen;
+                    break;
+                case Outlook.OlCategoryColor.olCategoryColorDarkTeal:
+                    result = Color.DarkCyan;
+                    break;
+                case Outlook.OlCategoryColor.olCategoryColorDarkOlive:
+                    result = Color.DarkOliveGreen;
+                    break;
+                case Outlook.OlCategoryColor.olCategoryColorDarkBlue:
+                    result = Color.DarkBlue;
+                    break;
+                case Outlook.OlCategoryColor.olCategoryColorDarkPurple:
+                    result = Color.DarkViolet;
+                    break;
+                case Outlook.OlCategoryColor.olCategoryColorDarkMaroon:
+                    result = Color.DarkKhaki;
+                    break;
+                default:
+                    break;
+            }
+            return result;
         }
 
         #endregion "Methods"
