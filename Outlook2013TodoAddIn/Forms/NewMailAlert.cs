@@ -129,7 +129,7 @@ namespace Outlook2013TodoAddIn.Forms
         private void btnFlag_Click(object sender, EventArgs e)
         {
             //Microsoft.Office.Interop.Outlook.OlFlagIcon.olYellowFlagIcon
-            this.Email.FlagRequest = "Follow up";
+            this.Email.FlagRequest = Constants.FollowUp;
             this.Email.Save();
             this.Close();
         }

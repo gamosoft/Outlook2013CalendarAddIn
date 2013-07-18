@@ -41,7 +41,9 @@ namespace Outlook2013TodoAddIn
 
             this.AppControl = new AppointmentsControl();
             this.AppControl.MailAlertsEnabled = Properties.Settings.Default.MailAlertsEnabled;
-            this.AppControl.ShowPastAppointments = Properties.Settings.Default.ShowPastAppointments; 
+            this.AppControl.ShowPastAppointments = Properties.Settings.Default.ShowPastAppointments;
+            this.AppControl.Accounts = Properties.Settings.Default.Accounts;
+            this.AppControl.ShowFriendlyGroupHeaders = Properties.Settings.Default.ShowFriendlyGroupHeaders;
             this.AppControl.NumDays = Properties.Settings.Default.NumDays; // Setting the value will load the appointments
             
             ToDoTaskPane = this.CustomTaskPanes.Add(this.AppControl, "Appointments");
