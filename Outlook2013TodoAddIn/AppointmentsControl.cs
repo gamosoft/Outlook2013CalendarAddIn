@@ -1,6 +1,7 @@
 ﻿using Outlook2013TodoAddIn.Forms;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
@@ -29,6 +30,16 @@ namespace Outlook2013TodoAddIn
         /// Gets/sets whether to show past appointments in the current day or not
         /// </summary>
         public bool ShowPastAppointments { get; set; }
+
+        /// <summary>
+        /// Gets/sets a list of all stores/accounts to retrieve information from
+        /// </summary>
+        public StringCollection Accounts { get; set; }
+
+        /// <summary>
+        /// Gets/sets whether to show friendly group headers (yesterday, today, tomorrow)
+        /// </summary>
+        public bool ShowFriendlyGroupHeaders { get; set; }
 
         /// <summary>
         /// Gets/sets the selected calendar date
@@ -116,17 +127,29 @@ namespace Outlook2013TodoAddIn
         }
 
         /// <summary>
-        /// Retrieve all appointments for the current configurations for all stores
+        /// Retrieve all appointments for the current configurations for all selected stores
         /// </summary>
         public void RetrieveAppointments()
         {
-            //foreach (Outlook.Store store in Globals.ThisAddIn.Application.Session.Stores)
+            List<Outlook.AppointmentItem> appts = new List<Outlook.AppointmentItem>();
+            foreach (Outlook.Store store in Globals.ThisAddIn.Application.Session.Stores)
+            {
+                if (Properties.Settings.Default.Accounts != null && Properties.Settings.Default.Accounts.Contains(store.DisplayName))
+                {
+                    Outlook.Folder calFolder = store.GetDefaultFolder(Outlook.OlDefaultFolders.olFolderCalendar) as Outlook.Folder;
+                    appts.AddRange(this.RetrieveAppointmentsForFolder(calFolder));
+                    // TODO: Shared calendars?
+                }
+            }
+            // We need to sort them because they may come from different accounts already ordered
+            appts.Sort(CompareAppointments);
+
             // Get the Outlook folder for the calendar to retrieve the appointments
-            Outlook.Folder calFolder =
-                Globals.ThisAddIn.Application.Session.GetDefaultFolder(
-                Outlook.OlDefaultFolders.olFolderCalendar)
-                as Outlook.Folder;
-            List<Outlook.AppointmentItem> appts = this.RetrieveAppointmentsForFolder(calFolder);
+            //Outlook.Folder calFolder =
+            //    Globals.ThisAddIn.Application.Session.GetDefaultFolder(
+            //    Outlook.OlDefaultFolders.olFolderCalendar)
+            //    as Outlook.Folder;
+            //List<Outlook.AppointmentItem> appts = this.RetrieveAppointmentsForFolder(calFolder);
 
             // Highlight dates with appointments in the current calendar
             this.apptCalendar.BoldedDates = appts.Select<Outlook.AppointmentItem, DateTime>(a => a.Start.Date).Distinct().ToArray();
@@ -150,7 +173,26 @@ namespace Outlook2013TodoAddIn
             {
                 if (i.Start.Day != sameDay)
                 {
-                    grp = new ListViewGroup(i.Start.ToShortDateString(), HorizontalAlignment.Left);
+                    string groupHeaderText = i.Start.ToShortDateString();
+                    if (this.ShowFriendlyGroupHeaders)
+                    {
+                        int daysDiff = (int)(i.Start.Date - DateTime.Today).TotalDays;
+                        switch (daysDiff)
+                        {
+                            case -1:
+                                groupHeaderText = Constants.Yesterday + ": " + groupHeaderText;
+                                break;
+                            case 0:
+                                groupHeaderText = Constants.Today + ": " + groupHeaderText;
+                                break;
+                            case 1:
+                                groupHeaderText = Constants.Tomorrow + ": " + groupHeaderText;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    grp = new ListViewGroup(groupHeaderText, HorizontalAlignment.Left);
                     this.listView1.Groups.Add(grp); // TODO: Style it?
                     sameDay = i.Start.Day;
                 };
@@ -190,6 +232,17 @@ namespace Outlook2013TodoAddIn
             this.listView1.Items.AddRange(lstCol.ToArray());
 
             this.apptCalendar.UpdateCalendar();
+        }
+
+        /// <summary>
+        /// Comparer method to sort appointments based on start date/time
+        /// </summary>
+        /// <param name="x">First appointment</param>
+        /// <param name="y">Second appointment</param>
+        /// <returns></returns>
+        private static int CompareAppointments(Outlook.AppointmentItem x, Outlook.AppointmentItem y)
+        {
+            return x.Start.CompareTo(y.Start);
         }
 
         /// <summary>
@@ -320,7 +373,7 @@ namespace Outlook2013TodoAddIn
                         }
                     }
                     mail.Body = Environment.NewLine + Environment.NewLine + appt.Body;
-                    mail.Subject = "RE: " + appt.Subject;
+                    mail.Subject = Constants.SubjectRE + ": " + appt.Subject;
                     mail.Display();
                 }
             }
@@ -356,6 +409,8 @@ namespace Outlook2013TodoAddIn
                     this.NumDays = cfg.NumDays;
                     this.MailAlertsEnabled = cfg.MailAlertsEnabled;
                     this.ShowPastAppointments = cfg.ShowPastAppointments;
+                    this.Accounts = cfg.Accounts;
+                    this.ShowFriendlyGroupHeaders = cfg.ShowFriendlyGroupHeaders;
                     this.RetrieveAppointments();
                 }
             }

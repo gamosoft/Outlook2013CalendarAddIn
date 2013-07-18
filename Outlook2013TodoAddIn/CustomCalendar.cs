@@ -266,7 +266,7 @@ namespace Outlook2013TodoAddIn
         {
             // All controls are previously created, just need to update labels, etc...
             this.lnkCurrentRange.Text = this.SelectedDate.ToString("MMM yyyy");
-            this.lnkToday.Text = "Today: " + DateTime.Today.ToShortDateString();
+            this.lnkToday.Text = Constants.Today + ": " + DateTime.Today.ToShortDateString();
 
             string[] daysOfWeek = Enum.GetNames(typeof(DayOfWeek));
             string sFirstDayOfWeek = Enum.GetName(typeof(DayOfWeek), this.FirstDayOfWeek);

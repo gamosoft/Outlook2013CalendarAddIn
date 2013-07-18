@@ -34,13 +34,16 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.chkShowPastAppointments = new System.Windows.Forms.CheckBox();
+            this.chkListCalendars = new System.Windows.Forms.CheckedListBox();
+            this.lblAccounts = new System.Windows.Forms.Label();
+            this.chkFriendlyGroupHeaders = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numRangeDays)).BeginInit();
             this.SuspendLayout();
             // 
             // chkMailAlerts
             // 
             this.chkMailAlerts.AutoSize = true;
-            this.chkMailAlerts.Location = new System.Drawing.Point(59, 134);
+            this.chkMailAlerts.Location = new System.Drawing.Point(45, 94);
             this.chkMailAlerts.Name = "chkMailAlerts";
             this.chkMailAlerts.Size = new System.Drawing.Size(143, 21);
             this.chkMailAlerts.TabIndex = 8;
@@ -50,7 +53,7 @@
             // lblRangeDays
             // 
             this.lblRangeDays.AutoSize = true;
-            this.lblRangeDays.Location = new System.Drawing.Point(55, 60);
+            this.lblRangeDays.Location = new System.Drawing.Point(55, 29);
             this.lblRangeDays.Name = "lblRangeDays";
             this.lblRangeDays.Size = new System.Drawing.Size(44, 17);
             this.lblRangeDays.TabIndex = 7;
@@ -58,7 +61,7 @@
             // 
             // numRangeDays
             // 
-            this.numRangeDays.Location = new System.Drawing.Point(115, 58);
+            this.numRangeDays.Location = new System.Drawing.Point(115, 27);
             this.numRangeDays.Maximum = new decimal(new int[] {
             30,
             0,
@@ -81,7 +84,7 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(169, 181);
+            this.btnCancel.Location = new System.Drawing.Point(168, 291);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(87, 37);
             this.btnCancel.TabIndex = 11;
@@ -91,7 +94,7 @@
             // btnOK
             // 
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(27, 181);
+            this.btnOK.Location = new System.Drawing.Point(26, 291);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(87, 37);
             this.btnOK.TabIndex = 10;
@@ -102,12 +105,39 @@
             // chkShowPastAppointments
             // 
             this.chkShowPastAppointments.AutoSize = true;
-            this.chkShowPastAppointments.Location = new System.Drawing.Point(59, 98);
+            this.chkShowPastAppointments.Location = new System.Drawing.Point(45, 67);
             this.chkShowPastAppointments.Name = "chkShowPastAppointments";
             this.chkShowPastAppointments.Size = new System.Drawing.Size(186, 21);
             this.chkShowPastAppointments.TabIndex = 12;
             this.chkShowPastAppointments.Text = "Show Past Appointments";
             this.chkShowPastAppointments.UseVisualStyleBackColor = true;
+            // 
+            // chkListCalendars
+            // 
+            this.chkListCalendars.FormattingEnabled = true;
+            this.chkListCalendars.Location = new System.Drawing.Point(26, 176);
+            this.chkListCalendars.Name = "chkListCalendars";
+            this.chkListCalendars.Size = new System.Drawing.Size(229, 106);
+            this.chkListCalendars.TabIndex = 13;
+            // 
+            // lblAccounts
+            // 
+            this.lblAccounts.AutoSize = true;
+            this.lblAccounts.Location = new System.Drawing.Point(23, 156);
+            this.lblAccounts.Name = "lblAccounts";
+            this.lblAccounts.Size = new System.Drawing.Size(70, 17);
+            this.lblAccounts.TabIndex = 14;
+            this.lblAccounts.Text = "Accounts:";
+            // 
+            // chkFriendlyGroupHeaders
+            // 
+            this.chkFriendlyGroupHeaders.AutoSize = true;
+            this.chkFriendlyGroupHeaders.Location = new System.Drawing.Point(45, 121);
+            this.chkFriendlyGroupHeaders.Name = "chkFriendlyGroupHeaders";
+            this.chkFriendlyGroupHeaders.Size = new System.Drawing.Size(176, 21);
+            this.chkFriendlyGroupHeaders.TabIndex = 15;
+            this.chkFriendlyGroupHeaders.Text = "Show Friendly Headers";
+            this.chkFriendlyGroupHeaders.UseVisualStyleBackColor = true;
             // 
             // FormConfiguration
             // 
@@ -115,7 +145,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(282, 253);
+            this.ClientSize = new System.Drawing.Size(282, 343);
+            this.Controls.Add(this.chkFriendlyGroupHeaders);
+            this.Controls.Add(this.lblAccounts);
+            this.Controls.Add(this.chkListCalendars);
             this.Controls.Add(this.chkShowPastAppointments);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
@@ -144,5 +177,8 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.CheckBox chkShowPastAppointments;
+        private System.Windows.Forms.CheckedListBox chkListCalendars;
+        private System.Windows.Forms.Label lblAccounts;
+        private System.Windows.Forms.CheckBox chkFriendlyGroupHeaders;
     }
 }
