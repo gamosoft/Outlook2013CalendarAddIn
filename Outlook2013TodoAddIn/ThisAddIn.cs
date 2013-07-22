@@ -44,6 +44,7 @@ namespace Outlook2013TodoAddIn
             this.AppControl.ShowPastAppointments = Properties.Settings.Default.ShowPastAppointments;
             this.AppControl.Accounts = Properties.Settings.Default.Accounts;
             this.AppControl.ShowFriendlyGroupHeaders = Properties.Settings.Default.ShowFriendlyGroupHeaders;
+            this.AppControl.ShowTasks = Properties.Settings.Default.ShowTasks;
             this.AppControl.NumDays = Properties.Settings.Default.NumDays; // Setting the value will load the appointments
             
             ToDoTaskPane = this.CustomTaskPanes.Add(this.AppControl, "Appointments");
@@ -57,7 +58,7 @@ namespace Outlook2013TodoAddIn
             // Selecting the date will retrieve the appointments
             // Otherwise it'll take the one used when the designer changed!
             this.AppControl.SelectedDate = DateTime.Today;
-            // this.AppControl.RetrieveAppointments();
+            // this.AppControl.RetrieveData();
 
             Globals.ThisAddIn.Application.ActiveExplorer().Deactivate += ThisAddIn_Deactivate;
 

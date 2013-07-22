@@ -117,5 +117,17 @@ namespace Outlook2013TodoAddIn.Properties {
                 this["ShowFriendlyGroupHeaders"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowTasks {
+            get {
+                return ((bool)(this["ShowTasks"]));
+            }
+            set {
+                this["ShowTasks"] = value;
+            }
+        }
     }
 }
