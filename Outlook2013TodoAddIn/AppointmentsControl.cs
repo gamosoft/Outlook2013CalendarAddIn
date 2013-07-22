@@ -50,6 +50,11 @@ namespace Outlook2013TodoAddIn
             set { this.apptCalendar.SelectedDate = value; }
         }
 
+        /// <summary>
+        /// Gets/sets whether to show the tasks list
+        /// </summary>
+        public bool ShowTasks { get; set; }
+
         #endregion "Properties"
 
         #region "Methods"
@@ -69,33 +74,53 @@ namespace Outlook2013TodoAddIn
         /// <param name="e">DateRangeEventArgs</param>
         private void apptCalendar_SelectedDateChanged(object sender, EventArgs e)
         {
-            this.RetrieveAppointments();
+            this.RetrieveData();
         }
 
         /// <summary>
-        /// Retrieves tasks for all stores
+        /// Retrieves appointments and tasks if configured
         /// </summary>
-        public void RetrieveTasks()
+        public void RetrieveData()
         {
-            // We want tasks for all the accounts
-            //foreach (Outlook.Store store in Globals.ThisAddIn.Application.Session.Stores)
-            //{
-            //    // Get the Outlook to-do folder to retrieve the items
-            //    MessageBox.Show("Store: " + store.DisplayName);
-            //    // TODO: try..catch (public folders times out)
-            Outlook.Folder todoFolder =
-                Globals.ThisAddIn.Application.Session.GetDefaultFolder(
-                Outlook.OlDefaultFolders.olFolderToDo)
-                as Outlook.Folder;
-            this.RetrieveTasksForFolder(todoFolder);
+            this.RetrieveAppointments();
+            if (this.ShowTasks)
+            {
+                // this.RetrieveTasks();
+            }
+        }
+
+        /// <summary>
+        /// Retrieves tasks for all selected stores
+        /// </summary>
+        private void RetrieveTasks()
+        {
+            List<Outlook.TaskItem> tasks = new List<Outlook.TaskItem>();
+            foreach (Outlook.Store store in Globals.ThisAddIn.Application.Session.Stores)
+            {
+                if (Properties.Settings.Default.Accounts != null && Properties.Settings.Default.Accounts.Contains(store.DisplayName))
+                {
+                    Outlook.Folder todoFolder = store.GetDefaultFolder(Outlook.OlDefaultFolders.olFolderToDo) as Outlook.Folder;
+                    tasks.AddRange(this.RetrieveTasksForFolder(todoFolder));
+                    // TODO: Shared calendars?
+                }
+            }
+            // We need to sort them because they may come from different accounts already ordered
+            // tasks.Sort(CompareTasks);
+
+            //Outlook.Folder todoFolder =
+            //    Globals.ThisAddIn.Application.Session.GetDefaultFolder(
+            //    Outlook.OlDefaultFolders.olFolderToDo)
+            //    as Outlook.Folder;
+            //this.RetrieveTasksForFolder(todoFolder);
         }
 
         /// <summary>
         /// Retrieves to-do tasks for the folder on the specified store
         /// </summary>
         /// <param name="todoFolder">Outlook folder</param>
-        private void RetrieveTasksForFolder(Outlook.Folder todoFolder)
+        private List<Outlook.TaskItem> RetrieveTasksForFolder(Outlook.Folder todoFolder)
         {
+            List<Outlook.TaskItem> tasks = new List<Outlook.TaskItem>();
             foreach (object item in todoFolder.Items)
             {
                 if (item is Outlook.MailItem)
@@ -124,12 +149,13 @@ namespace Outlook2013TodoAddIn
                     MessageBox.Show("Unknown type");
                 }
             }
+            return tasks;
         }
 
         /// <summary>
         /// Retrieve all appointments for the current configurations for all selected stores
         /// </summary>
-        public void RetrieveAppointments()
+        private void RetrieveAppointments()
         {
             List<Outlook.AppointmentItem> appts = new List<Outlook.AppointmentItem>();
             foreach (Outlook.Store store in Globals.ThisAddIn.Application.Session.Stores)
@@ -344,7 +370,7 @@ namespace Outlook2013TodoAddIn
                         // Open up the appointment in a new window
                         appt.Display(true); // Modal yes/no
                     }
-                    // At the end, synchronously "refresh" items in case they have changed
+                    // At the end, synchronously "refresh" appointments in case they have changed
                     this.RetrieveAppointments();
                 }
             }
@@ -411,7 +437,8 @@ namespace Outlook2013TodoAddIn
                     this.ShowPastAppointments = cfg.ShowPastAppointments;
                     this.Accounts = cfg.Accounts;
                     this.ShowFriendlyGroupHeaders = cfg.ShowFriendlyGroupHeaders;
-                    this.RetrieveAppointments();
+                    this.ShowTasks = cfg.ShowTasks;
+                    this.RetrieveData();
                 }
             }
         }

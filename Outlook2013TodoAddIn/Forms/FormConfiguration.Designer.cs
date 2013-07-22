@@ -37,6 +37,7 @@
             this.chkListCalendars = new System.Windows.Forms.CheckedListBox();
             this.lblAccounts = new System.Windows.Forms.Label();
             this.chkFriendlyGroupHeaders = new System.Windows.Forms.CheckBox();
+            this.chkShowTasks = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numRangeDays)).BeginInit();
             this.SuspendLayout();
             // 
@@ -84,7 +85,7 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(168, 291);
+            this.btnCancel.Location = new System.Drawing.Point(168, 314);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(87, 37);
             this.btnCancel.TabIndex = 11;
@@ -94,7 +95,7 @@
             // btnOK
             // 
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(26, 291);
+            this.btnOK.Location = new System.Drawing.Point(26, 314);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(87, 37);
             this.btnOK.TabIndex = 10;
@@ -115,7 +116,7 @@
             // chkListCalendars
             // 
             this.chkListCalendars.FormattingEnabled = true;
-            this.chkListCalendars.Location = new System.Drawing.Point(26, 176);
+            this.chkListCalendars.Location = new System.Drawing.Point(26, 199);
             this.chkListCalendars.Name = "chkListCalendars";
             this.chkListCalendars.Size = new System.Drawing.Size(229, 106);
             this.chkListCalendars.TabIndex = 13;
@@ -123,7 +124,7 @@
             // lblAccounts
             // 
             this.lblAccounts.AutoSize = true;
-            this.lblAccounts.Location = new System.Drawing.Point(23, 156);
+            this.lblAccounts.Location = new System.Drawing.Point(23, 179);
             this.lblAccounts.Name = "lblAccounts";
             this.lblAccounts.Size = new System.Drawing.Size(70, 17);
             this.lblAccounts.TabIndex = 14;
@@ -139,13 +140,24 @@
             this.chkFriendlyGroupHeaders.Text = "Show Friendly Headers";
             this.chkFriendlyGroupHeaders.UseVisualStyleBackColor = true;
             // 
+            // chkShowTasks
+            // 
+            this.chkShowTasks.AutoSize = true;
+            this.chkShowTasks.Location = new System.Drawing.Point(45, 148);
+            this.chkShowTasks.Name = "chkShowTasks";
+            this.chkShowTasks.Size = new System.Drawing.Size(106, 21);
+            this.chkShowTasks.TabIndex = 16;
+            this.chkShowTasks.Text = "Show Tasks";
+            this.chkShowTasks.UseVisualStyleBackColor = true;
+            // 
             // FormConfiguration
             // 
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(282, 343);
+            this.ClientSize = new System.Drawing.Size(282, 383);
+            this.Controls.Add(this.chkShowTasks);
             this.Controls.Add(this.chkFriendlyGroupHeaders);
             this.Controls.Add(this.lblAccounts);
             this.Controls.Add(this.chkListCalendars);
@@ -180,5 +192,6 @@
         private System.Windows.Forms.CheckedListBox chkListCalendars;
         private System.Windows.Forms.Label lblAccounts;
         private System.Windows.Forms.CheckBox chkFriendlyGroupHeaders;
+        private System.Windows.Forms.CheckBox chkShowTasks;
     }
 }
