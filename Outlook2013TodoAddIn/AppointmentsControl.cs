@@ -91,7 +91,13 @@ namespace Outlook2013TodoAddIn
             this.RetrieveAppointments();
             if (this.ShowTasks)
             {
+                this.splitContainer1.Panel2Collapsed = false;
+                this.splitContainer1.SplitterDistance = Properties.Settings.Default.SplitterDistance;
                 // this.RetrieveTasks();
+            }
+            else
+            {
+                this.splitContainer1.Panel2Collapsed = true;
             }
         }
 
@@ -225,7 +231,7 @@ namespace Outlook2013TodoAddIn
                         }
                     }
                     grp = new ListViewGroup(groupHeaderText, HorizontalAlignment.Left);
-                    this.listView1.Groups.Add(grp); // TODO: Style it?
+                    this.lstAppointments.Groups.Add(grp); // TODO: Style it?
                     sameDay = i.Start.Day;
                 };
                 string loc = "-"; // TODO: If no second line is specified, the tile is stretched to only one line
@@ -260,8 +266,8 @@ namespace Outlook2013TodoAddIn
                 lstCol.Add(current);
             });
 
-            this.listView1.Items.Clear();
-            this.listView1.Items.AddRange(lstCol.ToArray());
+            this.lstAppointments.Items.Clear();
+            this.lstAppointments.Items.AddRange(lstCol.ToArray());
 
             this.apptCalendar.UpdateCalendar();
         }
@@ -344,11 +350,11 @@ namespace Outlook2013TodoAddIn
         /// </summary>
         /// <param name="sender">Sender</param>
         /// <param name="e">EventArgs</param>
-        private void listView1_DoubleClick(object sender, EventArgs e)
+        private void lstAppointments_DoubleClick(object sender, EventArgs e)
         {
-            if (this.listView1.SelectedIndices.Count != 0)
+            if (this.lstAppointments.SelectedIndices.Count != 0)
             {
-                Outlook.AppointmentItem appt = this.listView1.SelectedItems[0].Tag as Outlook.AppointmentItem;
+                Outlook.AppointmentItem appt = this.lstAppointments.SelectedItems[0].Tag as Outlook.AppointmentItem;
                 if (appt != null)
                 {
                     if (appt.IsRecurring)
@@ -389,9 +395,9 @@ namespace Outlook2013TodoAddIn
         /// <param name="e">EventArgs</param>
         private void mnuItemReplyAllEmail_Click(object sender, EventArgs e)
         {
-            if (this.listView1.SelectedIndices.Count != 0)
+            if (this.lstAppointments.SelectedIndices.Count != 0)
             {
-                Outlook.AppointmentItem appt = this.listView1.SelectedItems[0].Tag as Outlook.AppointmentItem;
+                Outlook.AppointmentItem appt = this.lstAppointments.SelectedItems[0].Tag as Outlook.AppointmentItem;
                 if (appt != null)
                 {
                     Outlook.MailItem mail = Globals.ThisAddIn.Application.CreateItem(Outlook.OlItemType.olMailItem) as Outlook.MailItem;
@@ -455,7 +461,7 @@ namespace Outlook2013TodoAddIn
         /// </summary>
         /// <param name="sender">Sender</param>
         /// <param name="e">DrawListViewItemEventArgs</param>
-        private void listView1_DrawItem(object sender, DrawListViewItemEventArgs e)
+        private void lstAppointments_DrawItem(object sender, DrawListViewItemEventArgs e)
         {
             e.DrawBackground(); // To avoid repainting (making font "grow")
             Outlook.AppointmentItem appt = e.Item.Tag as Outlook.AppointmentItem;
@@ -622,6 +628,16 @@ namespace Outlook2013TodoAddIn
                     break;
             }
             return result;
+        }
+
+        /// <summary>
+        /// Save the splitter distance to restore upon reloading the plugin
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">SplitterEventArgs</param>
+        private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+            Properties.Settings.Default.SplitterDistance = this.splitContainer1.SplitterDistance;
         }
 
         #endregion "Methods"
