@@ -92,7 +92,12 @@ namespace Outlook2013TodoAddIn
             if (this.ShowTasks)
             {
                 this.splitContainer1.Panel2Collapsed = false;
-                this.splitContainer1.SplitterDistance = Properties.Settings.Default.SplitterDistance;
+                if (Properties.Settings.Default.SplitterDistance >= this.splitContainer1.Panel1MinSize && Properties.Settings.Default.SplitterDistance <= this.splitContainer1.Height - this.splitContainer1.Panel2MinSize)
+                {
+                    // This is to avoid the bug "SplitterDistance must be between Panel1MinSize and Width - Panel2MinSize."
+                    this.splitContainer1.SplitterDistance = Properties.Settings.Default.SplitterDistance;
+                    // TODO: This doesn't work, need to fix (race condition?)
+                }
                 // this.RetrieveTasks();
             }
             else
