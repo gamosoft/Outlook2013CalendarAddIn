@@ -32,13 +32,13 @@
             this.ctxMenuAppointments = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuItemReplyAllEmail = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.lstTasks = new System.Windows.Forms.ListView();
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.lstAppointments = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.lstTasks = new System.Windows.Forms.ListView();
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.apptCalendar = new Outlook2013TodoAddIn.CustomCalendar();
             this.ctxMenuAppointments.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -72,36 +72,24 @@
             this.panel1.Size = new System.Drawing.Size(258, 767);
             this.panel1.TabIndex = 8;
             // 
-            // lstTasks
+            // splitContainer1
             // 
-            this.lstTasks.Activation = System.Windows.Forms.ItemActivation.OneClick;
-            this.lstTasks.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader3,
-            this.columnHeader4});
-            this.lstTasks.ContextMenuStrip = this.ctxMenuAppointments;
-            this.lstTasks.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstTasks.FullRowSelect = true;
-            this.lstTasks.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.lstTasks.Location = new System.Drawing.Point(0, 0);
-            this.lstTasks.MultiSelect = false;
-            this.lstTasks.Name = "lstTasks";
-            this.lstTasks.OwnerDraw = true;
-            this.lstTasks.ShowItemToolTips = true;
-            this.lstTasks.Size = new System.Drawing.Size(258, 266);
-            this.lstTasks.TabIndex = 5;
-            this.lstTasks.TileSize = new System.Drawing.Size(300, 38);
-            this.lstTasks.UseCompatibleStateImageBehavior = false;
-            this.lstTasks.View = System.Windows.Forms.View.Tile;
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 228);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // columnHeader3
+            // splitContainer1.Panel1
             // 
-            this.columnHeader3.Text = "Date";
-            this.columnHeader3.Width = 200;
+            this.splitContainer1.Panel1.Controls.Add(this.lstAppointments);
             // 
-            // columnHeader4
+            // splitContainer1.Panel2
             // 
-            this.columnHeader4.Text = "Subject";
-            this.columnHeader4.Width = 200;
+            this.splitContainer1.Panel2.Controls.Add(this.lstTasks);
+            this.splitContainer1.Size = new System.Drawing.Size(258, 539);
+            this.splitContainer1.SplitterDistance = 269;
+            this.splitContainer1.TabIndex = 6;
+            this.splitContainer1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer1_SplitterMoved);
             // 
             // lstAppointments
             // 
@@ -136,24 +124,36 @@
             this.columnHeader2.Text = "Subject";
             this.columnHeader2.Width = 200;
             // 
-            // splitContainer1
+            // lstTasks
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 228);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.lstTasks.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.lstTasks.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader3,
+            this.columnHeader4});
+            this.lstTasks.ContextMenuStrip = this.ctxMenuAppointments;
+            this.lstTasks.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstTasks.FullRowSelect = true;
+            this.lstTasks.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lstTasks.Location = new System.Drawing.Point(0, 0);
+            this.lstTasks.MultiSelect = false;
+            this.lstTasks.Name = "lstTasks";
+            this.lstTasks.OwnerDraw = true;
+            this.lstTasks.ShowItemToolTips = true;
+            this.lstTasks.Size = new System.Drawing.Size(258, 266);
+            this.lstTasks.TabIndex = 5;
+            this.lstTasks.TileSize = new System.Drawing.Size(300, 38);
+            this.lstTasks.UseCompatibleStateImageBehavior = false;
+            this.lstTasks.View = System.Windows.Forms.View.Tile;
             // 
-            // splitContainer1.Panel1
+            // columnHeader3
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.lstAppointments);
+            this.columnHeader3.Text = "Date";
+            this.columnHeader3.Width = 200;
             // 
-            // splitContainer1.Panel2
+            // columnHeader4
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.lstTasks);
-            this.splitContainer1.Size = new System.Drawing.Size(258, 539);
-            this.splitContainer1.SplitterDistance = 269;
-            this.splitContainer1.TabIndex = 6;
-            this.splitContainer1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer1_SplitterMoved);
+            this.columnHeader4.Text = "Subject";
+            this.columnHeader4.Width = 200;
             // 
             // apptCalendar
             // 
