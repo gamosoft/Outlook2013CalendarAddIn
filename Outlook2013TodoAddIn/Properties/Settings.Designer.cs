@@ -129,5 +129,17 @@ namespace Outlook2013TodoAddIn.Properties {
                 this["ShowTasks"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Sunday")]
+        public global::System.DayOfWeek FirstDayOfWeek {
+            get {
+                return ((global::System.DayOfWeek)(this["FirstDayOfWeek"]));
+            }
+            set {
+                this["FirstDayOfWeek"] = value;
+            }
+        }
     }
 }

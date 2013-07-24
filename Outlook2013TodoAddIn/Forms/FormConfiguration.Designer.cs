@@ -38,6 +38,8 @@
             this.lblAccounts = new System.Windows.Forms.Label();
             this.chkFriendlyGroupHeaders = new System.Windows.Forms.CheckBox();
             this.chkShowTasks = new System.Windows.Forms.CheckBox();
+            this.cboFirstDayOfWeek = new System.Windows.Forms.ComboBox();
+            this.lblFirstDayOfWeek = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numRangeDays)).BeginInit();
             this.SuspendLayout();
             // 
@@ -85,7 +87,7 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(168, 314);
+            this.btnCancel.Location = new System.Drawing.Point(168, 374);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(87, 37);
             this.btnCancel.TabIndex = 11;
@@ -95,7 +97,7 @@
             // btnOK
             // 
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(26, 314);
+            this.btnOK.Location = new System.Drawing.Point(26, 374);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(87, 37);
             this.btnOK.TabIndex = 10;
@@ -116,7 +118,7 @@
             // chkListCalendars
             // 
             this.chkListCalendars.FormattingEnabled = true;
-            this.chkListCalendars.Location = new System.Drawing.Point(26, 199);
+            this.chkListCalendars.Location = new System.Drawing.Point(26, 259);
             this.chkListCalendars.Name = "chkListCalendars";
             this.chkListCalendars.Size = new System.Drawing.Size(229, 106);
             this.chkListCalendars.TabIndex = 13;
@@ -124,7 +126,7 @@
             // lblAccounts
             // 
             this.lblAccounts.AutoSize = true;
-            this.lblAccounts.Location = new System.Drawing.Point(23, 179);
+            this.lblAccounts.Location = new System.Drawing.Point(23, 239);
             this.lblAccounts.Name = "lblAccounts";
             this.lblAccounts.Size = new System.Drawing.Size(70, 17);
             this.lblAccounts.TabIndex = 14;
@@ -150,13 +152,33 @@
             this.chkShowTasks.Text = "Show Tasks";
             this.chkShowTasks.UseVisualStyleBackColor = true;
             // 
+            // cboFirstDayOfWeek
+            // 
+            this.cboFirstDayOfWeek.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboFirstDayOfWeek.FormattingEnabled = true;
+            this.cboFirstDayOfWeek.Location = new System.Drawing.Point(45, 201);
+            this.cboFirstDayOfWeek.Name = "cboFirstDayOfWeek";
+            this.cboFirstDayOfWeek.Size = new System.Drawing.Size(186, 24);
+            this.cboFirstDayOfWeek.TabIndex = 17;
+            // 
+            // lblFirstDayOfWeek
+            // 
+            this.lblFirstDayOfWeek.AutoSize = true;
+            this.lblFirstDayOfWeek.Location = new System.Drawing.Point(42, 181);
+            this.lblFirstDayOfWeek.Name = "lblFirstDayOfWeek";
+            this.lblFirstDayOfWeek.Size = new System.Drawing.Size(124, 17);
+            this.lblFirstDayOfWeek.TabIndex = 18;
+            this.lblFirstDayOfWeek.Text = "First Day of Week:";
+            // 
             // FormConfiguration
             // 
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(282, 383);
+            this.ClientSize = new System.Drawing.Size(282, 452);
+            this.Controls.Add(this.lblFirstDayOfWeek);
+            this.Controls.Add(this.cboFirstDayOfWeek);
             this.Controls.Add(this.chkShowTasks);
             this.Controls.Add(this.chkFriendlyGroupHeaders);
             this.Controls.Add(this.lblAccounts);
@@ -193,5 +215,7 @@
         private System.Windows.Forms.Label lblAccounts;
         private System.Windows.Forms.CheckBox chkFriendlyGroupHeaders;
         private System.Windows.Forms.CheckBox chkShowTasks;
+        private System.Windows.Forms.ComboBox cboFirstDayOfWeek;
+        private System.Windows.Forms.Label lblFirstDayOfWeek;
     }
 }
