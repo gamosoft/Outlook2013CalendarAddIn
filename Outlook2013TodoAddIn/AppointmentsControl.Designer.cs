@@ -32,12 +32,20 @@
             this.ctxMenuAppointments = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuItemReplyAllEmail = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.lstTasks = new System.Windows.Forms.ListView();
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lstAppointments = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.apptCalendar = new Outlook2013TodoAddIn.CustomCalendar();
             this.ctxMenuAppointments.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // ctxMenuAppointments
@@ -56,7 +64,7 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.listView1);
+            this.panel1.Controls.Add(this.splitContainer1);
             this.panel1.Controls.Add(this.apptCalendar);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
@@ -64,28 +72,59 @@
             this.panel1.Size = new System.Drawing.Size(258, 767);
             this.panel1.TabIndex = 8;
             // 
-            // listView1
+            // lstTasks
             // 
-            this.listView1.Activation = System.Windows.Forms.ItemActivation.OneClick;
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lstTasks.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.lstTasks.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader3,
+            this.columnHeader4});
+            this.lstTasks.ContextMenuStrip = this.ctxMenuAppointments;
+            this.lstTasks.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstTasks.FullRowSelect = true;
+            this.lstTasks.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lstTasks.Location = new System.Drawing.Point(0, 0);
+            this.lstTasks.MultiSelect = false;
+            this.lstTasks.Name = "lstTasks";
+            this.lstTasks.OwnerDraw = true;
+            this.lstTasks.ShowItemToolTips = true;
+            this.lstTasks.Size = new System.Drawing.Size(258, 266);
+            this.lstTasks.TabIndex = 5;
+            this.lstTasks.TileSize = new System.Drawing.Size(300, 38);
+            this.lstTasks.UseCompatibleStateImageBehavior = false;
+            this.lstTasks.View = System.Windows.Forms.View.Tile;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Date";
+            this.columnHeader3.Width = 200;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Subject";
+            this.columnHeader4.Width = 200;
+            // 
+            // lstAppointments
+            // 
+            this.lstAppointments.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.lstAppointments.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2});
-            this.listView1.ContextMenuStrip = this.ctxMenuAppointments;
-            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView1.FullRowSelect = true;
-            this.listView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.listView1.Location = new System.Drawing.Point(0, 228);
-            this.listView1.MultiSelect = false;
-            this.listView1.Name = "listView1";
-            this.listView1.OwnerDraw = true;
-            this.listView1.ShowItemToolTips = true;
-            this.listView1.Size = new System.Drawing.Size(258, 539);
-            this.listView1.TabIndex = 4;
-            this.listView1.TileSize = new System.Drawing.Size(300, 38);
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Tile;
-            this.listView1.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.listView1_DrawItem);
-            this.listView1.DoubleClick += new System.EventHandler(this.listView1_DoubleClick);
+            this.lstAppointments.ContextMenuStrip = this.ctxMenuAppointments;
+            this.lstAppointments.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstAppointments.FullRowSelect = true;
+            this.lstAppointments.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lstAppointments.Location = new System.Drawing.Point(0, 0);
+            this.lstAppointments.MultiSelect = false;
+            this.lstAppointments.Name = "lstAppointments";
+            this.lstAppointments.OwnerDraw = true;
+            this.lstAppointments.ShowItemToolTips = true;
+            this.lstAppointments.Size = new System.Drawing.Size(258, 269);
+            this.lstAppointments.TabIndex = 4;
+            this.lstAppointments.TileSize = new System.Drawing.Size(300, 38);
+            this.lstAppointments.UseCompatibleStateImageBehavior = false;
+            this.lstAppointments.View = System.Windows.Forms.View.Tile;
+            this.lstAppointments.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.lstAppointments_DrawItem);
+            this.lstAppointments.DoubleClick += new System.EventHandler(this.lstAppointments_DoubleClick);
             // 
             // columnHeader1
             // 
@@ -96,6 +135,25 @@
             // 
             this.columnHeader2.Text = "Subject";
             this.columnHeader2.Width = 200;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 228);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.lstAppointments);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.lstTasks);
+            this.splitContainer1.Size = new System.Drawing.Size(258, 539);
+            this.splitContainer1.SplitterDistance = 269;
+            this.splitContainer1.TabIndex = 6;
+            this.splitContainer1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer1_SplitterMoved);
             // 
             // apptCalendar
             // 
@@ -129,6 +187,10 @@
             this.Size = new System.Drawing.Size(258, 767);
             this.ctxMenuAppointments.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -139,9 +201,13 @@
         private System.Windows.Forms.ToolStripMenuItem mnuItemReplyAllEmail;
         private System.Windows.Forms.Panel panel1;
         private CustomCalendar apptCalendar;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView lstAppointments;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ListView lstTasks;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.SplitContainer splitContainer1;
 
 
     }

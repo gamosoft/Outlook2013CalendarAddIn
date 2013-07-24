@@ -32,5 +32,8 @@
     <Setting Name="FirstDayOfWeek" Type="System.DayOfWeek" Scope="User">
       <Value Profile="(Default)">Sunday</Value>
     </Setting>
+    <Setting Name="SplitterDistance" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">400</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
