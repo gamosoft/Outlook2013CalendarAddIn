@@ -55,6 +55,11 @@ namespace Outlook2013TodoAddIn
         /// </summary>
         public bool ShowTasks { get; set; }
 
+        /// <summary>
+        /// Gets/sets the first day of the week for the calendar
+        /// </summary>
+        public System.DayOfWeek FirstDayOfWeek { get; set; }
+
         #endregion "Properties"
 
         #region "Methods"
@@ -82,6 +87,7 @@ namespace Outlook2013TodoAddIn
         /// </summary>
         public void RetrieveData()
         {
+            this.apptCalendar.FirstDayOfWeek = this.FirstDayOfWeek;
             this.RetrieveAppointments();
             if (this.ShowTasks)
             {
@@ -438,6 +444,7 @@ namespace Outlook2013TodoAddIn
                     this.Accounts = cfg.Accounts;
                     this.ShowFriendlyGroupHeaders = cfg.ShowFriendlyGroupHeaders;
                     this.ShowTasks = cfg.ShowTasks;
+                    this.FirstDayOfWeek = cfg.FirstDayOfWeek;
                     this.RetrieveData();
                 }
             }

@@ -76,6 +76,15 @@ namespace Outlook2013TodoAddIn.Forms
             set { this.chkShowTasks.Checked = value; }
         }
 
+        /// <summary>
+        /// Gets/sets the first day of the week for the calendar
+        /// </summary>
+        public System.DayOfWeek FirstDayOfWeek
+        {
+            get { return (System.DayOfWeek)Enum.Parse(typeof(System.DayOfWeek), this.cboFirstDayOfWeek.SelectedValue.ToString()); }
+            set { this.cboFirstDayOfWeek.SelectedValue = value; }
+        }
+
         #endregion "Properties"
         
         #region "Methods"
@@ -101,6 +110,7 @@ namespace Outlook2013TodoAddIn.Forms
             this.chkFriendlyGroupHeaders.Checked = Properties.Settings.Default.ShowFriendlyGroupHeaders;
             this.chkShowTasks.Checked = Properties.Settings.Default.ShowTasks;
             this.LoadStores();
+            this.LoadDays();
         }
 
         /// <summary>
@@ -117,6 +127,15 @@ namespace Outlook2013TodoAddIn.Forms
         }
 
         /// <summary>
+        /// Loads the available days of the week in the dropdown
+        /// </summary>
+        private void LoadDays()
+        {
+            this.cboFirstDayOfWeek.DataSource = Enum.GetValues(typeof(System.DayOfWeek));
+            this.cboFirstDayOfWeek.SelectedItem = Properties.Settings.Default.FirstDayOfWeek;
+        }
+
+        /// <summary>
         /// Clicking the OK button
         /// </summary>
         /// <param name="sender">Sender</param>
@@ -129,6 +148,7 @@ namespace Outlook2013TodoAddIn.Forms
             Properties.Settings.Default.Accounts = this.Accounts;
             Properties.Settings.Default.ShowFriendlyGroupHeaders = this.chkFriendlyGroupHeaders.Checked;
             Properties.Settings.Default.ShowTasks = this.chkShowTasks.Checked;
+            Properties.Settings.Default.FirstDayOfWeek = (System.DayOfWeek)Enum.Parse(typeof(System.DayOfWeek), this.cboFirstDayOfWeek.SelectedValue.ToString());
         }
 
         #endregion "Methods"
