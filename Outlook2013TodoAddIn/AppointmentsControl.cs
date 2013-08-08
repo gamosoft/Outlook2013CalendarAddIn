@@ -70,6 +70,14 @@ namespace Outlook2013TodoAddIn
         public AppointmentsControl()
         {
             InitializeComponent();
+
+            if (Properties.Settings.Default.SplitterDistance >= this.splitContainer1.Panel1MinSize && Properties.Settings.Default.SplitterDistance <= this.splitContainer1.Height - this.splitContainer1.Panel2MinSize)
+            {
+                // This is to avoid the bug "SplitterDistance must be between Panel1MinSize and Width - Panel2MinSize."
+                this.splitContainer1.SplitterDistance = Properties.Settings.Default.SplitterDistance;
+                // TODO: This doesn't work, need to fix (race condition?)
+                // TODO: Another event is fired after controls are added...
+            }
         }
 
         /// <summary>
@@ -92,13 +100,6 @@ namespace Outlook2013TodoAddIn
             if (this.ShowTasks)
             {
                 this.splitContainer1.Panel2Collapsed = false;
-                if (Properties.Settings.Default.SplitterDistance >= this.splitContainer1.Panel1MinSize && Properties.Settings.Default.SplitterDistance <= this.splitContainer1.Height - this.splitContainer1.Panel2MinSize)
-                {
-                    // This is to avoid the bug "SplitterDistance must be between Panel1MinSize and Width - Panel2MinSize."
-                    this.splitContainer1.SplitterDistance = Properties.Settings.Default.SplitterDistance;
-                    // TODO: This doesn't work, need to fix (race condition?)
-                }
-                // this.RetrieveTasks();
             }
             else
             {
@@ -199,7 +200,7 @@ namespace Outlook2013TodoAddIn
 
             // Now display the actual appointments below the calendar
             DateTime startRange = this.apptCalendar.SelectedDate;
-            if (!this.ShowPastAppointments)
+            if (!this.ShowPastAppointments && startRange.Date == DateTime.Today)
             {
                 startRange = startRange.Add(DateTime.Now.TimeOfDay);
             }
