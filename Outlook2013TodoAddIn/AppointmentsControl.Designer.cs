@@ -39,6 +39,7 @@
             this.lstTasks = new System.Windows.Forms.ListView();
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.panelCalendar = new System.Windows.Forms.Panel();
             this.apptCalendar = new Outlook2013TodoAddIn.CustomCalendar();
             this.ctxMenuAppointments.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -46,6 +47,7 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.panelCalendar.SuspendLayout();
             this.SuspendLayout();
             // 
             // ctxMenuAppointments
@@ -65,7 +67,7 @@
             // panel1
             // 
             this.panel1.Controls.Add(this.splitContainer1);
-            this.panel1.Controls.Add(this.apptCalendar);
+            this.panel1.Controls.Add(this.panelCalendar);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
@@ -75,7 +77,7 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 228);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 230);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -86,8 +88,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.lstTasks);
-            this.splitContainer1.Size = new System.Drawing.Size(258, 539);
-            this.splitContainer1.SplitterDistance = 269;
+            this.splitContainer1.Size = new System.Drawing.Size(258, 537);
+            this.splitContainer1.SplitterDistance = 268;
             this.splitContainer1.TabIndex = 6;
             this.splitContainer1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer1_SplitterMoved);
             // 
@@ -106,7 +108,7 @@
             this.lstAppointments.Name = "lstAppointments";
             this.lstAppointments.OwnerDraw = true;
             this.lstAppointments.ShowItemToolTips = true;
-            this.lstAppointments.Size = new System.Drawing.Size(258, 269);
+            this.lstAppointments.Size = new System.Drawing.Size(258, 268);
             this.lstAppointments.TabIndex = 4;
             this.lstAppointments.TileSize = new System.Drawing.Size(300, 38);
             this.lstAppointments.UseCompatibleStateImageBehavior = false;
@@ -139,7 +141,7 @@
             this.lstTasks.Name = "lstTasks";
             this.lstTasks.OwnerDraw = true;
             this.lstTasks.ShowItemToolTips = true;
-            this.lstTasks.Size = new System.Drawing.Size(258, 266);
+            this.lstTasks.Size = new System.Drawing.Size(258, 265);
             this.lstTasks.TabIndex = 5;
             this.lstTasks.TileSize = new System.Drawing.Size(300, 38);
             this.lstTasks.UseCompatibleStateImageBehavior = false;
@@ -155,11 +157,20 @@
             this.columnHeader4.Text = "Subject";
             this.columnHeader4.Width = 200;
             // 
+            // panelCalendar
+            // 
+            this.panelCalendar.Controls.Add(this.apptCalendar);
+            this.panelCalendar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelCalendar.Location = new System.Drawing.Point(0, 0);
+            this.panelCalendar.Name = "panelCalendar";
+            this.panelCalendar.Size = new System.Drawing.Size(258, 230);
+            this.panelCalendar.TabIndex = 7;
+            // 
             // apptCalendar
             // 
+            this.apptCalendar.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.apptCalendar.BoldedDates = null;
             this.apptCalendar.CurrentMonthForeColor = System.Drawing.Color.Black;
-            this.apptCalendar.Dock = System.Windows.Forms.DockStyle.Top;
             this.apptCalendar.FirstDayOfWeek = System.DayOfWeek.Sunday;
             this.apptCalendar.HoverBackColor = System.Drawing.Color.LightCyan;
             this.apptCalendar.HoverForeColor = System.Drawing.Color.Black;
@@ -170,7 +181,7 @@
             this.apptCalendar.SelectedBackColor = System.Drawing.Color.LightBlue;
             this.apptCalendar.SelectedDate = new System.DateTime(2013, 5, 2, 0, 0, 0, 0);
             this.apptCalendar.SelectedForeColor = System.Drawing.Color.Blue;
-            this.apptCalendar.Size = new System.Drawing.Size(258, 228);
+            this.apptCalendar.Size = new System.Drawing.Size(258, 230);
             this.apptCalendar.TabIndex = 1;
             this.apptCalendar.TodayBackColor = System.Drawing.Color.Blue;
             this.apptCalendar.TodayForeColor = System.Drawing.Color.White;
@@ -191,6 +202,7 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.panelCalendar.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -208,6 +220,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.Panel panelCalendar;
 
 
     }
