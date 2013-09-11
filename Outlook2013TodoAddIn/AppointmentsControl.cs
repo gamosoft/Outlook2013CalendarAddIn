@@ -482,7 +482,8 @@ namespace Outlook2013TodoAddIn
             e.DrawBackground(); // To avoid repainting (making font "grow")
             Outlook.AppointmentItem appt = e.Item.Tag as Outlook.AppointmentItem;
 
-            Color catColor = Color.Empty;
+            // Color catColor = Color.Empty;
+            List<Color> catColors = new List<Color>();
 
             Font itemFont = this.Font;
             if (!String.IsNullOrEmpty(appt.Categories))
@@ -496,19 +497,20 @@ namespace Outlook2013TodoAddIn
                         Outlook.Category c = Globals.ThisAddIn.Application.Session.Categories[cat] as Outlook.Category;
                         if (c != null)
                         {
-                            catColor = TranslateCategoryColor(c.Color);
+                            catColors.Add(TranslateCategoryColor(c.Color));
                         }
-                        // TODO: Check if more than one
                     });
                 }
             }
             int startRectangleWidth = 65;
+            int categoriesRectangleWidth = 55;
             int horizontalSpacing = 5;
 
             Rectangle totalRectangle = e.Bounds;
             Rectangle startRectangle = totalRectangle; startRectangle.Width = startRectangleWidth;
             Rectangle statusRectangle = totalRectangle; statusRectangle.Width = horizontalSpacing * 2; statusRectangle.Offset(startRectangleWidth + horizontalSpacing, 0);
             Rectangle subjectRectangle = totalRectangle; subjectRectangle.Height = this.FontHeight; subjectRectangle.Offset(startRectangleWidth + horizontalSpacing * 4, 0);
+            Rectangle categoriesRectangle = totalRectangle; categoriesRectangle.Width = categoriesRectangleWidth; categoriesRectangle.Height = this.FontHeight; categoriesRectangle.Offset(10, this.FontHeight);
             Rectangle locationRectangle = totalRectangle; locationRectangle.Height = this.FontHeight; locationRectangle.Offset(startRectangleWidth + horizontalSpacing * 4, this.FontHeight);
             bool selected = e.State.HasFlag(ListViewItemStates.Selected);
             Color back = Color.Empty;
@@ -551,9 +553,21 @@ namespace Outlook2013TodoAddIn
             e.Graphics.FillRectangle(statusBrush, statusRectangle);
             e.Graphics.DrawRectangle(new Pen(statusColor), statusRectangle);
 
-            e.Graphics.FillRectangle(new SolidBrush(catColor), subjectRectangle);
+            if (catColors.Count != 0)
+            {
+                int catWidth = categoriesRectangle.Width / catColors.Count;
+                Rectangle catRect = categoriesRectangle;
+                catColors.ForEach(cc =>
+                {
+                    e.Graphics.FillRectangle(new SolidBrush(cc), catRect);
+                    catRect.Width = catWidth; catRect.Offset(catWidth, 0);
+                });
+                
+            }
+
+            //e.Graphics.FillRectangle(new SolidBrush(catColor), subjectRectangle);
             e.Graphics.DrawString(appt.Subject, new Font(this.Font, FontStyle.Bold), colorBrush, subjectRectangle, leftFormat);
-            e.Graphics.FillRectangle(new SolidBrush(catColor), locationRectangle);
+            //e.Graphics.FillRectangle(new SolidBrush(catColor), locationRectangle);
             e.Graphics.DrawString(appt.Location, this.Font, colorBrush, locationRectangle, leftFormat);
         }
 
