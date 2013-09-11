@@ -153,5 +153,17 @@ namespace Outlook2013TodoAddIn.Properties {
                 this["SplitterDistance"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowDayNames {
+            get {
+                return ((bool)(this["ShowDayNames"]));
+            }
+            set {
+                this["ShowDayNames"] = value;
+            }
+        }
     }
 }
