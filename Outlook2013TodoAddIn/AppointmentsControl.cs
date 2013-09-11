@@ -42,6 +42,11 @@ namespace Outlook2013TodoAddIn
         public bool ShowFriendlyGroupHeaders { get; set; }
 
         /// <summary>
+        /// Gets/sets whether to show localized day names next to the days
+        /// </summary>
+        public bool ShowDayNames { get; set; }
+
+        /// <summary>
         /// Gets/sets the selected calendar date
         /// </summary>
         public DateTime SelectedDate
@@ -235,6 +240,10 @@ namespace Outlook2013TodoAddIn
                             default:
                                 break;
                         }
+                    }
+                    if (this.ShowDayNames)
+                    {
+                        groupHeaderText += " (" + i.Start.ToString("dddd") + ")";
                     }
                     grp = new ListViewGroup(groupHeaderText, HorizontalAlignment.Left);
                     this.lstAppointments.Groups.Add(grp); // TODO: Style it?
@@ -455,6 +464,7 @@ namespace Outlook2013TodoAddIn
                     this.ShowPastAppointments = cfg.ShowPastAppointments;
                     this.Accounts = cfg.Accounts;
                     this.ShowFriendlyGroupHeaders = cfg.ShowFriendlyGroupHeaders;
+                    this.ShowDayNames = cfg.ShowDayNames;
                     this.ShowTasks = cfg.ShowTasks;
                     this.FirstDayOfWeek = cfg.FirstDayOfWeek;
                     this.RetrieveData();

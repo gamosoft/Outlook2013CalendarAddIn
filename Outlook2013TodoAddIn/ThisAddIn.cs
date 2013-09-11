@@ -44,6 +44,7 @@ namespace Outlook2013TodoAddIn
             this.AppControl.ShowPastAppointments = Properties.Settings.Default.ShowPastAppointments;
             this.AppControl.Accounts = Properties.Settings.Default.Accounts;
             this.AppControl.ShowFriendlyGroupHeaders = Properties.Settings.Default.ShowFriendlyGroupHeaders;
+            this.AppControl.ShowDayNames = Properties.Settings.Default.ShowDayNames;
             this.AppControl.ShowTasks = Properties.Settings.Default.ShowTasks;
             this.AppControl.FirstDayOfWeek = Properties.Settings.Default.FirstDayOfWeek;
             this.AppControl.NumDays = Properties.Settings.Default.NumDays; // Setting the value will load the appointments
