@@ -555,12 +555,15 @@ namespace Outlook2013TodoAddIn
 
             if (catColors.Count != 0)
             {
-                int catWidth = categoriesRectangle.Width / catColors.Count;
-                Rectangle catRect = categoriesRectangle;
-                catColors.ForEach(cc =>
+                // int catWidth = categoriesRectangle.Width / catColors.Count;
+                int catWidth = categoriesRectangle.Width / 3; // TODO: This looks nicer, but more than 3 won't fit
+                Rectangle catRect = categoriesRectangle; catRect.Width = catWidth;
+                // catColors.ForEach(cc =>
+                catColors.Take(3).ToList().ForEach(cc =>
                 {
-                    e.Graphics.FillRectangle(new SolidBrush(cc), catRect);
-                    catRect.Width = catWidth; catRect.Offset(catWidth, 0);
+                    e.Graphics.FillEllipse(new SolidBrush(cc), catRect);
+                    //e.Graphics.FillRectangle(new SolidBrush(cc), catRect);
+                    catRect.Offset(catWidth, 0);
                 });
                 
             }
