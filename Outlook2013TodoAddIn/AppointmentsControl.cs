@@ -258,6 +258,25 @@ namespace Outlook2013TodoAddIn
                 // current.UseItemStyleForSubItems = false;
 
                 current.ToolTipText = String.Format("{0} - {1}  {2}", i.Start.ToShortTimeString(), i.End.ToShortTimeString(), i.Subject);
+
+                if (!String.IsNullOrEmpty(i.Categories))
+                {
+                    string[] allCats = i.Categories.Split(new char[] { ',' });
+                    if (allCats != null && allCats.Length != 0)
+                    {
+                        List<string> cs = allCats.Select(cat => cat.Trim()).ToList();
+                        cs.ForEach(cat =>
+                        {
+                            Outlook.Category c = Globals.ThisAddIn.Application.Session.Categories[cat] as Outlook.Category;
+                            if (c != null)
+                            {
+                                current.ToolTipText += Environment.NewLine + " - " + c.Name;
+                            }
+                        });
+                    }
+                }
+
+
                 current.Tag = i;
                 current.Group = grp;
                 switch (i.BusyStatus)
