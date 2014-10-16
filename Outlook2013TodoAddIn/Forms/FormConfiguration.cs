@@ -77,6 +77,15 @@ namespace Outlook2013TodoAddIn.Forms
         }
 
         /// <summary>
+        /// Gets/sets whether to show week numbers
+        /// </summary>
+        public bool ShowWeekNumbers
+        {
+            get { return this.chkShowWeekNumbers.Checked; }
+            set { this.chkShowWeekNumbers.Checked = value; }
+        }
+
+        /// <summary>
         /// Gets/sets whether to show the tasks list
         /// </summary>
         public bool ShowTasks
@@ -118,6 +127,7 @@ namespace Outlook2013TodoAddIn.Forms
             this.chkShowPastAppointments.Checked = Properties.Settings.Default.ShowPastAppointments;
             this.chkFriendlyGroupHeaders.Checked = Properties.Settings.Default.ShowFriendlyGroupHeaders;
             this.chkShowDayNames.Checked = Properties.Settings.Default.ShowDayNames;
+            this.chkShowWeekNumbers.Checked = Properties.Settings.Default.ShowWeekNumbers;
             this.chkShowTasks.Checked = Properties.Settings.Default.ShowTasks;
             this.LoadStores();
             this.LoadDays();
@@ -158,6 +168,7 @@ namespace Outlook2013TodoAddIn.Forms
             Properties.Settings.Default.Accounts = this.Accounts;
             Properties.Settings.Default.ShowFriendlyGroupHeaders = this.chkFriendlyGroupHeaders.Checked;
             Properties.Settings.Default.ShowDayNames = this.chkShowDayNames.Checked;
+            Properties.Settings.Default.ShowWeekNumbers = this.chkShowWeekNumbers.Checked;
             Properties.Settings.Default.ShowTasks = this.chkShowTasks.Checked;
             Properties.Settings.Default.FirstDayOfWeek = (System.DayOfWeek)Enum.Parse(typeof(System.DayOfWeek), this.cboFirstDayOfWeek.SelectedValue.ToString());
         }

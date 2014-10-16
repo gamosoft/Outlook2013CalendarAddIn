@@ -47,6 +47,11 @@ namespace Outlook2013TodoAddIn
         public bool ShowDayNames { get; set; }
 
         /// <summary>
+        /// Gets/sets whether to show week numbers
+        /// </summary>
+        public bool ShowWeekNumbers { get; set; }
+
+        /// <summary>
         /// Gets/sets the selected calendar date
         /// </summary>
         public DateTime SelectedDate
@@ -303,6 +308,7 @@ namespace Outlook2013TodoAddIn
             this.lstAppointments.Items.Clear();
             this.lstAppointments.Items.AddRange(lstCol.ToArray());
 
+            this.apptCalendar.ShowWeekNumbers = this.ShowWeekNumbers;
             this.apptCalendar.UpdateCalendar();
         }
 
@@ -484,6 +490,7 @@ namespace Outlook2013TodoAddIn
                     this.Accounts = cfg.Accounts;
                     this.ShowFriendlyGroupHeaders = cfg.ShowFriendlyGroupHeaders;
                     this.ShowDayNames = cfg.ShowDayNames;
+                    this.ShowWeekNumbers = cfg.ShowWeekNumbers;
                     this.ShowTasks = cfg.ShowTasks;
                     this.FirstDayOfWeek = cfg.FirstDayOfWeek;
                     this.RetrieveData();
@@ -593,6 +600,11 @@ namespace Outlook2013TodoAddIn
             e.Graphics.DrawString(appt.Location, this.Font, colorBrush, locationRectangle, leftFormat);
         }
 
+        /// <summary>
+        /// The color scheme for Outlook is not the same as of Windows Forms, so this method tries to do a best effor in matching them
+        /// </summary>
+        /// <param name="col">Color of the category</param>
+        /// <returns>Resulting color to be displayed</returns>
         private Color TranslateCategoryColor(Outlook.OlCategoryColor col)
         {
             Color result = Color.Black;
