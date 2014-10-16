@@ -99,6 +99,11 @@ namespace Outlook2013TodoAddIn
         /// </summary>
         public Color HoverBackColor { get; set; }
 
+        /// <summary>
+        /// Gets/sets whether to show week numbers
+        /// </summary>
+        public bool ShowWeekNumbers { get; set; }
+
         #endregion "Properties"
 
         #region "Methods"
@@ -299,6 +304,11 @@ namespace Outlook2013TodoAddIn
             }
             bool previousMonthVisible = (dayCurrent != 1);
             bool nextMonthVisible = false;
+
+            if (this.ShowWeekNumbers)
+            {
+                // TODO: Show the week numbers
+            }
 
             // Row 0 is for days of week
             for (int row = 1; row < this.tableLayoutPanel1.RowCount; row++)
