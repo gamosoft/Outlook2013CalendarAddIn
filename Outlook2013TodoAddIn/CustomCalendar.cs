@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Outlook = Microsoft.Office.Interop.Outlook;
+using System.Globalization;
 
 namespace Outlook2013TodoAddIn
 {
@@ -173,6 +174,22 @@ namespace Outlook2013TodoAddIn
                 }
             }
 
+            // This piece controls the week numbers
+            this.tableLayoutPanel2.CellBorderStyle = TableLayoutPanelCellBorderStyle.None;
+            for (int row = 0; row < this.tableLayoutPanel2.RowCount; row++)
+            {
+                Label lblCtrl = new Label() { Text = "#" };
+                lblCtrl.Name = String.Format("lbl_{0}", row.ToString());
+                lblCtrl.Dock = DockStyle.Fill;
+                lblCtrl.TextAlign = ContentAlignment.MiddleRight;
+                lblCtrl.Margin = Padding.Empty;
+                lblCtrl.Padding = Padding.Empty;
+                lblCtrl.Font = new Font(this.Font.FontFamily, this.Font.Size-2, FontStyle.Italic);
+                lblCtrl.FlatStyle = FlatStyle.Flat;
+                this.tableLayoutPanel2.Controls.Add(lblCtrl);
+                this.tableLayoutPanel2.SetCellPosition(lblCtrl, new TableLayoutPanelCellPosition(0, row));
+            }
+
             this.btnPrevious.FlatAppearance.MouseOverBackColor = this.HoverBackColor;
             this.btnNext.FlatAppearance.MouseOverBackColor = this.HoverBackColor;
             this.btnConfig.FlatAppearance.MouseOverBackColor = this.HoverBackColor;
@@ -307,12 +324,39 @@ namespace Outlook2013TodoAddIn
 
             if (this.ShowWeekNumbers)
             {
-                // TODO: Show the week numbers
+                this.tableLayoutPanel1.Left = 31;
+                this.tableLayoutPanel1.Width = 212;
+                this.tableLayoutPanel2.Visible = true;
             }
+            else
+            {
+                this.tableLayoutPanel1.Left = 9;
+                this.tableLayoutPanel1.Width = 234;
+                this.tableLayoutPanel2.Visible = false;
+            }            
 
             // Row 0 is for days of week
             for (int row = 1; row < this.tableLayoutPanel1.RowCount; row++)
             {
+                if (this.ShowWeekNumbers)
+                {
+                    Label lblDoW = this.tableLayoutPanel2.GetControlFromPosition(0, row) as Label;
+                    DateTime dateForWeek;
+                    if (previousMonthVisible)
+                    {
+                        dateForWeek = new DateTime(previousMonth.Year, previousMonth.Month, dayCurrent);
+                    }
+                    else if (nextMonthVisible)
+                    {
+                        dateForWeek = new DateTime(nextMonth.Year, nextMonth.Month, dayCurrent);
+                    }
+                    else
+                    {
+                        dateForWeek = new DateTime(this.SelectedDate.Year, this.SelectedDate.Month, dayCurrent);
+                    }
+                    lblDoW.Text = GetWeekForDate(dateForWeek).ToString();
+                }
+                
                 for (int col = 0; col < this.tableLayoutPanel1.ColumnCount; col++)
                 {
                     Label lblCtrl = this.tableLayoutPanel1.GetControlFromPosition(col, row) as Label;
@@ -382,6 +426,13 @@ namespace Outlook2013TodoAddIn
                 }
             }
         }
+
+        private int GetWeekForDate(DateTime time)
+        {
+            // Add 6 days since we want the date at the "last" column of the calendar to be more precise
+            int weekNumber = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(time.AddDays(6), CalendarWeekRule.FirstDay, this.FirstDayOfWeek);
+            return weekNumber;
+        } 
 
         /// <summary>
         /// Returns to the previous month
