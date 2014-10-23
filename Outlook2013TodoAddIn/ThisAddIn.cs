@@ -36,36 +36,44 @@ namespace Outlook2013TodoAddIn
         /// <param name="e">EventArgs</param>
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
-            Globals.ThisAddIn.Application.NewMailEx += Application_NewMailEx;
-            this.AddRegistryNotification();
+            try
+            {
+                Globals.ThisAddIn.Application.NewMailEx += Application_NewMailEx;
+                this.AddRegistryNotification();
 
-            this.AppControl = new AppointmentsControl();
-            this.AppControl.MailAlertsEnabled = Properties.Settings.Default.MailAlertsEnabled;
-            this.AppControl.ShowPastAppointments = Properties.Settings.Default.ShowPastAppointments;
-            this.AppControl.Accounts = Properties.Settings.Default.Accounts;
-            this.AppControl.ShowFriendlyGroupHeaders = Properties.Settings.Default.ShowFriendlyGroupHeaders;
-            this.AppControl.ShowDayNames = Properties.Settings.Default.ShowDayNames;
-            this.AppControl.ShowWeekNumbers = Properties.Settings.Default.ShowWeekNumbers;
-            this.AppControl.ShowTasks = Properties.Settings.Default.ShowTasks;
-            this.AppControl.FirstDayOfWeek = Properties.Settings.Default.FirstDayOfWeek;
-            this.AppControl.NumDays = Properties.Settings.Default.NumDays; // Setting the value will load the appointments
-            
-            ToDoTaskPane = this.CustomTaskPanes.Add(this.AppControl, "Appointments");
-            ToDoTaskPane.Visible = Properties.Settings.Default.Visible;
-            ToDoTaskPane.Width = Properties.Settings.Default.Width;
-            ToDoTaskPane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
-            ToDoTaskPane.DockPositionRestrict = Office.MsoCTPDockPositionRestrict.msoCTPDockPositionRestrictNoHorizontal;
-            ToDoTaskPane.VisibleChanged += ToDoTaskPane_VisibleChanged;
-            this.AppControl.SizeChanged += appControl_SizeChanged;
+                this.AppControl = new AppointmentsControl();
+                this.AppControl.MailAlertsEnabled = Properties.Settings.Default.MailAlertsEnabled;
+                this.AppControl.ShowPastAppointments = Properties.Settings.Default.ShowPastAppointments;
+                this.AppControl.Accounts = Properties.Settings.Default.Accounts;
+                this.AppControl.ShowFriendlyGroupHeaders = Properties.Settings.Default.ShowFriendlyGroupHeaders;
+                this.AppControl.ShowDayNames = Properties.Settings.Default.ShowDayNames;
+                this.AppControl.ShowWeekNumbers = Properties.Settings.Default.ShowWeekNumbers;
+                this.AppControl.ShowTasks = Properties.Settings.Default.ShowTasks;
+                this.AppControl.FirstDayOfWeek = Properties.Settings.Default.FirstDayOfWeek;
+                this.AppControl.NumDays = Properties.Settings.Default.NumDays; // Setting the value will load the appointments
 
-            // Selecting the date will retrieve the appointments
-            // Otherwise it'll take the one used when the designer changed!
-            this.AppControl.SelectedDate = DateTime.Today;
-            // this.AppControl.RetrieveData();
+                ToDoTaskPane = this.CustomTaskPanes.Add(this.AppControl, "Appointments");
+                ToDoTaskPane.Visible = Properties.Settings.Default.Visible;
+                ToDoTaskPane.Width = Properties.Settings.Default.Width;
+                ToDoTaskPane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
+                ToDoTaskPane.DockPositionRestrict = Office.MsoCTPDockPositionRestrict.msoCTPDockPositionRestrictNoHorizontal;
+                ToDoTaskPane.VisibleChanged += ToDoTaskPane_VisibleChanged;
+                this.AppControl.SizeChanged += appControl_SizeChanged;
 
-            Globals.ThisAddIn.Application.ActiveExplorer().Deactivate += ThisAddIn_Deactivate;
+                // Selecting the date will retrieve the appointments
+                // Otherwise it'll take the one used when the designer changed!
+                this.AppControl.SelectedDate = DateTime.Today;
+                // this.AppControl.RetrieveData();
 
-            // TODO: Make sure there are no memory leaks (dispose COM objects)
+                Globals.ThisAddIn.Application.ActiveExplorer().Deactivate += ThisAddIn_Deactivate;
+
+                // TODO: Make sure there are no memory leaks (dispose COM objects)
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(String.Format("Error starting Calendar AddIn: {0}", exc.ToString()));
+                throw exc;
+            }
         }
 
         /// <summary>
