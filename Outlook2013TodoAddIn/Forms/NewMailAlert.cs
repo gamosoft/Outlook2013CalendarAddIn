@@ -12,7 +12,7 @@ using System.Windows.Forms;
 namespace Outlook2013TodoAddIn.Forms
 {
     /// <summary>
-    /// New form to display new emai lnotifications
+    /// New form to display new email notifications
     /// </summary>
     public partial class NewMailAlert : Form
     {
@@ -29,14 +29,9 @@ namespace Outlook2013TodoAddIn.Forms
         private bool mouseIsOver = false;
 
         /// <summary>
-        /// Show form
+        /// Topmost value
         /// </summary>
-        private const int SW_SHOW = 5;
-
-        /// <summary>
-        /// Fading effect
-        /// </summary>
-        private const uint AW_BLEND = 0x00080000;
+        private const int WS_EX_TOPMOST = 0x00000008;
 
         #endregion "Variables"
 
@@ -53,6 +48,21 @@ namespace Outlook2013TodoAddIn.Forms
         protected override bool ShowWithoutActivation
         {
             get { return true; }
+        }
+
+        /// <summary>
+        /// This is used so we can show without activation and be the TopMost form
+        /// The TopMost property of the form MUST be set to false for this to work
+        /// https://connect.microsoft.com/VisualStudio/feedback/details/401311/showwithoutactivation-is-not-supported-with-topmost
+        /// </summary>
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams value = base.CreateParams;
+                value.ExStyle |= WS_EX_TOPMOST;
+                return value;
+            }
         }
 
         #endregion "Properties"
@@ -77,37 +87,6 @@ namespace Outlook2013TodoAddIn.Forms
             timer.Interval = interval;
             timer.Tick += timer_Tick;
             timer.Start();
-        }
-
-        /// <summary>
-        /// Load and bring to fron
-        /// </summary>
-        /// <param name="e">EventArgs</param>
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
-            if (this.WindowState == FormWindowState.Minimized)
-            {
-                this.WindowState = FormWindowState.Normal;
-            }
-            this.BringToFront();
-        }
-
-        [DllImport("user32.dll")]
-        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-
-        [DllImport("user32.dll")]
-        private static extern bool AnimateWindow(IntPtr hWnd, uint dwTime, uint dwFlags);
-
-        /// <summary>
-        /// Method to display the form and make it topmost
-        /// </summary>
-        /// <returns>True or false</returns>
-        public bool ShowPopup()
-        {
-            bool result = ShowWindow(this.Handle, SW_SHOW);
-            //bool result = AnimateWindow(this.Handle, 200, AW_BLEND);
-            return result;
         }
 
         /// <summary>

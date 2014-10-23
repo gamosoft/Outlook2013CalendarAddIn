@@ -100,7 +100,7 @@
             this.lnkSender.AutoSize = true;
             this.lnkSender.Location = new System.Drawing.Point(85, 5);
             this.lnkSender.Name = "lnkSender";
-            this.lnkSender.Size = new System.Drawing.Size(82, 17);
+            this.lnkSender.Size = new System.Drawing.Size(72, 17);
             this.lnkSender.TabIndex = 10;
             this.lnkSender.TabStop = true;
             this.lnkSender.Text = "linkLabel1";
@@ -137,7 +137,6 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "NewMailAlert";
-            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 
