@@ -83,7 +83,7 @@ namespace Outlook2013TodoAddIn
                     NewMailAlert nm = new NewMailAlert(newMail, Properties.Settings.Default.DisplayTimeOut);
                     // Show the popup without stealing focus
                     SoundHelper.sndPlaySoundW(SoundHelper.MailBeep, SoundHelper.SND_NODEFAULT);
-                    nm.ShowPopup();
+                    nm.Show();
                 }
             }
         }
