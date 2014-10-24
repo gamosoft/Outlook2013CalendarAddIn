@@ -70,7 +70,7 @@
             // 
             // numRangeDays
             // 
-            this.numRangeDays.Location = new System.Drawing.Point(88, 27);
+            this.numRangeDays.Location = new System.Drawing.Point(78, 27);
             this.numRangeDays.Maximum = new decimal(new int[] {
             30,
             0,
@@ -201,7 +201,7 @@
             // 
             this.pctBoxPayPal.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pctBoxPayPal.Image = global::Outlook2013TodoAddIn.Properties.Resources.buy_me_a_beer_small;
-            this.pctBoxPayPal.Location = new System.Drawing.Point(190, 21);
+            this.pctBoxPayPal.Location = new System.Drawing.Point(152, 23);
             this.pctBoxPayPal.Name = "pctBoxPayPal";
             this.pctBoxPayPal.Size = new System.Drawing.Size(83, 30);
             this.pctBoxPayPal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -233,6 +233,7 @@
             this.Controls.Add(this.chkMailAlerts);
             this.Controls.Add(this.lblRangeDays);
             this.Controls.Add(this.numRangeDays);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormConfiguration";
