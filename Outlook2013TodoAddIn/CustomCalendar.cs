@@ -324,14 +324,14 @@ namespace Outlook2013TodoAddIn
 
             if (this.ShowWeekNumbers)
             {
-                this.tableLayoutPanel1.Left = 31;
-                this.tableLayoutPanel1.Width = 212;
+                this.tableLayoutPanel1.Left = this.tableLayoutPanel2.Left + this.tableLayoutPanel2.Width;
+                this.tableLayoutPanel1.Width = this.btnNext.Left - this.btnPrevious.Left - this.tableLayoutPanel2.Width + this.btnNext.Width;
                 this.tableLayoutPanel2.Visible = true;
             }
             else
             {
-                this.tableLayoutPanel1.Left = 9;
-                this.tableLayoutPanel1.Width = 234;
+                this.tableLayoutPanel1.Left = this.btnPrevious.Left;
+                this.tableLayoutPanel1.Width = this.btnNext.Left - this.btnPrevious.Left + this.btnNext.Width;
                 this.tableLayoutPanel2.Visible = false;
             }            
 
