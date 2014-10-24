@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.chkMailAlerts = new System.Windows.Forms.CheckBox();
             this.lblRangeDays = new System.Windows.Forms.Label();
             this.numRangeDays = new System.Windows.Forms.NumericUpDown();
@@ -42,7 +43,10 @@
             this.lblFirstDayOfWeek = new System.Windows.Forms.Label();
             this.chkShowDayNames = new System.Windows.Forms.CheckBox();
             this.chkShowWeekNumbers = new System.Windows.Forms.CheckBox();
+            this.pctBoxPayPal = new System.Windows.Forms.PictureBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.numRangeDays)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pctBoxPayPal)).BeginInit();
             this.SuspendLayout();
             // 
             // chkMailAlerts
@@ -58,7 +62,7 @@
             // lblRangeDays
             // 
             this.lblRangeDays.AutoSize = true;
-            this.lblRangeDays.Location = new System.Drawing.Point(55, 29);
+            this.lblRangeDays.Location = new System.Drawing.Point(28, 29);
             this.lblRangeDays.Name = "lblRangeDays";
             this.lblRangeDays.Size = new System.Drawing.Size(44, 17);
             this.lblRangeDays.TabIndex = 7;
@@ -66,7 +70,7 @@
             // 
             // numRangeDays
             // 
-            this.numRangeDays.Location = new System.Drawing.Point(115, 27);
+            this.numRangeDays.Location = new System.Drawing.Point(88, 27);
             this.numRangeDays.Maximum = new decimal(new int[] {
             30,
             0,
@@ -193,6 +197,20 @@
             this.chkShowWeekNumbers.Text = "Show Week Numbers";
             this.chkShowWeekNumbers.UseVisualStyleBackColor = true;
             // 
+            // pctBoxPayPal
+            // 
+            this.pctBoxPayPal.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pctBoxPayPal.Image = global::Outlook2013TodoAddIn.Properties.Resources.buy_me_a_beer_small;
+            this.pctBoxPayPal.Location = new System.Drawing.Point(190, 21);
+            this.pctBoxPayPal.Name = "pctBoxPayPal";
+            this.pctBoxPayPal.Size = new System.Drawing.Size(83, 30);
+            this.pctBoxPayPal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pctBoxPayPal.TabIndex = 21;
+            this.pctBoxPayPal.TabStop = false;
+            this.toolTip1.SetToolTip(this.pctBoxPayPal, "If you find it useful and have spare time you can drop me a line saying how you l" +
+        "ike the tool and such, or better yet, you can buy me a beer if you wish. ;-) ");
+            this.pctBoxPayPal.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
             // FormConfiguration
             // 
             this.AcceptButton = this.btnOK;
@@ -200,6 +218,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(282, 482);
+            this.Controls.Add(this.pctBoxPayPal);
             this.Controls.Add(this.chkShowWeekNumbers);
             this.Controls.Add(this.chkShowDayNames);
             this.Controls.Add(this.lblFirstDayOfWeek);
@@ -223,6 +242,7 @@
             this.Text = "Configuration";
             this.Load += new System.EventHandler(this.FormConfiguration_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numRangeDays)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pctBoxPayPal)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -244,5 +264,7 @@
         private System.Windows.Forms.Label lblFirstDayOfWeek;
         private System.Windows.Forms.CheckBox chkShowDayNames;
         private System.Windows.Forms.CheckBox chkShowWeekNumbers;
+        private System.Windows.Forms.PictureBox pctBoxPayPal;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
