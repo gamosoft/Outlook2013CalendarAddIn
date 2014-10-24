@@ -37,6 +37,11 @@ namespace Outlook2013TodoAddIn
         /// </summary>
         public const string FollowUp = "Follow up";
 
+        /// <summary>
+        /// URL to paypal donation site, in case someone want's to buy me a beer ;-)
+        /// </summary>
+        public const string DonateUrl = "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ZXYEC3PM6K7TQ&lc=US&item_name=Outlook2103AddInBuyBeer&currency_code=USD&bn=PP%2dDonationsBF%3amybutton%2epng%3aNonHosted";
+
         #endregion "Variables"
     }
 }

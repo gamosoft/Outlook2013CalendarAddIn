@@ -288,6 +288,7 @@
     <None Include="Images\Envelope.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\buy-me-a-beer-small.png" />
     <Content Include="Images\gear.png" />
   </ItemGroup>
   <PropertyGroup>

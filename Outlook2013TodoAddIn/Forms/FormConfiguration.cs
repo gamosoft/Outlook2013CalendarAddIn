@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -171,6 +172,16 @@ namespace Outlook2013TodoAddIn.Forms
             Properties.Settings.Default.ShowWeekNumbers = this.chkShowWeekNumbers.Checked;
             Properties.Settings.Default.ShowTasks = this.chkShowTasks.Checked;
             Properties.Settings.Default.FirstDayOfWeek = (System.DayOfWeek)Enum.Parse(typeof(System.DayOfWeek), this.cboFirstDayOfWeek.SelectedValue.ToString());
+        }
+
+        /// <summary>
+        /// Open the default web browser with a link to PayPal in case someone wants to buy me a beer
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">EventArgs</param>
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            Process.Start(Constants.DonateUrl);
         }
 
         #endregion "Methods"
