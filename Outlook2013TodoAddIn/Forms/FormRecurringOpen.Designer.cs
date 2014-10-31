@@ -106,6 +106,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Open Recurring Item";
+            this.Load += new System.EventHandler(this.FormRecurringOpen_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
