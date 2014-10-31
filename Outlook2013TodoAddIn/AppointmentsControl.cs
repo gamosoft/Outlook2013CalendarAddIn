@@ -400,6 +400,8 @@ namespace Outlook2013TodoAddIn
                     if (appt.IsRecurring)
                     {
                         FormRecurringOpen f = new FormRecurringOpen();
+                        f.Title = "Open Recurring Item";
+                        f.Message = "This is one appointment in a series. What do you want to open?";
                         if (f.ShowDialog() == DialogResult.OK)
                         {
                             if (f.OpenRecurring)
@@ -453,6 +455,49 @@ namespace Outlook2013TodoAddIn
                     mail.Body = Environment.NewLine + Environment.NewLine + appt.Body;
                     mail.Subject = Constants.SubjectRE + ": " + appt.Subject;
                     mail.Display();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Allows to delete the selected appointment (whether it's a recurring one or not)
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">EventArgs</param>
+        private void mnuItemDeleteAppointment_Click(object sender, EventArgs e)
+        {
+            if (this.lstAppointments.SelectedIndices.Count != 0)
+            {
+                Outlook.AppointmentItem appt = this.lstAppointments.SelectedItems[0].Tag as Outlook.AppointmentItem;
+                if (appt != null)
+                {
+                    if (appt.IsRecurring)
+                    {
+                        FormRecurringOpen f = new FormRecurringOpen();
+                        f.Title = "Warning: Delete Recurring Item";
+                        f.Message = "This is one appointment in a series. What do you want to delete?";
+                        if (f.ShowDialog() == DialogResult.OK)
+                        {
+                            if (f.OpenRecurring)
+                            {
+                                Outlook.AppointmentItem masterAppt = appt.Parent; // Get the master appointment item
+                                masterAppt.Delete(); // Will delete ALL instances
+                            }
+                            else
+                            {
+                                appt.Delete(); // Delete just this instance
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (MessageBox.Show("Are you sure you want to delete this appointment?", "Delete appointment", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        {
+                            appt.Delete(); // Delete just this instance
+                        }
+                    }
+                    // At the end, synchronously "refresh" appointments in case they have changed
+                    this.RetrieveAppointments();
                 }
             }
         }

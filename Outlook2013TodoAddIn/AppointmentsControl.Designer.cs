@@ -41,6 +41,7 @@
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panelCalendar = new System.Windows.Forms.Panel();
             this.apptCalendar = new Outlook2013TodoAddIn.CustomCalendar();
+            this.mnuItemDeleteAppointment = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxMenuAppointments.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -53,14 +54,15 @@
             // ctxMenuAppointments
             // 
             this.ctxMenuAppointments.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuItemReplyAllEmail});
+            this.mnuItemReplyAllEmail,
+            this.mnuItemDeleteAppointment});
             this.ctxMenuAppointments.Name = "ctxMenuAppointments";
-            this.ctxMenuAppointments.Size = new System.Drawing.Size(214, 28);
+            this.ctxMenuAppointments.Size = new System.Drawing.Size(225, 80);
             // 
             // mnuItemReplyAllEmail
             // 
             this.mnuItemReplyAllEmail.Name = "mnuItemReplyAllEmail";
-            this.mnuItemReplyAllEmail.Size = new System.Drawing.Size(213, 24);
+            this.mnuItemReplyAllEmail.Size = new System.Drawing.Size(224, 24);
             this.mnuItemReplyAllEmail.Text = "Reply All With Email";
             this.mnuItemReplyAllEmail.Click += new System.EventHandler(this.mnuItemReplyAllEmail_Click);
             // 
@@ -181,6 +183,7 @@
             this.apptCalendar.SelectedBackColor = System.Drawing.Color.LightBlue;
             this.apptCalendar.SelectedDate = new System.DateTime(2013, 5, 2, 0, 0, 0, 0);
             this.apptCalendar.SelectedForeColor = System.Drawing.Color.Blue;
+            this.apptCalendar.ShowWeekNumbers = false;
             this.apptCalendar.Size = new System.Drawing.Size(258, 230);
             this.apptCalendar.TabIndex = 1;
             this.apptCalendar.TodayBackColor = System.Drawing.Color.Blue;
@@ -188,6 +191,13 @@
             this.apptCalendar.CellDoubleClick += new System.EventHandler(this.apptCalendar_CellDoubleClick);
             this.apptCalendar.SelectedDateChanged += new System.EventHandler(this.apptCalendar_SelectedDateChanged);
             this.apptCalendar.ConfigurationButtonClicked += new System.EventHandler(this.apptCalendar_ConfigurationButtonClicked);
+            // 
+            // mnuItemDeleteAppointment
+            // 
+            this.mnuItemDeleteAppointment.Name = "mnuItemDeleteAppointment";
+            this.mnuItemDeleteAppointment.Size = new System.Drawing.Size(224, 24);
+            this.mnuItemDeleteAppointment.Text = "Delete appointment/s";
+            this.mnuItemDeleteAppointment.Click += new System.EventHandler(this.mnuItemDeleteAppointment_Click);
             // 
             // AppointmentsControl
             // 
@@ -221,6 +231,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Panel panelCalendar;
+        private System.Windows.Forms.ToolStripMenuItem mnuItemDeleteAppointment;
 
 
     }
