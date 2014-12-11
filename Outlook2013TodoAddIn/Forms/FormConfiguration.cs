@@ -125,6 +125,7 @@ namespace Outlook2013TodoAddIn.Forms
         {
             this.numRangeDays.Value = Properties.Settings.Default.NumDays;
             this.chkMailAlerts.Checked = Properties.Settings.Default.MailAlertsEnabled;
+            this.numRangeEmailAlertsTimeOut.Value = Properties.Settings.Default.DisplayTimeOut / 1000;
             this.chkShowPastAppointments.Checked = Properties.Settings.Default.ShowPastAppointments;
             this.chkFriendlyGroupHeaders.Checked = Properties.Settings.Default.ShowFriendlyGroupHeaders;
             this.chkShowDayNames.Checked = Properties.Settings.Default.ShowDayNames;
@@ -165,6 +166,7 @@ namespace Outlook2013TodoAddIn.Forms
         {
             Properties.Settings.Default.NumDays = this.numRangeDays.Value;
             Properties.Settings.Default.MailAlertsEnabled = this.chkMailAlerts.Checked;
+            Properties.Settings.Default.DisplayTimeOut = (int)this.numRangeEmailAlertsTimeOut.Value * 1000;
             Properties.Settings.Default.ShowPastAppointments = this.chkShowPastAppointments.Checked;
             Properties.Settings.Default.Accounts = this.Accounts;
             Properties.Settings.Default.ShowFriendlyGroupHeaders = this.chkFriendlyGroupHeaders.Checked;
