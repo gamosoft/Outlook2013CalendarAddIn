@@ -45,8 +45,11 @@
             this.chkShowWeekNumbers = new System.Windows.Forms.CheckBox();
             this.pctBoxPayPal = new System.Windows.Forms.PictureBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.numRangeEmailAlertsTimeOut = new System.Windows.Forms.NumericUpDown();
+            this.lblSeconds = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numRangeDays)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctBoxPayPal)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numRangeEmailAlertsTimeOut)).BeginInit();
             this.SuspendLayout();
             // 
             // chkMailAlerts
@@ -54,9 +57,9 @@
             this.chkMailAlerts.AutoSize = true;
             this.chkMailAlerts.Location = new System.Drawing.Point(45, 94);
             this.chkMailAlerts.Name = "chkMailAlerts";
-            this.chkMailAlerts.Size = new System.Drawing.Size(143, 21);
+            this.chkMailAlerts.Size = new System.Drawing.Size(95, 21);
             this.chkMailAlerts.TabIndex = 8;
-            this.chkMailAlerts.Text = "Enable Mail Alerts";
+            this.chkMailAlerts.Text = "Mail Alerts";
             this.chkMailAlerts.UseVisualStyleBackColor = true;
             // 
             // lblRangeDays
@@ -211,6 +214,37 @@
         "ike the tool and such, or better yet, you can buy me a beer if you wish. ;-) ");
             this.pctBoxPayPal.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
+            // numRangeEmailAlertsTimeOut
+            // 
+            this.numRangeEmailAlertsTimeOut.Location = new System.Drawing.Point(138, 93);
+            this.numRangeEmailAlertsTimeOut.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numRangeEmailAlertsTimeOut.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numRangeEmailAlertsTimeOut.Name = "numRangeEmailAlertsTimeOut";
+            this.numRangeEmailAlertsTimeOut.Size = new System.Drawing.Size(44, 22);
+            this.numRangeEmailAlertsTimeOut.TabIndex = 22;
+            this.numRangeEmailAlertsTimeOut.Value = new decimal(new int[] {
+            6,
+            0,
+            0,
+            0});
+            // 
+            // lblSeconds
+            // 
+            this.lblSeconds.AutoSize = true;
+            this.lblSeconds.Location = new System.Drawing.Point(186, 95);
+            this.lblSeconds.Name = "lblSeconds";
+            this.lblSeconds.Size = new System.Drawing.Size(61, 17);
+            this.lblSeconds.TabIndex = 23;
+            this.lblSeconds.Text = "seconds";
+            // 
             // FormConfiguration
             // 
             this.AcceptButton = this.btnOK;
@@ -218,6 +252,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(282, 482);
+            this.Controls.Add(this.lblSeconds);
+            this.Controls.Add(this.numRangeEmailAlertsTimeOut);
             this.Controls.Add(this.pctBoxPayPal);
             this.Controls.Add(this.chkShowWeekNumbers);
             this.Controls.Add(this.chkShowDayNames);
@@ -244,6 +280,7 @@
             this.Load += new System.EventHandler(this.FormConfiguration_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numRangeDays)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctBoxPayPal)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numRangeEmailAlertsTimeOut)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -267,5 +304,7 @@
         private System.Windows.Forms.CheckBox chkShowWeekNumbers;
         private System.Windows.Forms.PictureBox pctBoxPayPal;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.NumericUpDown numRangeEmailAlertsTimeOut;
+        private System.Windows.Forms.Label lblSeconds;
     }
 }
