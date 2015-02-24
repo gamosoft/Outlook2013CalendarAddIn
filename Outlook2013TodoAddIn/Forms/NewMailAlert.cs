@@ -26,18 +26,13 @@ namespace Outlook2013TodoAddIn.Forms
         /// <summary>
         /// Don't close the for if the mouse is over it
         /// </summary>
-        private bool mouseIsOver = false;
-
-        /// <summary>
-        /// Topmost value
-        /// </summary>
-        private const int WS_EX_TOPMOST = 0x00000008;
-
         #endregion "Variables"
+        private bool mouseIsOver = false;
+        /// <summary>
+
 
         #region "Properties"
 
-        /// <summary>
         /// Attached email message to open or flag
         /// </summary>
         public Microsoft.Office.Interop.Outlook.MailItem Email { get; set; }
@@ -60,7 +55,7 @@ namespace Outlook2013TodoAddIn.Forms
             get
             {
                 CreateParams value = base.CreateParams;
-                value.ExStyle |= WS_EX_TOPMOST;
+                value.ExStyle |= Constants.WS_EX_TOPMOST;
                 return value;
             }
         }
