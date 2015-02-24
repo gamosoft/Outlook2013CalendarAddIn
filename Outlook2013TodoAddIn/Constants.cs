@@ -42,6 +42,11 @@ namespace Outlook2013TodoAddIn
         /// </summary>
         public const string DonateUrl = "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ZXYEC3PM6K7TQ&lc=US&item_name=Outlook2103AddInBuyBeer&currency_code=USD&bn=PP%2dDonationsBF%3amybutton%2epng%3aNonHosted";
 
+        /// <summary>
+        /// Topmost value
+        /// </summary>
+        public const int WS_EX_TOPMOST = 0x00000008;
+
         #endregion "Variables"
     }
 }
