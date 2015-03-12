@@ -136,4 +136,10 @@
   <data name="todoIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\2012-11-20_1546.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Alert_16xSM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Alert_16xSM.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CurrentRow_15x14" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CurrentRow_15x14.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

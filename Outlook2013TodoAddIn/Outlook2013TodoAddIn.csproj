@@ -208,6 +208,7 @@
     <Compile Include="Forms\NewMailAlert.Designer.cs">
       <DependentUpon>NewMailAlert.cs</DependentUpon>
     </Compile>
+    <Compile Include="OLTaskItem.cs" />
     <Compile Include="OutlookHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -288,7 +289,9 @@
     <None Include="Images\Envelope.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\Alert_16xSM.png" />
     <Content Include="Images\buy-me-a-beer-small.png" />
+    <None Include="Images\CurrentRow_15x14.png" />
     <Content Include="Images\gear.png" />
   </ItemGroup>
   <PropertyGroup>

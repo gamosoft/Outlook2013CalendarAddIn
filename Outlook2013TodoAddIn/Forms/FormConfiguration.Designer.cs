@@ -160,7 +160,6 @@
             this.chkShowTasks.TabIndex = 16;
             this.chkShowTasks.Text = "Show Tasks";
             this.chkShowTasks.UseVisualStyleBackColor = true;
-            this.chkShowTasks.Visible = false;
             // 
             // cboFirstDayOfWeek
             // 

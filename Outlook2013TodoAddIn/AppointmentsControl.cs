@@ -109,6 +109,7 @@ namespace Outlook2013TodoAddIn
             this.RetrieveAppointments();
             if (this.ShowTasks)
             {
+                this.RetrieveTasks();
                 this.splitContainer1.Panel2Collapsed = false;
             }
             else
@@ -122,7 +123,7 @@ namespace Outlook2013TodoAddIn
         /// </summary>
         private void RetrieveTasks()
         {
-            List<Outlook.TaskItem> tasks = new List<Outlook.TaskItem>();
+            List<OLTaskItem> tasks = new List<OLTaskItem>();
             foreach (Outlook.Store store in Globals.ThisAddIn.Application.Session.Stores)
             {
                 if (Properties.Settings.Default.Accounts != null && Properties.Settings.Default.Accounts.Contains(store.DisplayName))
@@ -133,51 +134,105 @@ namespace Outlook2013TodoAddIn
                 }
             }
             // We need to sort them because they may come from different accounts already ordered
-            // tasks.Sort(CompareTasks);
+            // Applies sorting by due date
+            tasks.Sort(CompareTasks);
 
             //Outlook.Folder todoFolder =
             //    Globals.ThisAddIn.Application.Session.GetDefaultFolder(
             //    Outlook.OlDefaultFolders.olFolderToDo)
             //    as Outlook.Folder;
             //this.RetrieveTasksForFolder(todoFolder);
+
+            int sameDay = -1; // startRange.Day;
+
+            List<ListViewItem> lstCol = new List<ListViewItem>();
+            ListViewGroup grp = null;
+
+            tasks.ForEach(t =>
+            {
+                if (t.DueDate.Day != sameDay)
+                {
+                    string groupHeaderText = t.DueDate.ToShortDateString();
+                    if (t.DueDate.Year == Constants.NullYear) groupHeaderText = "No due date";
+                    if (this.ShowFriendlyGroupHeaders)
+                    {
+                        int daysDiff = (int)(t.DueDate.Date - DateTime.Today).TotalDays;
+                        switch (daysDiff)
+                        {
+                            case -1:
+                                groupHeaderText = Constants.Yesterday + ": " + groupHeaderText;
+                                break;
+                            case 0:
+                                groupHeaderText = Constants.Today + ": " + groupHeaderText;
+                                break;
+                            case 1:
+                                groupHeaderText = Constants.Tomorrow + ": " + groupHeaderText;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    if (this.ShowDayNames && t.DueDate.Year != Constants.NullYear)
+                    {
+                        groupHeaderText += " (" + t.DueDate.ToString("dddd") + ")";
+                    }
+                    grp = new ListViewGroup(groupHeaderText, HorizontalAlignment.Left);
+                    this.lstTasks.Groups.Add(grp);
+                    sameDay = t.DueDate.Day;
+                };
+
+                ListViewItem current = new ListViewItem(new string[] { String.Format("{0} {1}", t.DueDate.ToShortTimeString(), t.TaskSubject), "***" });
+                current.SubItems.Add(t.TaskSubject);
+
+                // current.Font = new Font(this.Font, FontStyle.Bold);
+                // current.UseItemStyleForSubItems = false;
+
+                current.ToolTipText = String.Format("Task Subject: {0}", t.TaskSubject);
+                if (t.StartDate.Year != Constants.NullYear)
+                {
+                    current.ToolTipText += Environment.NewLine + String.Format("Start Date: {0}", t.StartDate.ToShortDateString());
+                }
+                if (t.Reminder.Year != Constants.NullYear)
+                {
+                    current.ToolTipText += Environment.NewLine + String.Format("Reminder Time: {0}", t.Reminder.ToString());
+                }
+                if (t.DueDate.Year != Constants.NullYear)
+                {
+                    current.ToolTipText += Environment.NewLine + String.Format("Due Date: {0}", t.DueDate.ToShortDateString());
+                }
+                current.ToolTipText += Environment.NewLine + String.Format("In Folder: {0}", t.FolderName);
+
+                t.Categories.ForEach(cat =>
+                {
+                    Outlook.Category c = Globals.ThisAddIn.Application.Session.Categories[cat] as Outlook.Category;
+                    if (c != null)
+                    {
+                        current.ToolTipText += Environment.NewLine + " - " + c.Name;
+                    }
+
+                });
+
+                current.Tag = t;
+                current.Group = grp;
+                lstCol.Add(current);
+            });
+
+            this.lstTasks.Items.Clear();
+            this.lstTasks.Items.AddRange(lstCol.ToArray());
         }
 
         /// <summary>
         /// Retrieves to-do tasks for the folder on the specified store
         /// </summary>
         /// <param name="todoFolder">Outlook folder</param>
-        private List<Outlook.TaskItem> RetrieveTasksForFolder(Outlook.Folder todoFolder)
+        private List<OLTaskItem> RetrieveTasksForFolder(Outlook.Folder todoFolder)
         {
-            List<Outlook.TaskItem> tasks = new List<Outlook.TaskItem>();
+            List<OLTaskItem> tasks = new List<OLTaskItem>();
             foreach (object item in todoFolder.Items)
             {
-                if (item is Outlook.MailItem)
-                {
-                    Outlook.MailItem mail = item as Outlook.MailItem;
-                    //mail.Categories
-                    //mail.TaskCompletedDate;
-                    MessageBox.Show(String.Format("Mail Task: {0}, Due: {1}", mail.TaskSubject, mail.TaskDueDate.ToShortDateString()));
-                }
-                else if (item is Outlook.ContactItem)
-                {
-                    Outlook.ContactItem contact = item as Outlook.ContactItem;
-                    //contact.Categories
-                    //contact.TaskCompletedDate
-                    MessageBox.Show(String.Format("Contact Task: {0}, Due: {1}", contact.TaskSubject, contact.TaskDueDate.ToShortDateString()));
-                }
-                else if (item is Outlook.TaskItem)
-                {
-                    Outlook.TaskItem task = item as Outlook.TaskItem;
-                    //task.Categories
-                    //task.DateCompleted
-                    MessageBox.Show(String.Format("Task Task: {0}, Due: {1}", task.Subject, task.DueDate.ToShortDateString()));
-                }
-                else
-                {
-                    MessageBox.Show("Unknown type");
-                }
+                tasks.Add(new OLTaskItem(item));
             }
-            return tasks;
+            return tasks.Where(t => t.ValidTaskItem).ToList(); // Filter out invalid ones
         }
 
         /// <summary>
@@ -251,7 +306,7 @@ namespace Outlook2013TodoAddIn
                         groupHeaderText += " (" + i.Start.ToString("dddd") + ")";
                     }
                     grp = new ListViewGroup(groupHeaderText, HorizontalAlignment.Left);
-                    this.lstAppointments.Groups.Add(grp); // TODO: Style it?
+                    this.lstAppointments.Groups.Add(grp);
                     sameDay = i.Start.Day;
                 };
                 string loc = "-"; // TODO: If no second line is specified, the tile is stretched to only one line
@@ -281,7 +336,6 @@ namespace Outlook2013TodoAddIn
                     }
                 }
 
-
                 current.Tag = i;
                 current.Group = grp;
                 switch (i.BusyStatus)
@@ -310,6 +364,17 @@ namespace Outlook2013TodoAddIn
 
             this.apptCalendar.ShowWeekNumbers = this.ShowWeekNumbers;
             this.apptCalendar.UpdateCalendar();
+        }
+
+        /// <summary>
+        /// Comparer method to sort tasks based on due date/time
+        /// </summary>
+        /// <param name="x">First task</param>
+        /// <param name="y">Second task</param>
+        /// <returns></returns>
+        private static int CompareTasks(OLTaskItem x, OLTaskItem y)
+        {
+            return x.DueDate.CompareTo(y.DueDate);
         }
 
         /// <summary>
@@ -383,6 +448,43 @@ namespace Outlook2013TodoAddIn
                 }
             }
             catch { return null; }
+        }
+
+        /// <summary>
+        /// Open the task
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">EventArgs</param>
+        private void lstTasks_DoubleClick(object sender, EventArgs e)
+        {
+            if (this.lstTasks.SelectedIndices.Count != 0)
+            {
+                OLTaskItem task = this.lstTasks.SelectedItems[0].Tag as OLTaskItem;
+                if (task != null)
+                {
+                    if (task.OriginalItem is Outlook.MailItem)
+                    {
+                        Outlook.MailItem mail = task.OriginalItem as Outlook.MailItem;
+                        mail.Display(true);
+                    }
+                    else if (task.OriginalItem is Outlook.ContactItem)
+                    {
+                        Outlook.ContactItem contact = task.OriginalItem as Outlook.ContactItem;
+                        contact.Display(true);
+                    }
+                    else if (task.OriginalItem is Outlook.TaskItem)
+                    {
+                        Outlook.TaskItem t = task.OriginalItem as Outlook.TaskItem;
+                        t.Display(true);
+                    }
+                    else
+                    {
+                        // Do nothing
+                    }
+                    // At the end, synchronously "refresh" tasks in case they have changed
+                    this.RetrieveTasks();
+                }
+             }
         }
 
         /// <summary>
@@ -543,6 +645,75 @@ namespace Outlook2013TodoAddIn
             }
         }
 
+        private void lstTasks_DrawItem(object sender, DrawListViewItemEventArgs e)
+        {
+            e.DrawBackground(); // To avoid repainting (making font "grow")
+            OLTaskItem task = e.Item.Tag as OLTaskItem;
+
+            // Color catColor = Color.Empty;
+            List<Color> catColors = new List<Color>();
+
+            Font itemFont = this.Font;
+            task.Categories.ForEach(cat =>
+            {
+                Outlook.Category c = Globals.ThisAddIn.Application.Session.Categories[cat] as Outlook.Category;
+                if (c != null)
+                {
+                    catColors.Add(TranslateCategoryColor(c.Color));
+                }
+            });
+            int categoriesRectangleWidth = 30;
+            int horizontalSpacing = 2;
+
+            Rectangle totalRectangle = e.Bounds;
+            Rectangle subjectRectangle = totalRectangle; subjectRectangle.Height = this.FontHeight;
+            Rectangle categoriesRectangle = totalRectangle; categoriesRectangle.Width = categoriesRectangleWidth; categoriesRectangle.Height = this.FontHeight; categoriesRectangle.Offset(10, this.FontHeight);
+            Rectangle reminderRectangle = totalRectangle; reminderRectangle.Height = this.FontHeight; reminderRectangle.Offset(0, this.FontHeight);
+            if (task.Categories.Count != 0) reminderRectangle.Offset(categoriesRectangleWidth + horizontalSpacing * 4, 0);
+
+            bool selected = e.State.HasFlag(ListViewItemStates.Selected);
+            Color back = Color.Empty;
+            if (selected) back = Color.LightCyan;
+            using (Brush br = new SolidBrush(back))
+                e.Graphics.FillRectangle(br, totalRectangle);
+
+            StringFormat rightFormat = new StringFormat();
+            rightFormat.Alignment = StringAlignment.Far;
+            rightFormat.LineAlignment = StringAlignment.Near;
+            StringFormat leftFormat = new StringFormat();
+            leftFormat.Alignment = StringAlignment.Near;
+            leftFormat.LineAlignment = StringAlignment.Near;
+
+            Brush colorBrush = new SolidBrush(this.ForeColor);
+
+            if (catColors.Count != 0)
+            {
+                int catWidth = categoriesRectangle.Width / catColors.Count;
+                // int catWidth = categoriesRectangle.Width / 3; // TODO: This looks nicer, but more than 3 won't fit
+                Rectangle catRect = categoriesRectangle; catRect.Width = catWidth;
+                // catColors.ForEach(cc =>
+                catColors.Take(3).ToList().ForEach(cc =>
+                {
+                    // e.Graphics.FillEllipse(new SolidBrush(cc), catRect);
+                    e.Graphics.FillRectangle(new SolidBrush(cc), catRect);
+                    // e.Graphics.FillRectangle(new SolidBrush(cc), catRect.Left, catRect.Top, catWidth, this.FontHeight);
+                    catRect.Offset(catWidth, 0);
+                });
+
+            }
+            e.Graphics.DrawString(task.TaskSubject, new Font(this.Font, FontStyle.Bold), colorBrush, subjectRectangle, leftFormat);
+            if (task.Reminder.Year != Constants.NullYear)
+            {
+                e.Graphics.DrawImage(Properties.Resources.Alert_16xSM, reminderRectangle.Left, reminderRectangle.Top);
+                e.Graphics.DrawString(task.Reminder.ToString(), this.Font, colorBrush, reminderRectangle.Left + Properties.Resources.Alert_16xSM.Width + horizontalSpacing, reminderRectangle.Top, leftFormat);
+            }
+            else if (task.StartDate.Year != Constants.NullYear)
+            {
+                e.Graphics.DrawImage(Properties.Resources.CurrentRow_15x14, reminderRectangle.Left, reminderRectangle.Top);
+                e.Graphics.DrawString(task.StartDate.ToShortDateString(), this.Font, colorBrush, reminderRectangle.Left + Properties.Resources.CurrentRow_15x14.Width + horizontalSpacing, reminderRectangle.Top, leftFormat);
+            }
+        }
+
         /// <summary>
         /// Method to custom draw the list items
         /// </summary>
@@ -633,7 +804,6 @@ namespace Outlook2013TodoAddIn
                 catColors.Take(3).ToList().ForEach(cc =>
                 {
                     e.Graphics.FillEllipse(new SolidBrush(cc), catRect);
-                    //e.Graphics.FillRectangle(new SolidBrush(cc), catRect);
                     catRect.Offset(catWidth, 0);
                 });
                 

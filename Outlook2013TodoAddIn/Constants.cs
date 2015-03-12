@@ -47,6 +47,11 @@ namespace Outlook2013TodoAddIn
         /// </summary>
         public const int WS_EX_TOPMOST = 0x00000008;
 
+        /// <summary>
+        /// Outlook represents a null date with 1/1/4501
+        /// </summary>
+        public const int NullYear = 4501;
+
         #endregion "Variables"
     }
 }
