@@ -21,6 +21,8 @@ namespace Outlook2013TodoAddIn
         public object OriginalItem { get; set; }
         public List<string> Categories { get; set; }
 
+        public bool Completed { get; set; }
+
         #endregion "Properties"
 
         #region "Methods"
@@ -46,6 +48,7 @@ namespace Outlook2013TodoAddIn
                 MAPIFolder f = (MAPIFolder)mail.Parent;
                 this.FolderName = f.Name;
                 if (!String.IsNullOrEmpty(mail.Categories)) this.Categories.AddRange(mail.Categories.Split(new char[] { ',' }));
+                this.Completed = (mail.TaskCompletedDate.Year != Constants.NullYear);
             }
             else if (item is Outlook.ContactItem)
             {
@@ -58,6 +61,7 @@ namespace Outlook2013TodoAddIn
                 MAPIFolder f = (MAPIFolder)contact.Parent;
                 this.FolderName = f.Name;
                 if (!String.IsNullOrEmpty(contact.Categories)) this.Categories.AddRange(contact.Categories.Split(new char[] { ',' }));
+                this.Completed = (contact.TaskCompletedDate.Year != Constants.NullYear);
             }
             else if (item is Outlook.TaskItem)
             {
@@ -70,6 +74,7 @@ namespace Outlook2013TodoAddIn
                 MAPIFolder f = (MAPIFolder)task.Parent;
                 this.FolderName = f.Name;
                 if (!String.IsNullOrEmpty(task.Categories)) this.Categories.AddRange(task.Categories.Split(new char[] { ',' }));
+                this.Completed = task.Complete;
             }
             else
             {

@@ -40,15 +40,18 @@
             this.lstTasks = new System.Windows.Forms.ListView();
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ctxMenuTasks = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.panelCalendar = new System.Windows.Forms.Panel();
             this.apptCalendar = new Outlook2013TodoAddIn.CustomCalendar();
-            this.ctxMenuTasks = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mnuItemMarkComplete = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuItemDeleteTask = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxMenuAppointments.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.ctxMenuTasks.SuspendLayout();
             this.panelCalendar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,20 +61,20 @@
             this.mnuItemReplyAllEmail,
             this.mnuItemDeleteAppointment});
             this.ctxMenuAppointments.Name = "ctxMenuAppointments";
-            this.ctxMenuAppointments.Size = new System.Drawing.Size(225, 52);
+            this.ctxMenuAppointments.Size = new System.Drawing.Size(227, 52);
             // 
             // mnuItemReplyAllEmail
             // 
             this.mnuItemReplyAllEmail.Name = "mnuItemReplyAllEmail";
-            this.mnuItemReplyAllEmail.Size = new System.Drawing.Size(224, 24);
+            this.mnuItemReplyAllEmail.Size = new System.Drawing.Size(226, 24);
             this.mnuItemReplyAllEmail.Text = "Reply All With Email";
             this.mnuItemReplyAllEmail.Click += new System.EventHandler(this.mnuItemReplyAllEmail_Click);
             // 
             // mnuItemDeleteAppointment
             // 
             this.mnuItemDeleteAppointment.Name = "mnuItemDeleteAppointment";
-            this.mnuItemDeleteAppointment.Size = new System.Drawing.Size(224, 24);
-            this.mnuItemDeleteAppointment.Text = "Delete appointment/s";
+            this.mnuItemDeleteAppointment.Size = new System.Drawing.Size(226, 24);
+            this.mnuItemDeleteAppointment.Text = "Delete Appointment/s";
             this.mnuItemDeleteAppointment.Click += new System.EventHandler(this.mnuItemDeleteAppointment_Click);
             // 
             // panel1
@@ -169,6 +172,14 @@
             this.columnHeader4.Text = "Subject";
             this.columnHeader4.Width = 200;
             // 
+            // ctxMenuTasks
+            // 
+            this.ctxMenuTasks.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuItemMarkComplete,
+            this.mnuItemDeleteTask});
+            this.ctxMenuTasks.Name = "ctxMenuTasks";
+            this.ctxMenuTasks.Size = new System.Drawing.Size(181, 80);
+            // 
             // panelCalendar
             // 
             this.panelCalendar.Controls.Add(this.apptCalendar);
@@ -202,10 +213,19 @@
             this.apptCalendar.SelectedDateChanged += new System.EventHandler(this.apptCalendar_SelectedDateChanged);
             this.apptCalendar.ConfigurationButtonClicked += new System.EventHandler(this.apptCalendar_ConfigurationButtonClicked);
             // 
-            // ctxMenuTasks
+            // mnuItemMarkComplete
             // 
-            this.ctxMenuTasks.Name = "ctxMenuTasks";
-            this.ctxMenuTasks.Size = new System.Drawing.Size(61, 4);
+            this.mnuItemMarkComplete.Name = "mnuItemMarkComplete";
+            this.mnuItemMarkComplete.Size = new System.Drawing.Size(180, 24);
+            this.mnuItemMarkComplete.Text = "Mark Complete";
+            this.mnuItemMarkComplete.Click += new System.EventHandler(this.mnuItemMarkComplete_Click);
+            // 
+            // mnuItemDeleteTask
+            // 
+            this.mnuItemDeleteTask.Name = "mnuItemDeleteTask";
+            this.mnuItemDeleteTask.Size = new System.Drawing.Size(180, 24);
+            this.mnuItemDeleteTask.Text = "Delete Task";
+            this.mnuItemDeleteTask.Click += new System.EventHandler(this.mnuItemDeleteTask_Click);
             // 
             // AppointmentsControl
             // 
@@ -220,6 +240,7 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.ctxMenuTasks.ResumeLayout(false);
             this.panelCalendar.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -241,6 +262,8 @@
         private System.Windows.Forms.Panel panelCalendar;
         private System.Windows.Forms.ToolStripMenuItem mnuItemDeleteAppointment;
         private System.Windows.Forms.ContextMenuStrip ctxMenuTasks;
+        private System.Windows.Forms.ToolStripMenuItem mnuItemMarkComplete;
+        private System.Windows.Forms.ToolStripMenuItem mnuItemDeleteTask;
 
 
     }
