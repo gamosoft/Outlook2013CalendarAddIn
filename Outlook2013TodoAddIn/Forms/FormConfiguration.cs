@@ -96,6 +96,15 @@ namespace Outlook2013TodoAddIn.Forms
         }
 
         /// <summary>
+        /// Gets/sets whether to show the completed tasks in the list
+        /// </summary>
+        public bool ShowCompletedTasks
+        {
+            get { return this.chkShowCompletedTasks.Checked; }
+            set { this.chkShowCompletedTasks.Checked = value; }
+        }
+
+        /// <summary>
         /// Gets/sets the first day of the week for the calendar
         /// </summary>
         public System.DayOfWeek FirstDayOfWeek
@@ -131,6 +140,7 @@ namespace Outlook2013TodoAddIn.Forms
             this.chkShowDayNames.Checked = Properties.Settings.Default.ShowDayNames;
             this.chkShowWeekNumbers.Checked = Properties.Settings.Default.ShowWeekNumbers;
             this.chkShowTasks.Checked = Properties.Settings.Default.ShowTasks;
+            this.chkShowCompletedTasks.Checked = Properties.Settings.Default.ShowCompletedTasks;
             this.LoadStores();
             this.LoadDays();
         }
@@ -172,7 +182,7 @@ namespace Outlook2013TodoAddIn.Forms
             Properties.Settings.Default.ShowFriendlyGroupHeaders = this.chkFriendlyGroupHeaders.Checked;
             Properties.Settings.Default.ShowDayNames = this.chkShowDayNames.Checked;
             Properties.Settings.Default.ShowWeekNumbers = this.chkShowWeekNumbers.Checked;
-            Properties.Settings.Default.ShowTasks = this.chkShowTasks.Checked;
+            Properties.Settings.Default.ShowCompletedTasks = this.chkShowCompletedTasks.Checked;
             Properties.Settings.Default.FirstDayOfWeek = (System.DayOfWeek)Enum.Parse(typeof(System.DayOfWeek), this.cboFirstDayOfWeek.SelectedValue.ToString());
         }
 

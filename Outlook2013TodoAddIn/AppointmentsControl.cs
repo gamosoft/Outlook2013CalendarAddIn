@@ -66,6 +66,11 @@ namespace Outlook2013TodoAddIn
         public bool ShowTasks { get; set; }
 
         /// <summary>
+        /// Gets/sets whether to show the completed tasks in the list
+        /// </summary>
+        public bool ShowCompletedTasks { get; set; }
+
+        /// <summary>
         /// Gets/sets the first day of the week for the calendar
         /// </summary>
         public System.DayOfWeek FirstDayOfWeek { get; set; }
@@ -133,6 +138,12 @@ namespace Outlook2013TodoAddIn
                     // TODO: Shared calendars?
                 }
             }
+
+            if (!this.ShowCompletedTasks)
+            {
+                tasks = tasks.Where(t => !t.Completed).ToList();
+            }
+
             // We need to sort them because they may come from different accounts already ordered
             // Applies sorting by due date
             tasks.Sort(CompareTasks);
@@ -605,6 +616,86 @@ namespace Outlook2013TodoAddIn
         }
 
         /// <summary>
+        /// Allows to delete the selected task
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">EventArgs</param>
+        private void mnuItemDeleteTask_Click(object sender, EventArgs e)
+        {
+            if (this.lstTasks.SelectedIndices.Count != 0)
+            {
+                OLTaskItem task = this.lstTasks.SelectedItems[0].Tag as OLTaskItem;
+                if (task != null)
+                {
+                    if (MessageBox.Show("Are you sure you want to delete this task?", "Delete task", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        if (task.OriginalItem is Outlook.MailItem)
+                        {
+                            Outlook.MailItem mail = task.OriginalItem as Outlook.MailItem;
+                            mail.Delete();
+                        }
+                        else if (task.OriginalItem is Outlook.ContactItem)
+                        {
+                            Outlook.ContactItem contact = task.OriginalItem as Outlook.ContactItem;
+                            contact.Delete();
+                        }
+                        else if (task.OriginalItem is Outlook.TaskItem)
+                        {
+                            Outlook.TaskItem t = task.OriginalItem as Outlook.TaskItem;
+                            t.Delete();
+                        }
+                        else
+                        {
+                            // Do nothing
+                        }
+                    }
+                    // At the end, synchronously "refresh" tasks in case they have changed
+                    this.RetrieveTasks();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Allows to mark the selected task as completed (clear task flag for regular items)
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">EventArgs</param>
+        private void mnuItemMarkComplete_Click(object sender, EventArgs e)
+        {
+            if (this.lstTasks.SelectedIndices.Count != 0)
+            {
+                OLTaskItem task = this.lstTasks.SelectedItems[0].Tag as OLTaskItem;
+                if (task != null && !task.Completed) // Attempting to complete an already completed task throws an exception
+                {
+                    if (MessageBox.Show("Are you sure you want to complete this task?", "Mark task as completed/Clear task flag", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        if (task.OriginalItem is Outlook.MailItem)
+                        {
+                            Outlook.MailItem mail = task.OriginalItem as Outlook.MailItem;
+                            mail.ClearTaskFlag();
+                        }
+                        else if (task.OriginalItem is Outlook.ContactItem)
+                        {
+                            Outlook.ContactItem contact = task.OriginalItem as Outlook.ContactItem;
+                            contact.ClearTaskFlag();
+                        }
+                        else if (task.OriginalItem is Outlook.TaskItem)
+                        {
+                            Outlook.TaskItem t = task.OriginalItem as Outlook.TaskItem;
+                            t.MarkComplete();
+                        }
+                        else
+                        {
+                            // Do nothing
+                        }
+                    }
+                    // At the end, synchronously "refresh" tasks in case they have changed
+                    this.RetrieveTasks();
+                }
+            }
+        }
+
+        /// <summary>
         /// Switch to the calendar view when double-clicking a date
         /// </summary>
         /// <param name="sender">Sender</param>
@@ -639,6 +730,7 @@ namespace Outlook2013TodoAddIn
                     this.ShowDayNames = cfg.ShowDayNames;
                     this.ShowWeekNumbers = cfg.ShowWeekNumbers;
                     this.ShowTasks = cfg.ShowTasks;
+                    this.ShowCompletedTasks = cfg.ShowCompletedTasks;
                     this.FirstDayOfWeek = cfg.FirstDayOfWeek;
                     this.RetrieveData();
                 }
@@ -701,16 +793,23 @@ namespace Outlook2013TodoAddIn
                 });
 
             }
-            e.Graphics.DrawString(task.TaskSubject, new Font(this.Font, FontStyle.Bold), colorBrush, subjectRectangle, leftFormat);
+            Font mainFont = new Font(this.Font, FontStyle.Bold);
+            Font subFont = this.Font;
+            if (task.Completed)
+            {
+                mainFont = new Font(this.Font, FontStyle.Bold | FontStyle.Strikeout);
+                subFont = new Font(this.Font, FontStyle.Strikeout);
+            }
+            e.Graphics.DrawString(task.TaskSubject, mainFont, colorBrush, subjectRectangle, leftFormat);
             if (task.Reminder.Year != Constants.NullYear)
             {
                 e.Graphics.DrawImage(Properties.Resources.Alert_16xSM, reminderRectangle.Left, reminderRectangle.Top);
-                e.Graphics.DrawString(task.Reminder.ToString(), this.Font, colorBrush, reminderRectangle.Left + Properties.Resources.Alert_16xSM.Width + horizontalSpacing, reminderRectangle.Top, leftFormat);
+                e.Graphics.DrawString(task.Reminder.ToString(), subFont, colorBrush, reminderRectangle.Left + Properties.Resources.Alert_16xSM.Width + horizontalSpacing, reminderRectangle.Top, leftFormat);
             }
             else if (task.StartDate.Year != Constants.NullYear)
             {
                 e.Graphics.DrawImage(Properties.Resources.CurrentRow_15x14, reminderRectangle.Left, reminderRectangle.Top);
-                e.Graphics.DrawString(task.StartDate.ToShortDateString(), this.Font, colorBrush, reminderRectangle.Left + Properties.Resources.CurrentRow_15x14.Width + horizontalSpacing, reminderRectangle.Top, leftFormat);
+                e.Graphics.DrawString(task.StartDate.ToShortDateString(), subFont, colorBrush, reminderRectangle.Left + Properties.Resources.CurrentRow_15x14.Width + horizontalSpacing, reminderRectangle.Top, leftFormat);
             }
         }
 

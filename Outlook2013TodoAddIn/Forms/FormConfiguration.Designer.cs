@@ -47,6 +47,7 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.numRangeEmailAlertsTimeOut = new System.Windows.Forms.NumericUpDown();
             this.lblSeconds = new System.Windows.Forms.Label();
+            this.chkShowCompletedTasks = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numRangeDays)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctBoxPayPal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRangeEmailAlertsTimeOut)).BeginInit();
@@ -244,6 +245,16 @@
             this.lblSeconds.TabIndex = 23;
             this.lblSeconds.Text = "seconds";
             // 
+            // chkShowCompletedTasks
+            // 
+            this.chkShowCompletedTasks.AutoSize = true;
+            this.chkShowCompletedTasks.Location = new System.Drawing.Point(157, 206);
+            this.chkShowCompletedTasks.Name = "chkShowCompletedTasks";
+            this.chkShowCompletedTasks.Size = new System.Drawing.Size(105, 21);
+            this.chkShowCompletedTasks.TabIndex = 24;
+            this.chkShowCompletedTasks.Text = "Completed?";
+            this.chkShowCompletedTasks.UseVisualStyleBackColor = true;
+            // 
             // FormConfiguration
             // 
             this.AcceptButton = this.btnOK;
@@ -251,6 +262,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(282, 482);
+            this.Controls.Add(this.chkShowCompletedTasks);
             this.Controls.Add(this.lblSeconds);
             this.Controls.Add(this.numRangeEmailAlertsTimeOut);
             this.Controls.Add(this.pctBoxPayPal);
@@ -305,5 +317,6 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.NumericUpDown numRangeEmailAlertsTimeOut;
         private System.Windows.Forms.Label lblSeconds;
+        private System.Windows.Forms.CheckBox chkShowCompletedTasks;
     }
 }
