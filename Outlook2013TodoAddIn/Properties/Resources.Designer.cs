@@ -63,9 +63,29 @@ namespace Outlook2013TodoAddIn.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Alert_16xSM {
+            get {
+                object obj = ResourceManager.GetObject("Alert_16xSM", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap buy_me_a_beer_small {
             get {
                 object obj = ResourceManager.GetObject("buy_me_a_beer_small", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CurrentRow_15x14 {
+            get {
+                object obj = ResourceManager.GetObject("CurrentRow_15x14", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
