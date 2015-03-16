@@ -182,6 +182,7 @@ namespace Outlook2013TodoAddIn.Forms
             Properties.Settings.Default.ShowFriendlyGroupHeaders = this.chkFriendlyGroupHeaders.Checked;
             Properties.Settings.Default.ShowDayNames = this.chkShowDayNames.Checked;
             Properties.Settings.Default.ShowWeekNumbers = this.chkShowWeekNumbers.Checked;
+            Properties.Settings.Default.ShowTasks = this.chkShowTasks.Checked;
             Properties.Settings.Default.ShowCompletedTasks = this.chkShowCompletedTasks.Checked;
             Properties.Settings.Default.FirstDayOfWeek = (System.DayOfWeek)Enum.Parse(typeof(System.DayOfWeek), this.cboFirstDayOfWeek.SelectedValue.ToString());
         }
