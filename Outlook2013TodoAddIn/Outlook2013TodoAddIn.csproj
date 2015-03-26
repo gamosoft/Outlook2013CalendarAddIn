@@ -183,6 +183,7 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="ComboBoxItem.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="CustomCalendar.cs">
       <SubType>UserControl</SubType>
