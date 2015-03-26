@@ -241,7 +241,14 @@ namespace Outlook2013TodoAddIn
             List<OLTaskItem> tasks = new List<OLTaskItem>();
             foreach (object item in todoFolder.Items)
             {
-                tasks.Add(new OLTaskItem(item));
+                try
+                {
+                    tasks.Add(new OLTaskItem(item));
+                }
+                catch
+                {
+                    // Do nothing, probably the task had already been deleted
+                }
             }
             return tasks.Where(t => t.ValidTaskItem).ToList(); // Filter out invalid ones
         }
