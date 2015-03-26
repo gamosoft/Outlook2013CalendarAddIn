@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Outlook = Microsoft.Office.Interop.Outlook;
 
 namespace Outlook2013TodoAddIn.Forms
 {
@@ -72,6 +73,7 @@ namespace Outlook2013TodoAddIn.Forms
         public NewMailAlert(Microsoft.Office.Interop.Outlook.MailItem newMail, int interval)
         {
             InitializeComponent();
+            this.LoadFolders();
             this.Email = newMail; // Assign it to open or flag later
             this.lnkSender.Text = newMail.Sender.Name;
             this.lnkSubject.Text = newMail.Subject;
@@ -201,6 +203,60 @@ namespace Outlook2013TodoAddIn.Forms
             base.OnMouseLeave(ea);
             Point mousePos = PointToClient(Cursor.Position);
             mouseIsOver = ClientRectangle.Contains(mousePos);
+        }
+
+        /// <summary>
+        /// Method that loads all the folders in all stores
+        /// </summary>
+        private void LoadFolders()
+        {
+            comboMoveTo.Items.Clear();
+            foreach (Outlook.Store store in Globals.ThisAddIn.Application.Session.Stores)
+            {
+                if (Properties.Settings.Default.Accounts != null && Properties.Settings.Default.Accounts.Contains(store.DisplayName))
+                {
+                    Outlook.Folder inboxFolder = store.GetDefaultFolder(Outlook.OlDefaultFolders.olFolderInbox) as Outlook.Folder;
+                    LoadFolders(inboxFolder, "");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Recursive method to retrieve a folder's data, and all its children (if any)
+        /// </summary>
+        /// <param name="f">Folder</param>
+        /// <param name="padding">Padding to apply</param>
+        private void LoadFolders(Outlook.Folder f, string padding)
+        {
+            ComboBoxItem cbi = new ComboBoxItem(padding + f.Name, f);
+            comboMoveTo.Items.Add(cbi);
+            if (f.Folders.Count != 0)
+            {
+                // Get list of folder names and sort alphabetically
+                List<string> sf = new List<string>();
+                foreach (Outlook.Folder subf in f.Folders) sf.Add(subf.Name);
+                sf.Sort();
+                // Recursively call this method to add the children
+                sf.ForEach(n =>
+                {
+                    LoadFolders(f.Folders[n] as Outlook.Folder, padding + " -");
+                });
+            }
+        }
+
+        /// <summary>
+        /// When a folder is selected in the combobox, move the email item there
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">EventArgs</param>
+        private void comboMoveTo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.comboMoveTo.SelectedIndex != -1)
+            {
+                Outlook.Folder selFolder = (this.comboMoveTo.SelectedItem as ComboBoxItem).Value as Outlook.Folder;
+                this.Email.Move(selFolder);
+                this.Close();
+            }
         }
 
         #endregion "Methods"

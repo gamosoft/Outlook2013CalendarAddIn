@@ -35,6 +35,7 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.lnkSender = new System.Windows.Forms.LinkLabel();
             this.lnkSubject = new System.Windows.Forms.LinkLabel();
+            this.comboMoveTo = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // txtBody
@@ -46,6 +47,7 @@
             this.txtBody.ReadOnly = true;
             this.txtBody.Size = new System.Drawing.Size(285, 51);
             this.txtBody.TabIndex = 2;
+            this.txtBody.Text = "[Email body preview...]";
             this.txtBody.Click += new System.EventHandler(this.txtBody_Click);
             // 
             // btnDelete
@@ -100,10 +102,10 @@
             this.lnkSender.AutoSize = true;
             this.lnkSender.Location = new System.Drawing.Point(85, 5);
             this.lnkSender.Name = "lnkSender";
-            this.lnkSender.Size = new System.Drawing.Size(72, 17);
+            this.lnkSender.Size = new System.Drawing.Size(75, 17);
             this.lnkSender.TabIndex = 10;
             this.lnkSender.TabStop = true;
-            this.lnkSender.Text = "linkLabel1";
+            this.lnkSender.Text = "linkSender";
             this.lnkSender.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkSender_LinkClicked);
             // 
             // lnkSubject
@@ -111,17 +113,30 @@
             this.lnkSubject.AutoSize = true;
             this.lnkSubject.Location = new System.Drawing.Point(85, 27);
             this.lnkSubject.Name = "lnkSubject";
-            this.lnkSubject.Size = new System.Drawing.Size(72, 17);
+            this.lnkSubject.Size = new System.Drawing.Size(76, 17);
             this.lnkSubject.TabIndex = 11;
             this.lnkSubject.TabStop = true;
-            this.lnkSubject.Text = "linkLabel2";
+            this.lnkSubject.Text = "linkSubject";
             this.lnkSubject.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkSubject_LinkClicked);
+            // 
+            // comboMoveTo
+            // 
+            this.comboMoveTo.DisplayMember = "Text";
+            this.comboMoveTo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboMoveTo.FormattingEnabled = true;
+            this.comboMoveTo.Location = new System.Drawing.Point(220, 5);
+            this.comboMoveTo.Name = "comboMoveTo";
+            this.comboMoveTo.Size = new System.Drawing.Size(121, 24);
+            this.comboMoveTo.TabIndex = 12;
+            this.comboMoveTo.ValueMember = "Value";
+            this.comboMoveTo.SelectedIndexChanged += new System.EventHandler(this.comboMoveTo_SelectedIndexChanged);
             // 
             // NewMailAlert
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(385, 100);
+            this.Controls.Add(this.comboMoveTo);
             this.Controls.Add(this.lnkSubject);
             this.Controls.Add(this.lnkSender);
             this.Controls.Add(this.btnClose);
@@ -151,5 +166,6 @@
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.LinkLabel lnkSender;
         private System.Windows.Forms.LinkLabel lnkSubject;
+        private System.Windows.Forms.ComboBox comboMoveTo;
     }
 }
