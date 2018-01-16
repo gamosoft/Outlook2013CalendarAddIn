@@ -29,13 +29,13 @@ It's very weird but in version 2013 this option has disappeared, so you can only
 
 For this I have implemented a new pane that docks to the right of the Outlook window and shows the calendar and a list of future appointments within a certain range of upcoming days:
 
-![Future Appointments](./images/Home_appointments_v6.png)
+![Future Appointments](./images/Home_Appointments_v6.png)
 
 It will show appointments with their categories and status similar to what it did in Outlook 2010.
 
 I have implemented basic functionality, such as double-clicking the item to open it up (and in case of a recurring meeting to either open one or all of them):
 
-![Open all instances or current one](./images/Home_recurring.png)
+![Open all instances or current one](./images/Home_Recurring.png)
 
 You can also right-click an item and select "Reply all with email" to create a new mail item with all recipients of the appointment.
 Now you can delete appointments (whether one or multiple occurrences) directly from this pane, after a confirmation message is shown to the user:
@@ -91,4 +91,5 @@ By default will create it on the designated day, using current's day time rounde
 Remember, this was part of a personal project and I may be extending these functionalities or not depending on my availability, so use it at your own risk.
 
 I hope you guys like it too. :-)
+
 Kind regards.
