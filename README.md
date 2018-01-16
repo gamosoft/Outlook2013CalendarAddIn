@@ -17,7 +17,9 @@ You can download the compiled binaries here:
 You will have to uninstall any previous version (add/remove programs) if you had installed it before.
 You might need to install it as an administrator to avoid issues.
 
-Before unzipping the file please "unblock" it (right-click -> properties -> unblock) to avoid issues when installing, then unzip the file and double-click the VSTO file on the root folder to install it. Some people suggest downloading it with different browsers as well (please read the issues and discussions lists). If you don't unblock the file you'll get the following error:
+Before unzipping the file please "unblock" it (right-click -> properties -> unblock) to avoid issues when installing, then unzip the file and double-click the VSTO file on the root folder to install it. Some people suggest downloading it with different browsers as well (please read the issues and discussions lists).
+
+If you don't unblock the file you'll get the following error:
 
 ![Certificate Installation Error](./images/Home_OutlookAddIn.JPG)
 
