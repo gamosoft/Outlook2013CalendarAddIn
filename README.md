@@ -5,7 +5,7 @@ Adds extended appointment calendar to see events for several upcoming days, and 
 
 This project was born because after moving to the new Outlook 2013, a lot of nice and useful features were strangely "lost" in the upgrade from versions like 2010 or even 2007.
 
-It started as a personal project to include these options in my own daily work, but some colleagues were interested in it, so I decided to include it in Codeplex for everybody to download and mess around with it if you like it too. You're absolutely free to download it, and do whatever you want to do with the code if you wish, which BTW is provided as-is. ;-)
+It started as a personal project to include these options in my own daily work, but some colleagues were interested in it, so I decided to include it here for everybody to download and mess around with it if you like it too. You're absolutely free to download it, and do whatever you want to do with the code if you wish, which BTW is provided as-is. ;-)
 
 You can download the compiled binaries here:
 
