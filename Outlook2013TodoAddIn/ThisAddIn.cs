@@ -38,6 +38,13 @@ namespace Outlook2013TodoAddIn
         {
             try
             {
+
+                if (Properties.Settings.Default.CallUpgrade)
+                {
+                    Properties.Settings.Default.Upgrade();
+                    Properties.Settings.Default.CallUpgrade = false;
+                }
+
                 Globals.ThisAddIn.Application.NewMailEx += Application_NewMailEx;
                 this.AddRegistryNotification();
 
